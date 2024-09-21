@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Partidos from "./pages/partidos/partidos.jsx";
 import DetallePartidoPage from "./pages/DetallePartido/DetallePartidoPage.jsx";
 import Home from "./pages/Home/Home.jsx";
+import React from 'react';
+import Login from './components/Login/Login.js';
 
 function App() {
 
@@ -12,6 +14,7 @@ function App() {
         <Route path="/partidos" element={<Partidos />} />
         <Route path="/partido/:fixtureId" element={<DetallePartidoPage />} />
         <Route path="/" element={<Home />} />
+        <Route path="/login" component={<Login/>} />
       </Routes>
     </Router>
   );
