@@ -9,8 +9,9 @@ const Partidos = () => {
     useEffect(() => {
         const fetchPartidos = async () => {
             try {
-                const response = await axios.get('/fixtures');
-                setPartidos(response.data.fixtures);
+                const response = await axios.get('http://localhost:8000/fixtures');
+                setPartidos(response.data); // Aquí ya accedemos a la respuesta directamente.
+                console.log('Partidos:', response.data);
             } catch (error) {
                 console.error('Error al obtener los partidos:', error);
             }
@@ -24,7 +25,7 @@ const Partidos = () => {
             <h1>Partidos Disponibles</h1>
             <ul>
                 {partidos.map((partido) => (
-                    <li key={partido.fixture.id} onClick={() => setPartidoSeleccionado(partido)}>
+                    <li key={partido.id} onClick={() => setPartidoSeleccionado(partido)}>
                         {partido.teams.home.name} vs {partido.teams.away.name}
                     </li>
                 ))}
