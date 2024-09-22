@@ -21,8 +21,8 @@ function App() {
         <Route path="/partido/:fixtureId" element={<DetallePartidoPage />} />
         <Route path="/resultados" element={<ListaResultados />} />
         <Route path="/wallet" element={<Wallet />} />
-        <Route path="/login" component={<Login/>} />
-        <Route path="/signin" component={<Signin/>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signin" element={<Signin />} />
       </Routes>
     </Router>
   );
