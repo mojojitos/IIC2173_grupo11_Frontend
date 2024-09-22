@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./CompraBono.scss";
 
 const CompraBonos = ({ partido }) => {
   const {
@@ -19,7 +20,7 @@ const CompraBonos = ({ partido }) => {
     const resultToSend = selectedResult === "Empate" ? "---" : selectedResult;
     try {
       const requestData = {
-        request_id: crypto.randomUUID(), // para identificar la solicitud hya que cambiarlo
+        request_id: crypto.randomUUID(),
         group_id: "11",
         fixture_id: fixture_id,
         league_name: leagueName,
@@ -34,7 +35,6 @@ const CompraBonos = ({ partido }) => {
 
       const response = await axios.post(
         "Link a la API de compra de bonos",
-        // Importante agregar la pagina de compra de bonos
         requestData
       );
       setStatus("Compra exitosa");
@@ -49,7 +49,6 @@ const CompraBonos = ({ partido }) => {
     const result = e.target.value;
     setSelectedResult(result);
 
-    // Obtener las odds según el resultado seleccionado
     const selectedOdd = odds[0].values.find((value) => {
       if (result === teams.home.name) return value.value === "Home";
       if (result === "Empate") return value.value === "Draw";
@@ -58,7 +57,6 @@ const CompraBonos = ({ partido }) => {
     });
     setSelectedOdd(selectedOdd);
 
-    // Calcular ganancia
     if (selectedOdd) {
       setGanancia(quantity * parseFloat(selectedOdd.odd * 1000));
     } else {
@@ -67,7 +65,7 @@ const CompraBonos = ({ partido }) => {
   };
 
   return (
-    <div>
+    <div className="compra-bonos">
       <h2>Comprar Bonos</h2>
       <div>
         <label>Cantidad de Bonos: </label>
@@ -78,7 +76,6 @@ const CompraBonos = ({ partido }) => {
             const newQuantity = Number(e.target.value);
             setQuantity(newQuantity);
 
-            // Recalcular ganancia si ya se seleccionó un resultado
             if (selectedOdd) {
               setGanancia(newQuantity * parseFloat(selectedOdd.odd) * 1000);
             }
@@ -96,13 +93,25 @@ const CompraBonos = ({ partido }) => {
         </select>
       </div>
 
-      <div>
+      <div className="ganancia-info">
         <p>Ganancia potencial: {ganancia}</p>
+      </div>
+      <div className="precio-info">
         <p>Precio total: {quantity * 1000}</p>
       </div>
 
-      <button onClick={handleCompra}>Comprar</button>
-      {status && <p>{status}</p>}
+      <button className="boton-comprar" onClick={handleCompra}>
+        Comprar
+      </button>
+      {status && (
+        <p
+          className={`status ${
+            status === "Compra exitosa" ? "success" : "error"
+          }`}
+        >
+          {status}
+        </p>
+      )}
     </div>
   );
 };
