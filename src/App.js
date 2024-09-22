@@ -15,6 +15,7 @@ function App() {
     <Router>
       <Navbar />
       <Switch>
+        <Route exact path="/" component={PaginaPrincipal} />
         <Route path="/pagina-principal" component={PaginaPrincipal} />
         <Route path="/partidos" component={ListaPartidos} />
         <Route path="/resultados" component={ListaResultados} />

@@ -7,39 +7,39 @@ function Navbar() {
     return (
         <nav class="navbar">
             <div class="navbar-brand">
-                <a class="navbar-item" href="/">
+                <Link class="navbar-item" href="/">
                     <img src={logo} alt="Logo" />
-                </a>
+                </Link>
             </div>
             <dviv class="navbar-divider"></dviv>
             <div class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item" href="/pagina-principal">
+                    <Link class="navbar-item" to="/pagina-principal">
                         Inicio
-                    </a>
+                    </Link>
 
-                    <a class="navbar-item" href="/partidos">
+                    <Link class="navbar-item" to="/partidos">
                         Partidos
-                    </a>
+                    </Link>
 
-                    <a class="navbar-item" href="/resultados">
+                    <Link class="navbar-item" to="/resultados">
                         Resultados
-                    </a>
+                    </Link>
 
-                    <a class="navbar-item" href="/wallet">
+                    <Link class="navbar-item" to="/wallet">
                         Billetera
-                    </a>
+                    </Link>
                 </div>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button is-primary" href="/signin">
+                        <Link class="button is-primary" to="/signin">
                             <strong>Sign In</strong>
-                        </a>
-                        <a class="button is-light" href="/login">
+                        </Link>
+                        <Link class="button is-light" to="/login">
                             Log in
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
