@@ -7,7 +7,7 @@ import Login from './components/Login/Login.js';
 import PaginaPrincipal from './components/PaginaPrincipal/PaginaPrincipal.js';
 import ListaResultados from './components/ListaResultados/ListaResultados.js';
 import Wallet from './components/Wallet/Wallet.js';
-import Signin from './components/Signin/Signin';
+import Signup from './components/Signup/Signup.js';
 import Navbar from './components/Navbar/Navbar';
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
         <Route path="/resultados" element={<ListaResultados />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </Router>
   );

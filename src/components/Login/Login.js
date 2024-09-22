@@ -1,15 +1,37 @@
 import React, { useState } from 'react';
 import './Login.css';
+import axios from 'axios';
+
+const authenticateUser = async (email, password) => {
+    try {
+      const response = await axios.post('URL_DEL_BACKEND/login', {
+        email: email,
+        password: password,
+      });
+      return response.data; // Asume que el backend devuelve un objeto con la información del usuario
+    } catch (error) {
+      console.error('Error en la autenticación:', error);
+      throw error;
+    }
+  };
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [status, setStatus] = useState('');
     
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Email:', email);
-        console.log('Password:', password);
-    };
+        try {
+            const userData = await authenticateUser(email, password);
+            setStatus('Login exitoso');
+            console.log('Datos del usuario:', userData);
+            // Aquí puedes redirigir al usuario o guardar el token en el estado
+          } catch (error) {
+            setStatus('Error en el login');
+            console.error('Error al realizar el login:', error);
+          }
+        };
     
     return (
         <div className="hero is-fullheight">
@@ -51,6 +73,7 @@ const Login = () => {
                                 </div>
                             </div>
                         </form>
+                        {status && <div className="has-text-white">{status}</div>}
                     </div>
                 </div>
             </div>

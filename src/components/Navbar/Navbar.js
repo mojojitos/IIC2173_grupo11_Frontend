@@ -28,8 +28,8 @@ function Navbar() {
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <Link class="button is-primary" to="/signin">
-                            <strong>Sign In</strong>
+                        <Link class="button is-primary" to="/signup">
+                            <strong>Sign Up</strong>
                         </Link>
                         <Link class="button is-light" to="/login">
                             Log in
