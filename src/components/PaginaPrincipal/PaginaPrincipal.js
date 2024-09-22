@@ -5,18 +5,22 @@ import { Link } from 'react-router-dom';
 const PaginaPrincipal = () => {
     return (
         <div class="pagina-principal">
-            <h1>Bienvenido a la página principal</h1>
+            <h1 class="title is-1">¡Bienvenido a CoolGoat!</h1>
             <div class="columns">
                 <div class="column">
-                    <Link class="button is-large is-fullwidth is-info" to="/partidos">
-                        <h2>Partidos</h2>
-                        <p>Revisa los partidos que estan en desarrollo</p>
+                    <Link class="hero is-large is-info" to="/partidos">
+                        <div class="hero-body">
+                            <h3 class="title is-3">Partidos</h3>
+                            <h5 class="subtitle is-5">Revisa los partidos que estan en desarrollo</h5>
+                        </div>
                     </Link>
                 </div>
                 <div class="column">
-                    <Link class="button is-large is-fullwidth is-info" to="/resultados">
-                        <h2>Resultados</h2>
-                        <p>Revisa los resultados de partidos finalizados</p>
+                    <Link class="hero is-large is-fullwidth is-info" to="/resultados">
+                        <div class="hero-body">
+                            <h3 class="title is-3">Resultados</h3>
+                            <h5 class="subtitle is-5">Revisa los resultados de partidos finallizados</h5>
+                        </div>
                     </Link>
                 </div>
             </div>

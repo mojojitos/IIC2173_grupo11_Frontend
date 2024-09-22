@@ -1,8 +1,8 @@
 import React from 'react';
-import './CargaWallet.css';
+import './Wallet.css';
 
-const CargaWallet = () => {
+const Wallet = () => {
     return <div>Formulario para carga de dinero</div>;
 };
 
-export default CargaWallet;
+export default Wallet;
