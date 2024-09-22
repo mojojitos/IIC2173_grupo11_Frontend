@@ -10,3 +10,5 @@ const ListaResultados = resultados.map(partido =>
 return (
     <ul>{listItems}</ul>
   );
+
+export default ListaResultados;
