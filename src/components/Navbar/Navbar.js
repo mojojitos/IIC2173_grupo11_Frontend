@@ -1,5 +1,6 @@
 import React from "react";
 import './Navbar.css';
+import { Link } from 'react-router-dom';
 import logo from '';
 
 function Navbar() {
@@ -13,19 +14,19 @@ function Navbar() {
             <dviv class="navbar-divider"></dviv>
             <div class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item" href="/">
+                    <a class="navbar-item" href="/pagina-principal">
                         Inicio
                     </a>
 
-                    <a class="navbar-item" href="/">
+                    <a class="navbar-item" href="/partidos">
                         Partidos
                     </a>
 
-                    <a class="navbar-item" href="/">
+                    <a class="navbar-item" href="/resultados">
                         Resultados
                     </a>
 
-                    <a class="navbar-item" href="/">
+                    <a class="navbar-item" href="/wallet">
                         Billetera
                     </a>
                 </div>
@@ -33,10 +34,10 @@ function Navbar() {
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button is-primary" href="/">
+                        <a class="button is-primary" href="/signin">
                             <strong>Sign In</strong>
                         </a>
-                        <a class="button is-light" href="/">
+                        <a class="button is-light" href="/login">
                             Log in
                         </a>
                     </div>
