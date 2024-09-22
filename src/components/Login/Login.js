@@ -12,12 +12,12 @@ const Login = () => {
     };
     
     return (
-        <div className="hero is-fullheight is-primary">
+        <div className="hero is-fullheight">
             <div className="hero-body">
-                <div className="container has-text-centered">
-                    <div className="column is-8 is-offset-2">
+                <div className="container has-text-centered has-background-primary">
+                    <div className="column is-6 is-offset-3">
                         <h3 className="title is-3 has-text-white">Ingreso de Usuario</h3>
-                        <div className="title has-text-grey is-5">Please enter your email and password.</div>
+                        <div className="title has-text-grey is-5">Ingresa tu correo y contraseña.</div>
                         <form onSubmit={handleSubmit}>
                             <div className="field">
                                 <label className="label has-text-white">Email</label>
@@ -32,12 +32,12 @@ const Login = () => {
                                 </div>
                             </div>
                             <div className="field">
-                                <label className="label has-text-white">Password</label>
+                                <label className="label has-text-white">Contraseña</label>
                                 <div className="control">
                                     <input
-                                        className="input is-large"
+                                        className="input"
                                         type="password"
-                                        placeholder="Password"
+                                        placeholder="Contraseña"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
@@ -45,7 +45,7 @@ const Login = () => {
                             </div>
                             <div className="field">
                                 <div className="control">
-                                    <button className="button is-link is-fullwidth" type="submit">
+                                    <button className="button is-link" type="submit">
                                         Login
                                     </button>
                                 </div>
