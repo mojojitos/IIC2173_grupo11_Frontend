@@ -3,11 +3,11 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Partidos from "./components/Partidos/Partidos.jsx";
 import DetallePartidoPage from "./components/DetallePartido/DetallePartidoPage.jsx";
-import Login from './components/Login/Login.js';
-import PaginaPrincipal from './components/PaginaPrincipal/PaginaPrincipal.js';
-import ListaResultados from './components/ListaResultados/ListaResultados.js';
-import Wallet from './components/Wallet/Wallet.js';
-import Signup from './components/Signup/Signup.js';
+import Login from './components/Login/Login.jsx';
+import PaginaPrincipal from './components/PaginaPrincipal/PaginaPrincipal.jsx';
+import ListaResultados from './components/ListaResultados/ListaResultados.jsx';
+import Wallet from './components/Wallet/Wallet.jsx';
+import Signup from './components/Signup/Signup.jsx';
 import Navbar from './components/Navbar/Navbar';
 
 function App() {

@@ -2,6 +2,32 @@ import React from "react";
 import './Navbar.css';
 import { Link } from 'react-router-dom';
 
+const isLoggedIn = true;
+
+const Billetera = () => {
+    return (
+        <Link class="navbar-item" to="/wallet">
+            Billetera
+        </Link>
+    )
+}
+
+const Logout = () => {
+    return (
+        <Link class="button is-light" to="/logout">
+            Log Out
+        </Link>
+    )
+}
+
+const Login = () => {
+    return (
+        <Link class="button is-light" to="/login">
+            Log In
+        </Link>
+    )
+}
+
 function Navbar() {
     return (
         <nav class="navbar">
@@ -20,9 +46,7 @@ function Navbar() {
                         Resultados
                     </Link>
 
-                    <Link class="navbar-item" to="/wallet">
-                        Billetera
-                    </Link>
+                    { isLoggedIn && <Billetera />}
                 </div>
             </div>
             <div class="navbar-end">
@@ -31,9 +55,11 @@ function Navbar() {
                         <Link class="button is-primary" to="/signup">
                             <strong>Sign Up</strong>
                         </Link>
-                        <Link class="button is-light" to="/login">
-                            Log in
-                        </Link>
+                        { isLoggedIn ? (
+                            <Logout />
+                        ) : (
+                            <Login />
+                        )}
                     </div>
                 </div>
             </div>
@@ -42,3 +68,5 @@ function Navbar() {
 };
 
 export default Navbar;
+
+// Nota: Agregar boton de Log out en caso de que el usuario este logueado
