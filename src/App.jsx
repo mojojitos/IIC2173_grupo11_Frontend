@@ -8,7 +8,19 @@ import PaginaPrincipal from './components/PaginaPrincipal/PaginaPrincipal.jsx';
 import ListaResultados from './components/ListaResultados/ListaResultados.jsx';
 import Wallet from './components/Wallet/Wallet.jsx';
 import Signup from './components/Signup/Signup.jsx';
-import Navbar from './components/Navbar/Navbar';
+import Navbar from './components/Navbar/Navbar.jsx';
+import { useState } from 'react';
+import axios from 'axios';
+
+// const listener_ganar = async (partido_ganado) => {
+//   try {
+
+//   }
+// };
+
+// const WinNotice = () => {
+//   const [partido_ganado, setPartidoGanado] = useState('');
+// }
 
 function App() {
   return (

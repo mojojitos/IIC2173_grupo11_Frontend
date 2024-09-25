@@ -68,5 +68,3 @@ function Navbar() {
 };
 
 export default Navbar;
-
-// Nota: Agregar boton de Log out en caso de que el usuario este logueado
