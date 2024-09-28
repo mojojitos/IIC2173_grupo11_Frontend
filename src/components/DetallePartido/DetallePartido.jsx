@@ -2,7 +2,7 @@ import React from "react";
 import "./DetallePartido.scss";
 
 const DetallePartido = ({ partido }) => {
-  const { fixtures, league, teams, referee, odds, status } = partido || {};
+  const { fixtures, league, teams, referee, odds, status, remaining_bonus } = partido || {};
 
   return (
     <div className="detalle-partido">
@@ -51,6 +51,7 @@ const DetallePartido = ({ partido }) => {
         <p>Árbitro: {referee || "Árbitro no disponible"}</p>
         <p>Ronda: {league?.round || "Ronda no disponible"}</p>
         <p>Temporada: {league?.season || "Temporada no disponible"}</p>
+        <p>Bonos: {remaining_bonus || "Bonos no disponibles"}</p>
 
         <h3>Probabilidades:</h3>
         <ul className="odds">

@@ -14,7 +14,8 @@ const PartidosTerminados = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get(`http://localhost:3000/oldfixtures?page=${page}`);
+        // http://localhost:3000/oldfixtures?page=${page}
+        const response = await axios.get(``);
         setPartidos(response.data);
       } catch (error) {
         console.error("Error al obtener los partidos terminados:", error);

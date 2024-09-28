@@ -37,8 +37,6 @@ const Partidos = () => {
     }
   };
 
-  const sortedPartidos = [...partidos].sort((a, b) => new Date(a.fixtures.date) - new Date(b.fixtures.date));
-
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>{error}</p>;
 
@@ -46,7 +44,7 @@ const Partidos = () => {
     <div className="partidos-list">
       <h1>Partidos Disponibles</h1>
       <ul>
-        {sortedPartidos.map((partido) => (
+        {partidos.map((partido) => (
           <Partido key={partido.fixtures.id} partido={partido} />
         ))}
       </ul>
