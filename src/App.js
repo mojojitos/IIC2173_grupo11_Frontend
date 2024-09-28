@@ -9,6 +9,7 @@ import PartidosTerminados from './components/PartidosTerminados/PartidosTerminad
 import Wallet from './components/Wallet/Wallet.js';
 import Signup from './components/Signup/Signup.js';
 import Navbar from './components/Navbar/Navbar';
+import DetallePartidoTerminado from './components/PartidosTerminados/DetallePartidoTerminado.jsx';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/pagina-principal" element={<PaginaPrincipal />} />
         <Route path="/partidos" element={<Partidos />} />
         <Route path="/partido/:fixtureId" element={<DetallePartidoPage />} />
+        <Route path="/partido-terminado/:fixtureId" element={<DetallePartidoTerminado />} />
         <Route path="/resultados" element={<PartidosTerminados />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/login" element={<Login />} />

@@ -2,7 +2,7 @@ import React from "react";
 import "./DetallePartido.scss";
 
 const DetallePartido = ({ partido }) => {
-  const { fixtures, league, teams, referee, odds, status, remaining_bonus } = partido || {};
+  const { fixtures, league, teams, odds, goals, remaining_bonus } = partido || {};
 
   return (
     <div className="detalle-partido">
@@ -31,27 +31,35 @@ const DetallePartido = ({ partido }) => {
               alt={`${teams?.home?.name} logo`}
               className="team-logo"
             />
-            <span className="team-name">{teams?.home?.name || "Equipo Local"}</span>
+            <div>
+              <span className="team-name">{teams?.home?.name || "Equipo Local"}</span>
+              <p className="team-goals">{goals?.home !== null ? goals.home : "0"}</p>
+            </div>
           </div>
-          <div className="vs-indicator">VS</div>
+          <div className="vs-indicator">
+            VS
+            <p className="match-status">{fixtures?.status?.long || "Estado no disponible"}</p> {/* Estado del partido */}
+          </div>
           <div className="team">
             <img
               src={teams?.away?.logo}
               alt={`${teams?.away?.name} logo`}
               className="team-logo"
             />
-            <span className="team-name">{teams?.away?.name || "Equipo Visitante"}</span>
+            <div>
+              <span className="team-name">{teams?.away?.name || "Equipo Visitante"}</span>
+              <p className="team-goals">{goals?.away !== null ? goals.away : "0"}</p>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="additional-info">
-        <p>Estado: {status?.long || "Estado no disponible"}</p>
         <p>Liga: {league?.name || "Liga no disponible"} ({league?.country || "País no disponible"})</p>
-        <p>Árbitro: {referee || "Árbitro no disponible"}</p>
+        <p>Árbitro: {fixtures?.referee || "Árbitro no disponible"}</p>
         <p>Ronda: {league?.round || "Ronda no disponible"}</p>
         <p>Temporada: {league?.season || "Temporada no disponible"}</p>
-        <p>Bonos: {remaining_bonus || "Bonos no disponibles"}</p>
+        <p>Bonos: {remaining_bonus ?? "Bonos no disponibles"}</p>
 
         <h3>Probabilidades:</h3>
         <ul className="odds">

@@ -31,7 +31,6 @@ const Partidos = () => {
       }
       
       const response = await axios.get(url);
-      console.log(response.data);
       setPartidos(response.data);
     } catch (error) {
       console.error("Error al obtener los partidos:", error);
@@ -89,7 +88,7 @@ const Partidos = () => {
 
       <ul>
         {partidos.map((partido) => (
-          <Partido key={partido.fixtures.id} partido={partido} />
+          <Partido key={partido.fixtures.id} partido={partido} link={"partido"} />
         ))}
       </ul>
       

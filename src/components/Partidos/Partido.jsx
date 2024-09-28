@@ -2,12 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Partido.scss";
 
-const Partido = ({ partido }) => {
+const Partido = ({ partido, link }) => {
   const oddsValues = partido.odds?.values || [];
-
   return (
     <li className="partido-item">
-      <Link to={`/partido/${partido.fixtures.id}`} className="partido-link">
+      <Link to={`/${link}/${partido.fixtures.id}`} className="partido-link">
         {/* Logo y nombre de la liga */}
         <div className="league-info">
           <img src={partido.league.logo} alt={`${partido.league.name} logo`} className="league-logo" />

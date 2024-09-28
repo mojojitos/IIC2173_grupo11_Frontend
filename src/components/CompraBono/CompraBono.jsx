@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./CompraBono.scss";
 
-const CompraBonos = ({ partido }) => {
+const CompraBonos = ({ partido, userId }) => {
   const {
     fixture_id,
-    league: { name: leagueName, round },
-    date,
     teams,
     odds,
   } = partido;
@@ -18,25 +16,18 @@ const CompraBonos = ({ partido }) => {
   const [ganancia, setGanancia] = useState(0);
 
   const handleCompra = async () => {
-    const resultToSend = selectedResult === "Empate" ? "---" : selectedResult;
+    const resultToSend = selectedResult === "Empate" ? "Draw" : selectedResult; 
 
     try {
       const requestData = {
-        request_id: crypto.randomUUID(),
-        group_id: "11",
-        fixture_id: fixture_id,
-        league_name: leagueName,
-        round: round,
-        date: date,
+        userId: userId,
+        fixtureId: fixture_id, 
         result: resultToSend,
-        deposit_token: "",
-        datetime: new Date().toISOString(),
         quantity: quantity,
-        seller: 0,
       };
 
       const response = await axios.post(
-        "Link a la API de compra de bonos",
+        "http://localhost:3000/bonos/request",
         requestData
       );
       setStatus("Compra exitosa");
@@ -68,10 +59,9 @@ const CompraBonos = ({ partido }) => {
   };
 
   const handleQuantityChange = (e) => {
-    const newQuantity = Math.max(0, Number(e.target.value)); 
-    
+    const newQuantity = Math.max(0, Number(e.target.value));
     setQuantity(newQuantity);
-    if (quantity === 0) {
+    if (newQuantity === 0) {
       setQuantity("");
     }
     if (selectedOdd) {
@@ -109,15 +99,15 @@ const CompraBonos = ({ partido }) => {
         <p>Precio total: ${quantity * 1000}</p>
       </div>
 
-      <button className="boton-comprar" onClick={handleCompra} disabled={!quantity || !selectedResult}>
+      <button
+        className="boton-comprar"
+        onClick={handleCompra}
+        disabled={!quantity || !selectedResult}
+      >
         Comprar
       </button>
       {status && (
-        <p
-          className={`status ${
-            status === "Compra exitosa" ? "success" : "error"
-          }`}
-        >
+        <p className={`status ${status === "Compra exitosa" ? "success" : "error"}`}>
           {status}
         </p>
       )}

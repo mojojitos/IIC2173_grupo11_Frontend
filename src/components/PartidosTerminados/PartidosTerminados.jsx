@@ -13,10 +13,26 @@ const PartidosTerminados = () => {
     const fetchPartidosTerminados = async () => {
       setLoading(true);
       setError(null);
+
       try {
-        // http://localhost:3000/oldfixtures?page=${page}
-        const response = await axios.get(``);
-        setPartidos(response.data);
+        const response = await axios.get(`http://localhost:3000/AllOldFixtures?page=${page}`);
+        const partidosData = response.data;
+
+        // Hacer solicitudes a fixtures/id para cada partido terminado
+        const partidosDetalles = await Promise.all(
+          partidosData.map(async (partido) => {
+            try {
+              const detalleResponse = await axios.get(`http://localhost:3000/fixtures/${partido.id_fixture}`);
+              return detalleResponse.data; // Retorna los detalles del partido
+            } catch (error) {
+              console.error(`Error al obtener los detalles del partido con ID: ${partido.id_fixture}`, error);
+              return null; // Manejar errores devolviendo null
+            }
+          })
+        );
+
+        // Filtrar cualquier partido que no se haya podido obtener correctamente
+        setPartidos(partidosDetalles.filter((detalle) => detalle !== null));
       } catch (error) {
         console.error("Error al obtener los partidos terminados:", error);
         setError("Error al obtener los partidos terminados.");
@@ -27,7 +43,7 @@ const PartidosTerminados = () => {
 
     fetchPartidosTerminados();
   }, [page]);
-
+  console.log(partidos);
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
   };
@@ -46,7 +62,7 @@ const PartidosTerminados = () => {
       <h1>Partidos Terminados</h1>
       <ul>
         {partidos.map((partido) => (
-          <Partido key={partido.fixtures.id} partido={partido} />
+          <Partido key={partido.fixtures.id} partido={partido} link={"partido-terminado"}/>
         ))}
       </ul>
       <div className="pagination">
