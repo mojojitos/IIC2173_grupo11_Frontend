@@ -3,16 +3,20 @@ import axios from 'axios';
 import './Signup.scss';
 
 const Signup = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [Username, setUsername] = useState('');
+    const [Nombre, setNombre] = useState('');
+    const [Apellido, setApellido] = useState('');
+    const [Correo, setCorreo] = useState('');
     const [message, setMessage] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('https://tu-backend.com/api/usuarios', {
-                email,
-                password
+            const response = await axios.post('http://api-g11:3000/createFakeUser', {
+                Username,
+                Nombre,
+                Apellido,
+                Correo
             });
 
             if (response.status === 200) {
@@ -31,27 +35,53 @@ const Signup = () => {
                 <div className="column is-half">
                     <form onSubmit={handleSubmit}>
                         <div className="field">
-                            <label className="label">Email</label>
+                            <label className="label">Nombre de Usuario</label>
                             <div className="control">
                                 <input 
                                     className="input" 
-                                    type="email" 
-                                    placeholder="e.g. alex@example.com" 
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    type="string" 
+                                    placeholder="Ingresa nombre de usuario" 
+                                    value={Username}
+                                    onChange={(e) => setUsername(e.target.value)}
                                     required 
                                 />
                             </div>
                         </div>
                         <div className="field">
-                            <label className="label">Password</label>
+                            <label className="label">Nombre</label>
                             <div className="control">
                                 <input 
                                     className="input" 
-                                    type="password" 
-                                    placeholder="********" 
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    type="string" 
+                                    placeholder="Ingresa tu nombre" 
+                                    value={Nombre}
+                                    onChange={(e) => setNombre(e.target.value)}
+                                    required 
+                                />
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">Apellido</label>
+                            <div className="control">
+                                <input 
+                                    className="input" 
+                                    type="string" 
+                                    placeholder="Ingresa tu apellido" 
+                                    value={Apellido}
+                                    onChange={(e) => setApellido(e.target.value)}
+                                    required 
+                                />
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">Correo</label>
+                            <div className="control">
+                                <input 
+                                    className="input" 
+                                    type="string" 
+                                    placeholder="Ingresa tu correo" 
+                                    value={Correo}
+                                    onChange={(e) => setCorreo(e.target.value)}
                                     required 
                                 />
                             </div>

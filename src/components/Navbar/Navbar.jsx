@@ -2,7 +2,7 @@ import React from "react";
 import './Navbar.scss';
 import { Link } from 'react-router-dom';
 
-const isLoggedIn = true;
+const isLoggedIn = false;
 
 const Billetera = () => {
     return (
