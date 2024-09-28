@@ -8,24 +8,38 @@ const Partidos = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  
+  // Estados para los filtros
+  const [filterDate, setFilterDate] = useState("");
+  const [filterDestiny, setFilterDestiny] = useState("");
 
   useEffect(() => {
-    const fetchPartidos = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await axios.get(`http://localhost:3000/fixtures?page=${page}`);
-        setPartidos(response.data);
-      } catch (error) {
-        console.error("Error al obtener los partidos:", error);
-        setError("Error al obtener los partidos.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchPartidos();
   }, [page]);
+
+  const fetchPartidos = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      let url = `http://localhost:3000/fixtures?page=${page}`;
+      
+      // Modificar la URL según los filtros seleccionados
+      if (filterDate) {
+        url = `http://localhost:3000/byDate/${filterDate}?page=${page}`;
+      } else if (filterDestiny) {
+        url = `http://localhost:3000/byDestiny/${filterDestiny}?page=${page}`;
+      }
+      
+      const response = await axios.get(url);
+      console.log(response.data);
+      setPartidos(response.data);
+    } catch (error) {
+      console.error("Error al obtener los partidos:", error);
+      setError("Error al obtener los partidos.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
@@ -37,17 +51,49 @@ const Partidos = () => {
     }
   };
 
+  const handleApplyFilters = () => {
+    setPage(1); // Reiniciar a la primera página
+    fetchPartidos(); // Obtener los partidos con los filtros aplicados
+  };
+
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <div className="partidos-list">
       <h1>Partidos Disponibles</h1>
+
+      {/* Filtros */}
+      <div className="filters">
+        <label>
+          Filtrar por Fecha:
+          <input
+            type="date"
+            value={filterDate}
+            onChange={(e) => setFilterDate(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Filtrar por Destino:
+          <input
+            type="text"
+            placeholder="Ingrese el destino"
+            value={filterDestiny}
+            onChange={(e) => setFilterDestiny(e.target.value)}
+          />
+        </label>
+
+        <button onClick={handleApplyFilters}>Aplicar Filtros</button>
+      </div>
+
       <ul>
         {partidos.map((partido) => (
           <Partido key={partido.fixtures.id} partido={partido} />
         ))}
       </ul>
+      
+      {/* Paginación */}
       <div className="pagination">
         <button onClick={handlePreviousPage} disabled={page === 1}>
           Anterior

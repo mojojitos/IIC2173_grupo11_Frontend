@@ -54,3 +54,29 @@
   transform: scale(1.02); 
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
+.filters {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.filters label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.filters input {
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.filters button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #004ea1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
