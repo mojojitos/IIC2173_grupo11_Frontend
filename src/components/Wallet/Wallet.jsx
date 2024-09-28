@@ -27,7 +27,7 @@ const Wallet = () => {
     };
 
     return (
-        <div className="hero">
+        <div className="container-center">
             <div className="box">
                 <h1 className="title">Tu Billetera</h1>
                 <p className="subtitle">Créditos actuales: {monto}</p>

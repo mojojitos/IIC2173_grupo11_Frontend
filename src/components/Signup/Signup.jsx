@@ -26,7 +26,7 @@ const Signup = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container-signup">
             <div className="columns is-centered">
                 <div className="column is-half">
                     <form onSubmit={handleSubmit}>
