@@ -42,10 +42,6 @@ function Navbar() {
                         Partidos
                     </Link>
 
-                    <Link class="navbar-item" to="/resultados">
-                        Resultados
-                    </Link>
-
                     { isLoggedIn && <Billetera />}
                 </div>
             </div>

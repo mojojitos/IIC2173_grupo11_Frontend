@@ -15,14 +15,6 @@ const PaginaPrincipal = () => {
                         </div>
                     </Link>
                 </div>
-                <div class="column">
-                    <Link class="hero is-large is-fullwidth is-info" to="/resultados">
-                        <div class="hero-body">
-                            <h3 class="title is-3">Resultados</h3>
-                            <h5 class="subtitle is-5">Revisa los resultados de partidos finallizados</h5>
-                        </div>
-                    </Link>
-                </div>
             </div>
         </div>
     );

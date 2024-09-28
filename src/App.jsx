@@ -5,7 +5,6 @@ import Partidos from "./components/Partidos/Partidos.jsx";
 import DetallePartidoPage from "./components/DetallePartido/DetallePartidoPage.jsx";
 import Login from './components/Login/Login.jsx';
 import PaginaPrincipal from './components/PaginaPrincipal/PaginaPrincipal.jsx';
-import ListaResultados from './components/ListaResultados/ListaResultados.jsx';
 import Wallet from './components/Wallet/Wallet.jsx';
 import Signup from './components/Signup/Signup.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
@@ -31,7 +30,6 @@ function App() {
         <Route path="/pagina-principal" element={<PaginaPrincipal />} />
         <Route path="/partidos" element={<Partidos />} />
         <Route path="/partido/:fixtureId" element={<DetallePartidoPage />} />
-        <Route path="/resultados" element={<ListaResultados />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
