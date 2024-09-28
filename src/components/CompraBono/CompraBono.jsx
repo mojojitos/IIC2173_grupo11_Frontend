@@ -10,14 +10,16 @@ const CompraBonos = ({ partido }) => {
     teams,
     odds,
   } = partido;
-  const [quantity, setQuantity] = useState(0);
+
+  const [quantity, setQuantity] = useState("");
   const [selectedResult, setSelectedResult] = useState("");
-  const [selectedOdd, setSelectedOdd] = useState(0);
+  const [selectedOdd, setSelectedOdd] = useState(null);
   const [status, setStatus] = useState("");
   const [ganancia, setGanancia] = useState(0);
 
   const handleCompra = async () => {
     const resultToSend = selectedResult === "Empate" ? "---" : selectedResult;
+
     try {
       const requestData = {
         request_id: crypto.randomUUID(),
@@ -49,18 +51,31 @@ const CompraBonos = ({ partido }) => {
     const result = e.target.value;
     setSelectedResult(result);
 
-    const selectedOdd = odds[0].values.find((value) => {
+    const foundOdd = odds.values.find((value) => {
       if (result === teams.home.name) return value.value === "Home";
       if (result === "Empate") return value.value === "Draw";
       if (result === teams.away.name) return value.value === "Away";
       return false;
     });
-    setSelectedOdd(selectedOdd);
 
-    if (selectedOdd) {
-      setGanancia(quantity * parseFloat(selectedOdd.odd * 1000));
+    setSelectedOdd(foundOdd);
+
+    if (foundOdd) {
+      setGanancia(quantity * parseFloat(foundOdd.odd) * 1000);
     } else {
       setGanancia(0);
+    }
+  };
+
+  const handleQuantityChange = (e) => {
+    const newQuantity = Math.max(0, Number(e.target.value)); 
+    
+    setQuantity(newQuantity);
+    if (quantity === 0) {
+      setQuantity("");
+    }
+    if (selectedOdd) {
+      setGanancia(newQuantity * parseFloat(selectedOdd.odd) * 1000);
     }
   };
 
@@ -72,20 +87,14 @@ const CompraBonos = ({ partido }) => {
         <input
           type="number"
           value={quantity}
-          onChange={(e) => {
-            const newQuantity = Number(e.target.value);
-            setQuantity(newQuantity);
-
-            if (selectedOdd) {
-              setGanancia(newQuantity * parseFloat(selectedOdd.odd) * 1000);
-            }
-          }}
+          onChange={handleQuantityChange}
+          placeholder="0"
         />
       </div>
 
       <div>
         <label>Resultado: </label>
-        <select onChange={handleResultChange}>
+        <select onChange={handleResultChange} value={selectedResult}>
           <option value="">Seleccionar resultado</option>
           <option value={teams.home.name}>Victoria {teams.home.name}</option>
           <option value="Empate">Empate</option>
@@ -94,13 +103,13 @@ const CompraBonos = ({ partido }) => {
       </div>
 
       <div className="ganancia-info">
-        <p>Ganancia potencial: {ganancia}</p>
+        <p>Ganancia potencial: ${ganancia}</p>
       </div>
       <div className="precio-info">
-        <p>Precio total: {quantity * 1000}</p>
+        <p>Precio total: ${quantity * 1000}</p>
       </div>
 
-      <button className="boton-comprar" onClick={handleCompra}>
+      <button className="boton-comprar" onClick={handleCompra} disabled={!quantity || !selectedResult}>
         Comprar
       </button>
       {status && (

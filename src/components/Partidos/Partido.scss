@@ -1,0 +1,114 @@
+.partido-item {
+  list-style: none;
+  margin: 10px 0;
+}
+
+.partido-link {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #000;
+  justify-content: space-between;
+}
+
+.league-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60px; 
+  height: 40px;
+  margin-right: 20px;
+}
+
+.league-logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.league-name {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+
+.match-info {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.team-info {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+}
+
+.team-logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.team-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.match-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+}
+
+.match-date-day {
+  margin-bottom: 5px;
+}
+
+.match-date-time {
+  font-size: 16px;
+}
+
+
+.odds-info {
+  display: flex;
+  justify-content: space-around; 
+  align-items: center; 
+  flex: 1;
+}
+
+.odd-item {
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  min-width: 200px; 
+  height: 30px;
+  font-size: 16px;
+  margin: 1px;
+}
+.odd-item-no {
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  min-width: 606px; 
+  height: 30px;
+  font-size: 14px;
+}
+
+

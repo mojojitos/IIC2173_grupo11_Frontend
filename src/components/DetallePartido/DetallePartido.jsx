@@ -2,54 +2,71 @@ import React from "react";
 import "./DetallePartido.scss";
 
 const DetallePartido = ({ partido }) => {
+  const { fixtures, league, teams, referee, odds, status } = partido || {};
+
   return (
     <div className="detalle-partido">
-      <h1>
-        {partido.teams.home.name} vs {partido.teams.away.name}
-      </h1>
-      <p>Fecha: {new Date(partido.date).toLocaleString()}</p>
-      <p>Estado: {partido.status.long}</p>
-
-      <div className="league-info">
-        <p>
-          Liga: {partido.league.name} ({partido.league.country})
-        </p>
-        <img src={partido.league.logo} alt="Logo de la liga" />
+      <div className="match-header">
+        <div className="date-league">
+          {league?.logo && (
+            <img src={league.logo} alt={`Logo de la liga ${league?.name}`} className="league-logo" />
+          )}
+          <p className="match-date">
+            {fixtures?.date
+              ? new Date(fixtures.date).toLocaleString('es-ES', {
+                  weekday: 'long',
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })
+              : "Fecha no disponible"}
+          </p>
+        </div>
+        <div className="match-details">
+          <div className="team">
+            <img
+              src={teams?.home?.logo}
+              alt={`${teams?.home?.name} logo`}
+              className="team-logo"
+            />
+            <span className="team-name">{teams?.home?.name || "Equipo Local"}</span>
+          </div>
+          <div className="vs-indicator">VS</div>
+          <div className="team">
+            <img
+              src={teams?.away?.logo}
+              alt={`${teams?.away?.name} logo`}
+              className="team-logo"
+            />
+            <span className="team-name">{teams?.away?.name || "Equipo Visitante"}</span>
+          </div>
+        </div>
       </div>
 
-      <p>Árbitro: {partido.referee}</p>
-      <p>Ronda: {partido.league.round}</p>
-      <p>Temporada: {partido.league.season}</p>
+      <div className="additional-info">
+        <p>Estado: {status?.long || "Estado no disponible"}</p>
+        <p>Liga: {league?.name || "Liga no disponible"} ({league?.country || "País no disponible"})</p>
+        <p>Árbitro: {referee || "Árbitro no disponible"}</p>
+        <p>Ronda: {league?.round || "Ronda no disponible"}</p>
+        <p>Temporada: {league?.season || "Temporada no disponible"}</p>
 
-      <h3>Equipos:</h3>
-      <div className="team">
-        <p className="team-name">Equipo Local: {partido.teams.home.name}</p>
-        <img
-          className="team-logo"
-          src={partido.teams.home.logo}
-          alt={`${partido.teams.home.name} logo`}
-        />
+        <h3>Probabilidades:</h3>
+        <ul className="odds">
+          {odds?.values?.length ? (
+            odds.values.map((odd) => (
+              <li key={odd.value}>
+                {odd.value === "Home" && `Victoria ${teams?.home?.name || "Local"}`}
+                {odd.value === "Draw" && "Empate"}
+                {odd.value === "Away" && `Victoria ${teams?.away?.name || "Visitante"}`}: {odd.odd}
+              </li>
+            ))
+          ) : (
+            <li>No hay probabilidades disponibles</li>
+          )}
+        </ul>
       </div>
-      <div className="team">
-        <p className="team-name">Equipo Visitante: {partido.teams.away.name}</p>
-        <img
-          className="team-logo"
-          src={partido.teams.away.logo}
-          alt={`${partido.teams.away.name} logo`}
-        />
-      </div>
-
-      <h3>Probabilidades:</h3>
-      <ul className="odds">
-        {partido.odds[0].values.map((odd) => (
-          <li key={odd.value}>
-            {odd.value === "Home" && `Victoria ${partido.teams.home.name}`}
-            {odd.value === "Draw" && "Empate"}
-            {odd.value === "Away" &&
-              `Victoria ${partido.teams.away.name}`}: {odd.odd}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };

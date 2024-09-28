@@ -5,31 +5,47 @@ import DetallePartido from "./DetallePartido.jsx";
 import axios from "axios";
 
 const DetallePartidoPage = () => {
-  const [partidos, setPartidos] = useState([]);
+  const [partido, setPartido] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { fixtureId } = useParams();
 
   useEffect(() => {
-    const fetchPartidos = async () => {
+    const fetchPartido = async () => {
+      if (!fixtureId) {
+        setError("ID de partido no válido.");
+        setLoading(false);
+        return;
+      }
+
       try {
-        const response = await axios.get("http://localhost:8000/fixtures");
-        setPartidos(response.data);
-        console.log("Partidos:", response.data);
+        const response = await axios.get(`http://localhost:3000/fixtures/${fixtureId}`);
+        setPartido(response.data);
       } catch (error) {
         console.error("Error al obtener los partidos:", error);
+        setError("Error al obtener los datos del partido.");
+      } finally {
+        setLoading(false); // Finalizar la carga
       }
     };
 
-    fetchPartidos();
-  }, []);
-  const { fixtureId } = useParams(); // Obtener el id desde la URL
-  const partido = partidos.find(
-    (p) => p.fixture_id === parseInt(fixtureId, 10)
-  ); // Buscar el partido por fixtureId
+    fetchPartido();
+  }, [fixtureId]);
+
+  if (loading) {
+    return <p>Cargando...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   if (!partido) {
     return <p>Partido no encontrado</p>;
   }
 
   return (
-    <div>
+    <div className="detalle-partido-page">
       <DetallePartido partido={partido} />
       <CompraBonos partido={partido} />
     </div>

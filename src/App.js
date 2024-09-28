@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Partidos from "./components/Partidos/Partidos.jsx";
+import Partidos from "./components/Partidos/PartidosPage.jsx";
 import DetallePartidoPage from "./components/DetallePartido/DetallePartidoPage.jsx";
 import Login from './components/Login/Login.js';
 import PaginaPrincipal from './components/PaginaPrincipal/PaginaPrincipal.js';
