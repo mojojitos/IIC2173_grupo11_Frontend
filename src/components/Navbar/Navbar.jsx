@@ -31,6 +31,11 @@ const Login = () => {
 function Navbar() {
     return (
         <nav class="navbar">
+            <div class="navbar-brand">
+                <Link class="navbar-item" to="/pagina-principal" className="button-logo">
+                    <img src="/logo.png" alt="Logo" className="navbar-logo" />
+                </Link>
+            </div>
             <dviv class="navbar-divider"></dviv>
             <div class="navbar-menu">
                 <div class="navbar-start">

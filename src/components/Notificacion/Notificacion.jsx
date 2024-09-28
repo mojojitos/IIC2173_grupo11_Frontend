@@ -8,6 +8,6 @@ function Notificacion() {
             ¡Partido Ganado! Has obtenido XXX creditos.
         </div>
     );
-}
+};
 
 export default Notificacion;

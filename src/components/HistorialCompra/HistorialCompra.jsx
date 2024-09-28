@@ -8,7 +8,6 @@ function HistorialCompra() {
         <div className="container">
             <div>
                 <h1 className="title">Historial de Compras</h1>
-                <List />
             </div>
         </div>
     );

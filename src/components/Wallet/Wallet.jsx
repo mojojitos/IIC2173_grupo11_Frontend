@@ -4,41 +4,43 @@ import './Wallet.scss';
 import 'bulma/css/bulma.min.css';
 
 const Wallet = () => {
-    const [credits, setCredits] = useState(0);
-    const [amount, setAmount] = useState('');
+    const [recarga, setRecarga] = useState(0); // Monto De Recarga
+    const [monto, setMonto] = useState(''); // Monto Actual
 
     useEffect(() => {
-        // Llamada al backend para obtener los créditos actuales usando Axios
-        axios.get('https://tu-backend.com/api/credits')
-            .then(response => setCredits(response.data.credits))
-            .catch(error => console.error('Error fetching credits:', error));
+        axios.get('https://api-g11:3000/getWalletCredit/:id') // Mostrar dinero actual
+            .then(response => 
+                {setMonto(response.data.monto);
+                })
+            .catch(error => 
+                {console.error('Error al cargar tu monto actual:', error)
+                });
     }, []);
 
-    const handleLoadCredits = (event) => {
+    const RecargarCreditos = (event) => {  // Recarga de creditos
         event.preventDefault();
-        // Llamada al backend para cargar más créditos usando Axios
-        axios.post('https://tu-backend.com/api/load-credits', {
-            amount: parseInt(amount)
+        axios.patch('https://api-g11:3000/wallet', {
+            amount: parseInt(recarga)
         })
-            .then(response => setCredits(response.data.newCredits))
-            .catch(error => console.error('Error loading credits:', error));
+            .then(response => setRecarga(response.data.monto)) // Probar despues
+            .catch(error => console.error('Error al hacer la recarga de creditos', error));
     };
 
     return (
-        <div className="container">
-            <div className="notification">
-                <h1 className="title">Billetera</h1>
-                <p className="subtitle">Créditos actuales: {credits}</p>
-                <form onSubmit={handleLoadCredits}>
+        <div className="hero">
+            <div className="box">
+                <h1 className="title">Tu Billetera</h1>
+                <p className="subtitle">Créditos actuales: {monto}</p>
+                <form onSubmit={RecargarCreditos}>
                     <div className="field">
-                        <label className="label">Cantidad a cargar</label>
+                        <label className="label">Cantidad de creditos a cargar</label>
                         <div className="control">
                             <input
                                 className="input"
                                 type="number"
-                                value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
-                                placeholder="Ingrese la cantidad"
+                                value={recarga}
+                                onChange={(e) => setRecarga(e.target.value)}
+                                placeholder="Ingresa aqui el número de creditos"
                             />
                         </div>
                     </div>

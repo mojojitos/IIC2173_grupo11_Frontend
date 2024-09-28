@@ -10,18 +10,7 @@ import Signup from './components/Signup/Signup.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Notificacion from './components/Notificacion/Notificacion.jsx';
 import HistorialCompra from './components/HistorialCompra/HistorialCompra.jsx';
-import { useState } from 'react';
-import axios from 'axios';
 
-// const listener_ganar = async (partido_ganado) => {
-//   try {
-
-//   }
-// };
-
-// const WinNotice = () => {
-//   const [partido_ganado, setPartidoGanado] = useState('');
-// }
 
 function App() {
   return (

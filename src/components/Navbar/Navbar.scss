@@ -1,0 +1,17 @@
+.navbar-logo {
+    height: 40px;
+    width: auto;
+    padding: 0px;
+    margin: 2.5px;
+}
+
+.button-logo {
+    height: 40px;
+    width: auto;
+    margin: 20px;
+    transition: box-shadow 0.3s;
+}
+
+.navbar-logo:hover {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
