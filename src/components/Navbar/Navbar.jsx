@@ -2,7 +2,7 @@ import React from "react";
 import './Navbar.scss';
 import { Link } from 'react-router-dom';
 
-const isLoggedIn = false;
+const isLoggedIn = true;
 
 const Billetera = () => {
     return (
@@ -28,6 +28,14 @@ const Login = () => {
     )
 }
 
+const Historial = () => {
+    return (
+        <Link class="navbar-item" to="/historial-compra">
+            Historial de Compras
+        </Link>
+    )
+}
+
 function Navbar() {
     return (
         <nav class="navbar">
@@ -48,6 +56,7 @@ function Navbar() {
                     </Link>
 
                     { isLoggedIn && <Billetera />}
+                    { isLoggedIn && <Historial />}
                 </div>
             </div>
             <div class="navbar-end">
