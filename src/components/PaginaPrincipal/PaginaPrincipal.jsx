@@ -1,5 +1,5 @@
 import React from "react";
-import './PaginaPrincipal.css';
+import './PaginaPrincipal.scss';
 import { Link } from 'react-router-dom';
 
 const PaginaPrincipal = () => {

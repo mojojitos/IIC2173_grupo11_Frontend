@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Wallet.css';
+import './Wallet.scss';
 import 'bulma/css/bulma.min.css';
 
 const Wallet = () => {

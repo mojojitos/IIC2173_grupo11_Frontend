@@ -8,6 +8,8 @@ import PaginaPrincipal from './components/PaginaPrincipal/PaginaPrincipal.jsx';
 import Wallet from './components/Wallet/Wallet.jsx';
 import Signup from './components/Signup/Signup.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
+import Notificacion from './components/Notificacion/Notificacion.jsx';
+import HistorialCompra from './components/HistorialCompra/HistorialCompra.jsx';
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -33,6 +35,8 @@ function App() {
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/notificacion" element={<Notificacion />} />
+        <Route path="/historial-compra" element={<HistorialCompra />} />
       </Routes>
     </Router>
   );
