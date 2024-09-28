@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Partido from "./Partido.jsx";
-import "./PartidosPage.scss";
+import Partido from "../Partidos/Partido.jsx";
+import "./PartidosTerminados.scss";
 
-const Partidos = () => {
+const PartidosTerminados = () => {
   const [partidos, setPartidos] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchPartidos = async () => {
+    const fetchPartidosTerminados = async () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get(`http://localhost:3000/fixtures?page=${page}`);
+        const response = await axios.get(`http://localhost:3000/oldfixtures?page=${page}`);
         setPartidos(response.data);
       } catch (error) {
-        console.error("Error al obtener los partidos:", error);
-        setError("Error al obtener los partidos.");
+        console.error("Error al obtener los partidos terminados:", error);
+        setError("Error al obtener los partidos terminados.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPartidos();
+    fetchPartidosTerminados();
   }, [page]);
 
   const handleNextPage = () => {
@@ -37,16 +37,14 @@ const Partidos = () => {
     }
   };
 
-  const sortedPartidos = [...partidos].sort((a, b) => new Date(a.fixtures.date) - new Date(b.fixtures.date));
-
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <div className="partidos-list">
-      <h1>Partidos Disponibles</h1>
+      <h1>Partidos Terminados</h1>
       <ul>
-        {sortedPartidos.map((partido) => (
+        {partidos.map((partido) => (
           <Partido key={partido.fixtures.id} partido={partido} />
         ))}
       </ul>
@@ -61,4 +59,4 @@ const Partidos = () => {
   );
 };
 
-export default Partidos;
+export default PartidosTerminados;
