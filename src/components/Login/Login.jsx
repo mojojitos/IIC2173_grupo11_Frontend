@@ -36,7 +36,7 @@ const Login = () => {
     return (
         <div className="hero is-fullheight">
             <div className="hero-body">
-                <div className="container has-text-centered has-background-primary">
+                <div className="container has-text-centered has-background-dark">
                     <div className="column is-6 is-offset-3">
                         <h3 className="title is-3 has-text-white">Ingreso de Usuario</h3>
                         <div className="title has-text-grey is-5">Ingresa tu correo y contraseña.</div>
@@ -67,7 +67,7 @@ const Login = () => {
                             </div>
                             <div className="field">
                                 <div className="control">
-                                    <button className="button is-link" type="submit">
+                                    <button className="button is-primary" type="submit">
                                         Login
                                     </button>
                                 </div>
