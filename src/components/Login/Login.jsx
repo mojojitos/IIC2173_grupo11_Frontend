@@ -34,7 +34,7 @@ const Login = () => {
         };
     
     return (
-        <div class="container-login">
+        <div className="container-login">
         <div className="hero is-medium-height">
                 <div className="container has-text-centered has-background-dark">
                     <div className="column is-6 is-offset-3">
@@ -77,7 +77,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            <footer class="footer-background">
+            <footer className="footer-background">
                 <img src="/background-icon.png" alt="background-icon" />
             </footer>
         </div>

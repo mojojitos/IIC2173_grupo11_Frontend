@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
-import "./HistorialCompra.scss";
+import "./HistorialNotificacion.scss";
 import axios from "axios";
 
-function HistorialCompra() {
-    const [comprasRealizadas, setComprasRealizadas] = useState([]);
+
+function HistorialNotificacion() {
+    const [notificacionesRecibidas, setNotificacionesRecibidas] = useState([]);
     const [indiceActual, setIndiceActual] = useState(1);
     const [totalPaginas, setTotalPaginas] = useState(1);
-    const [tamanoPagina] = useState(8);
+    const [tamanoPagina] = useState(10);
     useEffect(() => {
-        axios.get('http://api-g11:3000/transactions/:id_user')
+        axios.get('http://api-g11:3000/showNotifications/:id_user')
         .then(response => {
-            setComprasRealizadas(response.data);
+            setNotificacionesRecibidas(response.data);
             setTotalPaginas(Math.ceil(response.data.lenght / tamanoPagina));
         })
         .catch(error => {
-            console.error('Error al obtener el historial de compra;', error);
+            console.error('Error al obtener las notificaciones recibidas;', error);
         });
     }, [tamanoPagina]);
 
@@ -43,20 +44,27 @@ function HistorialCompra() {
     };
 
 
-    const comprasxPagina = comprasRealizadas.slice(
+    const notifsxPagina = notificacionesRecibidas.slice(
         (indiceActual - 1) * tamanoPagina,
         indiceActual * tamanoPagina
     );
 
 
     return(
-        <div className="container_compra">
+        <div className="container_notificaciones">
             <div>
-                <h1 className="title">Historial de Compras</h1>
+                <h1 className="title">Centro de Notificaciones</h1>
                 <ul>
-                    {comprasxPagina.map((compra, index) => (
-                        <li key={index} class="transaccion">
-                            {compra.date} - {compra.number_bonus} - {compra.state}
+                    {notifsxPagina
+                    .sort((a, b) => new Date(b.date) - new Date(a.date))
+                    .map((notif, index) => (
+                        <li key={index} className="message is-dark">
+                            <div className="message-header">
+                                <p>{notif.date}</p>
+                            </div>
+                            <div className="message-body">
+                                <p>{notif.message}</p>
+                            </div>
                         </li>
                     ))}
                 </ul>
@@ -66,7 +74,7 @@ function HistorialCompra() {
                     <ul className="pagination-list">
                         { (indiceActual !== 1) && <li><button className="pagination-link" onClick={handleTargetPagina(1)}>1</button></li>}
                         { (indiceActual > 3) && <li><span className="pagination-ellipsis">&hellip;</span></li>}
-                        { (indiceActual > 2) && <li><button className="pagination-link" onClick={handleTargetPagina(indiceActual -  1)}>{(indiceActual - 1)}</button></li>}
+                        { (indiceActual > 2) && <li><button clasName="pagination-link" onClick={handleTargetPagina(indiceActual -  1)}>{(indiceActual - 1)}</button></li>}
                         <li><button className="pagination-link is-current" onClick={handleTargetPagina(indiceActual)}>{indiceActual}</button></li>
                         { (indiceActual < totalPaginas - 1) && <li><button className="pagination-link" onClick={handleTargetPagina(indiceActual + 1)}>{(indiceActual + 1)}</button></li>}
                         { (indiceActual < totalPaginas - 2) && <li><span className="pagination-ellipsis">&hellip;</span></li>}
@@ -78,4 +86,4 @@ function HistorialCompra() {
     );
 };
 
-export default HistorialCompra;
+export default HistorialNotificacion;

@@ -6,7 +6,7 @@ const isLoggedIn = true;
 
 const Billetera = () => {
     return (
-        <Link class="navbar-item" to="/wallet">
+        <Link className="navbar-item" to="/wallet">
             Billetera
         </Link>
     )
@@ -14,7 +14,7 @@ const Billetera = () => {
 
 const Logout = () => {
     return (
-        <Link class="button is-light" to="/logout">
+        <Link className="button is-light" to="/logout">
             Log Out
         </Link>
     )
@@ -22,47 +22,56 @@ const Logout = () => {
 
 const Login = () => {
     return (
-        <Link class="button is-light" to="/login">
+        <Link className="button is-light" to="/login">
             Log In
         </Link>
     )
 }
 
-const Historial = () => {
+const HistorialCompra = () => {
     return (
-        <Link class="navbar-item" to="/historial-compra">
+        <Link className="navbar-item" to="/historial-compra">
             Historial de Compras
+        </Link>
+    )
+}
+
+const HistorialNotificacion = () => {
+    return (
+        <Link className="navbar-item" to="/historial-notificacion">
+            Notificaciones
         </Link>
     )
 }
 
 function Navbar() {
     return (
-        <nav class="navbar">
-            <div class="navbar-brand">
-                <Link class="navbar-item" to="/pagina-principal" className="button-logo">
+        <nav className="navbar">
+            <div className="navbar-brand">
+                <Link to="/pagina-principal" className="button-logo">
                     <img src="/logo.png" alt="Logo" className="navbar-logo" />
                 </Link>
             </div>
-            <dviv class="navbar-divider"></dviv>
-            <div class="navbar-menu">
-                <div class="navbar-start">
-                    <Link class="navbar-item" to="/pagina-principal">
+            <dviv className="navbar-divider"></dviv>
+            <div className="navbar-menu">
+                <div className="navbar-start">
+                    <Link className="navbar-item" to="/pagina-principal">
                         Inicio
                     </Link>
 
-                    <Link class="navbar-item" to="/partidos">
+                    <Link className="navbar-item" to="/partidos">
                         Partidos
                     </Link>
 
                     { isLoggedIn && <Billetera />}
-                    { isLoggedIn && <Historial />}
+                    { isLoggedIn && <HistorialCompra />}
+                    { isLoggedIn && <HistorialNotificacion />}
                 </div>
             </div>
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <Link class="button is-primary" to="/signup">
+            <div className="navbar-end">
+                <div className="navbar-item">
+                    <div className="buttons">
+                        <Link className="button is-primary" to="/signup">
                             <strong>Sign Up</strong>
                         </Link>
                         { isLoggedIn ? (
