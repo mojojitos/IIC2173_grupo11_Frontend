@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Login.css';
+import './Login.scss';
 import axios from 'axios';
 
 const authenticateUser = async (email, password) => {
@@ -34,11 +34,11 @@ const Login = () => {
         };
     
     return (
-        <div className="hero is-fullheight">
-            <div className="hero-body">
-                <div className="container has-text-centered has-background-primary">
+        <div className="container-login">
+        <div className="hero is-medium-height">
+                <div className="container has-text-centered has-background-dark">
                     <div className="column is-6 is-offset-3">
-                        <h3 className="title is-3 has-text-white">Ingreso de Usuario</h3>
+                        <h3 className="title is-3 has-text-white">Ingresa como usuario de CoolGoat</h3>
                         <div className="title has-text-grey is-5">Ingresa tu correo y contraseña.</div>
                         <form onSubmit={handleSubmit}>
                             <div className="field">
@@ -67,8 +67,8 @@ const Login = () => {
                             </div>
                             <div className="field">
                                 <div className="control">
-                                    <button className="button is-link" type="submit">
-                                        Login
+                                    <button className="button is-primary" type="submit">
+                                        Ingresa
                                     </button>
                                 </div>
                             </div>
@@ -77,6 +77,9 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            <footer className="footer-background">
+                <img src="/background-icon.png" alt="background-icon" />
+            </footer>
         </div>
     );
 };
