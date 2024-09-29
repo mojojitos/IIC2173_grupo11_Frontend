@@ -2,39 +2,32 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./CompraBono.scss";
 
-const CompraBonos = ({ partido }) => {
+const CompraBonos = ({ partido, userId }) => {
   const {
     fixture_id,
-    league: { name: leagueName, round },
-    date,
     teams,
     odds,
   } = partido;
-  const [quantity, setQuantity] = useState(0);
+
+  const [quantity, setQuantity] = useState("");
   const [selectedResult, setSelectedResult] = useState("");
-  const [selectedOdd, setSelectedOdd] = useState(0);
+  const [selectedOdd, setSelectedOdd] = useState(null);
   const [status, setStatus] = useState("");
   const [ganancia, setGanancia] = useState(0);
 
   const handleCompra = async () => {
-    const resultToSend = selectedResult === "Empate" ? "---" : selectedResult;
+    const resultToSend = selectedResult === "Empate" ? "Draw" : selectedResult; 
+
     try {
       const requestData = {
-        request_id: crypto.randomUUID(),
-        group_id: "11",
-        fixture_id: fixture_id,
-        league_name: leagueName,
-        round: round,
-        date: date,
+        userId: userId,
+        fixtureId: fixture_id, 
         result: resultToSend,
-        deposit_token: "",
-        datetime: new Date().toISOString(),
         quantity: quantity,
-        seller: 0,
       };
 
       const response = await axios.post(
-        "Link a la API de compra de bonos",
+        "http://localhost:3000/bonos/request",
         requestData
       );
       setStatus("Compra exitosa");
@@ -49,18 +42,30 @@ const CompraBonos = ({ partido }) => {
     const result = e.target.value;
     setSelectedResult(result);
 
-    const selectedOdd = odds[0].values.find((value) => {
+    const foundOdd = odds.values.find((value) => {
       if (result === teams.home.name) return value.value === "Home";
       if (result === "Empate") return value.value === "Draw";
       if (result === teams.away.name) return value.value === "Away";
       return false;
     });
-    setSelectedOdd(selectedOdd);
 
-    if (selectedOdd) {
-      setGanancia(quantity * parseFloat(selectedOdd.odd * 1000));
+    setSelectedOdd(foundOdd);
+
+    if (foundOdd) {
+      setGanancia(quantity * parseFloat(foundOdd.odd) * 1000);
     } else {
       setGanancia(0);
+    }
+  };
+
+  const handleQuantityChange = (e) => {
+    const newQuantity = Math.max(0, Number(e.target.value));
+    setQuantity(newQuantity);
+    if (newQuantity === 0) {
+      setQuantity("");
+    }
+    if (selectedOdd) {
+      setGanancia(newQuantity * parseFloat(selectedOdd.odd) * 1000);
     }
   };
 
@@ -72,20 +77,14 @@ const CompraBonos = ({ partido }) => {
         <input
           type="number"
           value={quantity}
-          onChange={(e) => {
-            const newQuantity = Number(e.target.value);
-            setQuantity(newQuantity);
-
-            if (selectedOdd) {
-              setGanancia(newQuantity * parseFloat(selectedOdd.odd) * 1000);
-            }
-          }}
+          onChange={handleQuantityChange}
+          placeholder="0"
         />
       </div>
 
       <div>
         <label>Resultado: </label>
-        <select onChange={handleResultChange}>
+        <select onChange={handleResultChange} value={selectedResult}>
           <option value="">Seleccionar resultado</option>
           <option value={teams.home.name}>Victoria {teams.home.name}</option>
           <option value="Empate">Empate</option>
@@ -94,21 +93,21 @@ const CompraBonos = ({ partido }) => {
       </div>
 
       <div className="ganancia-info">
-        <p>Ganancia potencial: {ganancia}</p>
+        <p>Ganancia potencial: ${ganancia}</p>
       </div>
       <div className="precio-info">
-        <p>Precio total: {quantity * 1000}</p>
+        <p>Precio total: ${quantity * 1000}</p>
       </div>
 
-      <button className="boton-comprar" onClick={handleCompra}>
+      <button
+        className="boton-comprar"
+        onClick={handleCompra}
+        disabled={!quantity || !selectedResult}
+      >
         Comprar
       </button>
       {status && (
-        <p
-          className={`status ${
-            status === "Compra exitosa" ? "success" : "error"
-          }`}
-        >
+        <p className={`status ${status === "Compra exitosa" ? "success" : "error"}`}>
           {status}
         </p>
       )}

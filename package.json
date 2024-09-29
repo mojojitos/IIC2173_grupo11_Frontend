@@ -6,8 +6,8 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "bulma": "^1.0.2",
     "axios": "^1.7.7",
+    "bulma": "^1.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
@@ -39,6 +39,11 @@
     ]
   },
   "devDependencies": {
+    "@eslint/js": "^9.11.1",
+    "@lhci/cli": "^0.14.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.0",
+    "globals": "^15.9.0",
     "sass": "^1.79.3"
   }
 }
