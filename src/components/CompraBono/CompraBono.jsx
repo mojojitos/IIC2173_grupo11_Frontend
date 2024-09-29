@@ -13,7 +13,7 @@ const CompraBonos = ({ partido, userId }) => {
   const handleCompra = async () => {
     try {
       const requestData = {
-        userId: 1,
+        userId: userId,
         fixtureId: fixtures.id,
         result: selectedResult,
         quantity: quantity,
