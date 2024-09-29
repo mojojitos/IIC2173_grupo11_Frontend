@@ -3,12 +3,7 @@ import axios from "axios";
 import "./CompraBono.scss";
 
 const CompraBonos = ({ partido, userId }) => {
-  const {
-    fixture_id,
-    teams,
-    odds,
-  } = partido;
-
+  const { fixtures, teams, odds } = partido;
   const [quantity, setQuantity] = useState("");
   const [selectedResult, setSelectedResult] = useState("");
   const [selectedOdd, setSelectedOdd] = useState(null);
@@ -16,15 +11,14 @@ const CompraBonos = ({ partido, userId }) => {
   const [ganancia, setGanancia] = useState(0);
 
   const handleCompra = async () => {
-    const resultToSend = selectedResult === "Empate" ? "Draw" : selectedResult; 
-
     try {
       const requestData = {
-        userId: userId,
-        fixtureId: fixture_id, 
-        result: resultToSend,
+        userId: 1,
+        fixtureId: fixtures.id,
+        result: selectedResult,
         quantity: quantity,
       };
+      console.log(requestData);
 
       const response = await axios.post(
         "http://localhost:3000/bonos/request",
@@ -42,12 +36,7 @@ const CompraBonos = ({ partido, userId }) => {
     const result = e.target.value;
     setSelectedResult(result);
 
-    const foundOdd = odds.values.find((value) => {
-      if (result === teams.home.name) return value.value === "Home";
-      if (result === "Empate") return value.value === "Draw";
-      if (result === teams.away.name) return value.value === "Away";
-      return false;
-    });
+    const foundOdd = odds.values.find((value) => value.value === result);
 
     setSelectedOdd(foundOdd);
 
@@ -86,9 +75,9 @@ const CompraBonos = ({ partido, userId }) => {
         <label>Resultado: </label>
         <select onChange={handleResultChange} value={selectedResult}>
           <option value="">Seleccionar resultado</option>
-          <option value={teams.home.name}>Victoria {teams.home.name}</option>
-          <option value="Empate">Empate</option>
-          <option value={teams.away.name}>Victoria {teams.away.name}</option>
+          <option value="Home">Victoria {teams.home.name}</option>
+          <option value="Draw">Empate</option>
+          <option value="Away">Victoria {teams.away.name}</option>
         </select>
       </div>
 
