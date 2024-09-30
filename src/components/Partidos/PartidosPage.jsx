@@ -14,31 +14,31 @@ const Partidos = () => {
   const [filterDestiny, setFilterDestiny] = useState("");
 
   useEffect(() => {
-    fetchPartidos();
-  }, [page]);
-
-  const fetchPartidos = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      let url = `http://localhost:3000/fixtures?page=${page}`;
-      
-      // Modificar la URL según los filtros seleccionados
-      if (filterDate) {
-        url = `http://localhost:3000/byDate/${filterDate}?page=${page}`;
-      } else if (filterDestiny) {
-        url = `http://localhost:3000/byDestiny/${filterDestiny}?page=${page}`;
+    const fetchPartidos = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        let url = `http://localhost:3000/fixtures?page=${page}`;
+        
+        // Modificar la URL según los filtros seleccionados
+        if (filterDate) {
+          url = `http://localhost:3000/byDate/${filterDate}?page=${page}`;
+        } else if (filterDestiny) {
+          url = `http://localhost:3000/byDestiny/${filterDestiny}?page=${page}`;
+        }
+        
+        const response = await axios.get(url);
+        setPartidos(response.data);
+      } catch (error) {
+        console.error("Error al obtener los partidos:", error);
+        setError("Error al obtener los partidos.");
+      } finally {
+        setLoading(false);
       }
-      
-      const response = await axios.get(url);
-      setPartidos(response.data);
-    } catch (error) {
-      console.error("Error al obtener los partidos:", error);
-      setError("Error al obtener los partidos.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchPartidos();
+  }, [page, filterDate, filterDestiny]); // Añadir dependencias para actualizar según los filtros y la página
 
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
@@ -52,7 +52,6 @@ const Partidos = () => {
 
   const handleApplyFilters = () => {
     setPage(1); // Reiniciar a la primera página
-    fetchPartidos(); // Obtener los partidos con los filtros aplicados
   };
 
   if (loading) return <p>Cargando...</p>;
