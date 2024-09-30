@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 
 const PaginaPrincipal = () => {
     return (
-        <div class="pagina-principal">
-            <h1 class="title is-1">¡Bienvenido a CoolGoat!</h1>
-            <div class="columns">
-                <div class="column">
-                    <Link class="hero is-large is-info" to="/partidos">
-                        <div class="hero-body">
-                            <h3 class="title is-3">Partidos</h3>
-                            <h5 class="subtitle is-5">Revisa los partidos que estan en desarrollo</h5>
+        <div className="pagina-principal">
+            <h1 className="title is-1">¡Bienvenido a CoolGoat!</h1>
+            <div className="columns">
+                <div className="column">
+                    <Link className="hero is-large is-info" to="/partidos">
+                        <div className="hero-body">
+                            <h3 className="title is-3">Partidos</h3>
+                            <h5 className="subtitle is-5">Revisa los partidos que estan en desarrollo</h5>
                         </div>
                     </Link>
                 </div>

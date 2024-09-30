@@ -3,8 +3,8 @@ import "./Notificacion.scss";
 
 function Notificacion() {
     return (
-        <div class="notificacion is-info">
-            <button class="delete"></button>
+        <div className="notificacion is-info">
+            <button className="delete"></button>
             ¡Partido Ganado! Has obtenido XXX creditos.
         </div>
     );
