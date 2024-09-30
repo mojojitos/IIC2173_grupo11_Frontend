@@ -22,7 +22,7 @@ function HistorialCompra() {
     const HandleSiguientePagina = () => {
         const handleClick = () => setIndiceActual(indiceActual + 1);
         return (
-            <button class="pagination-next" onClick={handleClick} disabled={indiceActual === totalPaginas}>
+            <button className="pagination-next" onClick={handleClick} disabled={indiceActual === totalPaginas}>
                 &gt;
             </button>
         )
@@ -31,7 +31,7 @@ function HistorialCompra() {
     const HandlePaginaAnterior = () => {
         const handleClick = () => setIndiceActual(indiceActual - 1);
         return (
-            <button class="pagination-previous" onClick={handleClick} disabled={indiceActual === 1}>
+            <button className="pagination-previous" onClick={handleClick} disabled={indiceActual === 1}>
                 &lt;
             </button>
         )
@@ -55,7 +55,7 @@ function HistorialCompra() {
                 <h1 className="title">Historial de Compras</h1>
                 <ul>
                     {comprasxPagina.map((compra, index) => (
-                        <li key={index} class="transaccion">
+                        <li key={index} className="transaccion">
                             {compra.date} - {compra.number_bonus} - {compra.state}
                         </li>
                     ))}

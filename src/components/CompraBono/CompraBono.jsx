@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 import "./CompraBono.scss";
 
@@ -96,12 +97,43 @@ const CompraBonos = ({ partido, userId }) => {
         Comprar
       </button>
       {status && (
-        <p className={`status ${status === "Compra exitosa" ? "success" : "error"}`}>
+        <p
+          className={`status ${
+            status === "Compra exitosa" ? "success" : "error"
+          }`}
+        >
           {status}
         </p>
       )}
     </div>
   );
+};
+
+CompraBonos.propTypes = {
+  partido: PropTypes.shape({
+    fixtures: PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        .isRequired,
+    }).isRequired,
+    teams: PropTypes.shape({
+      home: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      }).isRequired,
+      away: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+    odds: PropTypes.shape({
+      values: PropTypes.arrayOf(
+        PropTypes.shape({
+          value: PropTypes.string.isRequired,
+          odd: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+            .isRequired,
+        })
+      ).isRequired,
+    }).isRequired,
+  }).isRequired,
+  userId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default CompraBonos;

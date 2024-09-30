@@ -23,7 +23,7 @@ function HistorialNotificacion() {
     const HandleSiguientePagina = () => {
         const handleClick = () => setIndiceActual(indiceActual + 1);
         return (
-            <button class="pagination-next" onClick={handleClick} disabled={indiceActual === totalPaginas}>
+            <button className="pagination-next" onClick={handleClick} disabled={indiceActual === totalPaginas}>
                 &gt;
             </button>
         )
@@ -32,7 +32,7 @@ function HistorialNotificacion() {
     const HandlePaginaAnterior = () => {
         const handleClick = () => setIndiceActual(indiceActual - 1);
         return (
-            <button class="pagination-previous" onClick={handleClick} disabled={indiceActual === 1}>
+            <button className="pagination-previous" onClick={handleClick} disabled={indiceActual === 1}>
                 &lt;
             </button>
         )
@@ -74,7 +74,7 @@ function HistorialNotificacion() {
                     <ul className="pagination-list">
                         { (indiceActual !== 1) && <li><button className="pagination-link" onClick={handleTargetPagina(1)}>1</button></li>}
                         { (indiceActual > 3) && <li><span className="pagination-ellipsis">&hellip;</span></li>}
-                        { (indiceActual > 2) && <li><button clasName="pagination-link" onClick={handleTargetPagina(indiceActual -  1)}>{(indiceActual - 1)}</button></li>}
+                        { (indiceActual > 2) && <li><button className="pagination-link" onClick={handleTargetPagina(indiceActual -  1)}>{(indiceActual - 1)}</button></li>}
                         <li><button className="pagination-link is-current" onClick={handleTargetPagina(indiceActual)}>{indiceActual}</button></li>
                         { (indiceActual < totalPaginas - 1) && <li><button className="pagination-link" onClick={handleTargetPagina(indiceActual + 1)}>{(indiceActual + 1)}</button></li>}
                         { (indiceActual < totalPaginas - 2) && <li><span className="pagination-ellipsis">&hellip;</span></li>}
