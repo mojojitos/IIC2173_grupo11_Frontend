@@ -63,6 +63,10 @@ function Navbar() {
                         Partidos
                     </Link>
 
+                    <Link className="navbar-item" to="/resultados">
+                        Resultados
+                    </Link>
+
                     { isLoggedIn && <Billetera />}
                     { isLoggedIn && <HistorialCompra />}
                     { isLoggedIn && <HistorialNotificacion />}

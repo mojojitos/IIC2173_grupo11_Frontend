@@ -18,10 +18,16 @@ const PaginaPrincipal = () => {
                 </div>
                 <p className="subtitle is-3 has-text-centered">¡La mejor plataforma de apuestas deportivas!</p>
             </div>
-            <Link className="hero is-small is-info" to="/partidos">
+            <Link className="hero is-small is-primary" to="/partidos">
                 <div className="hero-body">
                     <h3 className="title is-3">Partidos en juego</h3>
                     <h5 className="subtitle is-5">¡Haz click aqui para ver los partidos que estan en desarrollo!</h5>
+                </div>
+            </Link>
+            <Link className="hero is-small is-info" to="/resultados">
+                <div className="hero-body">
+                    <h3 className="title is-3">Partidos terminados</h3>
+                    <h5 className="subtitle is-5">¡Haz click aqui para revisar los resultados de los partidos que ya terminaron!</h5>
                 </div>
             </Link>
         </div>
