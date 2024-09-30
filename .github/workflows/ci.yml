@@ -2,7 +2,7 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [sub-develop]
+    branches: [sub-develop-lint]
   pull_request:
     branches: [main]
 
