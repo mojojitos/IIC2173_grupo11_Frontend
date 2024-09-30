@@ -55,8 +55,13 @@ function HistorialCompra() {
                 <h1 className="title">Historial de Compras</h1>
                 <ul>
                     {comprasxPagina.map((compra, index) => (
-                        <li key={index} class="transaccion">
-                            {compra.date} - {compra.number_bonus} - {compra.state}
+                        <li key={index} className="transaccion">
+                            <div className="hero is-small has-backgroung-grey-darker">
+                                <div className="hero-body">
+                                    <p className="title"> {compra.date} | Monto: {compra.number_bonus} </p>
+                                    <p className="subtitle"> Estado: {compra.total} </p>
+                                </div>
+                            </div>
                         </li>
                     ))}
                 </ul>
