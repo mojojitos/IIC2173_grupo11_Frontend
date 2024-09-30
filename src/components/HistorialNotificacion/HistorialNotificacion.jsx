@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./HistorialNotificacion.scss";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 
 function HistorialNotificacion() {
@@ -9,14 +10,19 @@ function HistorialNotificacion() {
     const [totalPaginas, setTotalPaginas] = useState(1);
     const [tamanoPagina] = useState(10);
     useEffect(() => {
-        axios.get('http://api-g11:3000/showNotifications/:id_user')
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            const decodedToken = jwtDecode(token);
+            const id_user = decodedToken.sub;
+        axios.get(`http://api-g11:3000/showNotifications/${id_user}`)
         .then(response => {
             setNotificacionesRecibidas(response.data);
-            setTotalPaginas(Math.ceil(response.data.lenght / tamanoPagina));
+            setTotalPaginas(Math.ceil(response.data.length / tamanoPagina));
         })
         .catch(error => {
-            console.error('Error al obtener las notificaciones recibidas;', error);
+            console.error('Error al obtener las notificaciones recibidas:', error);
         });
+    }
     }, [tamanoPagina]);
 
     // Logica para paginacion y cambio de página
