@@ -1,37 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import './Login.scss';
-import axios from 'axios';
-
-const authenticateUser = async (email, password) => {
-    try {
-      const response = await axios.post('URL_DEL_BACKEND/login', {
-        email: email,
-        password: password,
-      });
-      return response.data; // Asume que el backend devuelve un objeto con la información del usuario
-    } catch (error) {
-      console.error('Error en la autenticación:', error);
-      throw error;
-    }
-  };
+// import axios from 'axios';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [status, setStatus] = useState('');
+    const { loginWithRedirect, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const userData = await authenticateUser(email, password);
-            setStatus('Login exitoso');
-            console.log('Datos del usuario:', userData);
-            // Aquí puedes redirigir al usuario o guardar el token en el estado
-          } catch (error) {
+            loginWithRedirect({
+                appState: { targetUrl: '/' },
+            });
+        } catch (error) {
             setStatus('Error en el login');
             console.error('Error al realizar el login:', error);
-          }
+        }
+    };
+
+    useEffect(() => {
+        const storeAccessToken = async () => {
+            console.log(`user: ${user}`);
+            if (user) {
+                console.log('user saved');
+            }
+            if (isAuthenticated) {
+                try {
+                    const accessToken = await getAccessTokenSilently();
+                    localStorage.setItem('accessToken', accessToken);
+                    const testToken = localStorage.getItem('accessToken');
+                    console.log(`Test Token: ${testToken}`);
+                    console.log(`Access Token: ${accessToken}`);
+                } catch (error) {
+                    console.error('Error fetching access token', error);
+                }
+            }
         };
+    
+        storeAccessToken();
+    }, [isAuthenticated, getAccessTokenSilently, user]);
     
     return (
         <div className="container-login">

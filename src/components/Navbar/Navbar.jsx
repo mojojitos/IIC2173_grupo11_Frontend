@@ -1,8 +1,7 @@
 import React from "react";
 import './Navbar.scss';
 import { Link } from 'react-router-dom';
-
-const isLoggedIn = true;
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Billetera = () => {
     return (
@@ -13,12 +12,20 @@ const Billetera = () => {
 }
 
 const Logout = () => {
+    const { logout } = useAuth0();
+  
+    const handleLogout = () => {
+      logout({
+        returnTo: window.location.origin,
+      });
+    };
+  
     return (
-        <Link className="button is-light" to="/logout">
-            Log Out
-        </Link>
-    )
-}
+      <Link classNameName="button is-light" onClick={handleLogout}>
+        Log Out
+      </Link>
+    );
+};
 
 const Login = () => {
     return (
@@ -45,6 +52,7 @@ const HistorialNotificacion = () => {
 }
 
 function Navbar() {
+    const { isAuthenticated, user } = useAuth0();
     return (
         <nav className="navbar">
             <div className="navbar-brand">
@@ -67,21 +75,21 @@ function Navbar() {
                         Resultados
                     </Link>
 
-                    { isLoggedIn && <Billetera />}
-                    { isLoggedIn && <HistorialCompra />}
-                    { isLoggedIn && <HistorialNotificacion />}
+                    { isAuthenticated && <Billetera />}
+                    { isAuthenticated && <Historial />}
                 </div>
             </div>
             <div className="navbar-end">
                 <div className="navbar-item">
                     <div className="buttons">
-                        <Link className="button is-primary" to="/signup">
-                            <strong>Sign Up</strong>
-                        </Link>
-                        { isLoggedIn ? (
-                            <Logout />
+                        { isAuthenticated ? (
+                            <>
+                            <p>¡Bienvenido, {user.name}!</p>
+                            </>
                         ) : (
-                            <Login />
+                            <Link className="button is-primary" to="/signup">
+                                <strong>Sign Up</strong>
+                            </Link>
                         )}
                     </div>
                 </div>

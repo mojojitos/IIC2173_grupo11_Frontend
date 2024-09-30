@@ -1,31 +1,41 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Signup.scss';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
     const [Username, setUsername] = useState('');
     const [Nombre, setNombre] = useState('');
     const [Apellido, setApellido] = useState('');
     const [Correo, setCorreo] = useState('');
+    const [Password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://api-g11:3000/createFakeUser', {
-                Username,
-                Nombre,
-                Apellido,
-                Correo
+            const response = await axios.post(process.env.REACT_APP_BACKEND_LINK, {
+                username: Username,
+                firstName: Nombre,
+                lastName: Apellido,
+                email: Correo,
+                password: Password
             });
 
-            if (response.status === 200) {
+            if (response.status === 201) {
                 setMessage('Usuario creado exitosamente');
+                console.log(`Data: ${response.data}`);
+                navigate('/');
             } else {
+                console.log(response.data);
                 setMessage('Error al crear el usuario');
+                alert(response.text());
             }
         } catch (error) {
             setMessage('Error de red');
+            alert(message);
+            alert(`Error creando usuario: ${error.response.data.message}`);
         }
     };
 
@@ -88,7 +98,20 @@ const Signup = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="field ">
+                            <div className="field">
+                            <label className="label">Contraseña</label>
+                            <div className="control">
+                                <input 
+                                    className="input" 
+                                    type="string" 
+                                    placeholder="Ingresa tu contraseña" 
+                                    value={Password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required 
+                                />
+                            </div>
+                        </div>
+                        <div className="field ">
                                 <div className="control">
                                     <button className="button is-primary" type="submit">Registrate</button>
                                 </div>
