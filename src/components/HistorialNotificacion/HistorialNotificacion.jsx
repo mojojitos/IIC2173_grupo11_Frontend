@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./HistorialNotificacion.scss";
 import axios from "axios";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 
 function HistorialNotificacion() {
