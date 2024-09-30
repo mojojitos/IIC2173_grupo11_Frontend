@@ -103,7 +103,7 @@ const Signup = () => {
                             <div className="control">
                                 <input 
                                     className="input" 
-                                    type="string" 
+                                    type="password" 
                                     placeholder="Ingresa tu contraseña" 
                                     value={Password}
                                     onChange={(e) => setPassword(e.target.value)}

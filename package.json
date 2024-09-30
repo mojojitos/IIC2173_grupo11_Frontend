@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
     "bulma": "^1.0.2",
+    "jwt-decode": "^4.0.0",
     "npm-force-resolutions": "^0.0.10",
     "postcss": "^8.4.47",
     "prop-types": "^15.8.1",

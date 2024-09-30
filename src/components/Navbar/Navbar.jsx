@@ -22,7 +22,7 @@ const Logout = () => {
   
     return (
       <Link classNameName="button is-light" onClick={handleLogout}>
-        Log Out
+        <strong>Log Out</strong>
       </Link>
     );
 };
@@ -30,7 +30,7 @@ const Logout = () => {
 const Login = () => {
     return (
         <Link className="button is-light" to="/login">
-            Log In
+            <strong>Log In</strong>
         </Link>
     )
 }
@@ -52,7 +52,7 @@ const HistorialNotificacion = () => {
 }
 
 function Navbar() {
-    const { isAuthenticated, user } = useAuth0();
+    const { isAuthenticated } = useAuth0();
     return (
         <nav className="navbar">
             <div className="navbar-brand">
@@ -76,20 +76,20 @@ function Navbar() {
                     </Link>
 
                     { isAuthenticated && <Billetera />}
-                    { isAuthenticated && <Historial />}
+                    { isAuthenticated && <HistorialCompra />}
+                    { isAuthenticated && <HistorialNotificacion />}
                 </div>
             </div>
             <div className="navbar-end">
                 <div className="navbar-item">
                     <div className="buttons">
+                        <Link className="button is-primary" to="/signup">
+                            <strong>Sign Up</strong>
+                        </Link>
                         { isAuthenticated ? (
-                            <>
-                            <p>¡Bienvenido, {user.name}!</p>
-                            </>
+                            <Logout />
                         ) : (
-                            <Link className="button is-primary" to="/signup">
-                                <strong>Sign Up</strong>
-                            </Link>
+                            <Login />
                         )}
                     </div>
                 </div>
