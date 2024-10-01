@@ -15,14 +15,14 @@ const PartidosTerminados = () => {
       setError(null);
 
       try {
-        const response = await axios.get(`http://localhost:3000/AllOldFixtures?page=${page}`);
+        const response = await axios.get(`https://grupo11backend.me/AllOldFixtures?page=${page}`);
         const partidosData = response.data;
 
         // Hacer solicitudes a fixtures/id para cada partido terminado
         const partidosDetalles = await Promise.all(
           partidosData.map(async (partido) => {
             try {
-              const detalleResponse = await axios.get(`http://localhost:3000/fixtures/${partido.id_fixture}`);
+              const detalleResponse = await axios.get(`https://grupo11backend.me/fixtures/${partido.id_fixture}`);
               return detalleResponse.data; // Retorna los detalles del partido
             } catch (error) {
               console.error(`Error al obtener los detalles del partido con ID: ${partido.id_fixture}`, error);

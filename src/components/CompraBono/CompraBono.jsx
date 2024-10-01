@@ -22,7 +22,7 @@ const CompraBonos = ({ partido, userId }) => {
       console.log(requestData);
 
       const response = await axios.post(
-        "http://localhost:3000/bonos/request",
+        "https://grupo11backend.me/bonos/request",
         requestData
       );
       setStatus("Compra exitosa");
