@@ -18,7 +18,7 @@ const DetallePartidoPage = () => {
       }
 
       try {
-        const response = await axios.get(`http://localhost:3000/fixtures/${fixtureId}`);
+        const response = await axios.get(`https://grupo11backend.me/fixtures/${fixtureId}`);
         setPartido(response.data);
       } catch (error) {
         console.error("Error al obtener los partidos:", error);

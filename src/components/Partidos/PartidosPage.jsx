@@ -18,13 +18,13 @@ const Partidos = () => {
       setLoading(true);
       setError(null);
       try {
-        let url = `http://localhost:3000/fixtures?page=${page}`;
+        let url = `https://grupo11backend.me/fixtures?page=${page}`;
         
         // Modificar la URL según los filtros seleccionados
         if (filterDate) {
-          url = `http://localhost:3000/byDate/${filterDate}?page=${page}`;
+          url = `https://grupo11backend.me/fixtures/byDate/${filterDate}?page=${page}`;
         } else if (filterDestiny) {
-          url = `http://localhost:3000/byDestiny/${filterDestiny}?page=${page}`;
+          url = `https://grupo11backend.me/fixtures/byDestiny/${filterDestiny}?page=${page}`;
         }
         
         const response = await axios.get(url);
