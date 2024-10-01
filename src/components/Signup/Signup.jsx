@@ -119,10 +119,10 @@ const Signup = () => {
                     </form>
                     {message && <p>{message}</p>}
                 </div>
-                <footer className="footer-background">
-                    <img src="/background-icon.png" alt="background-icon" />
-                </footer>
             </div>
+            <footer className="footer-background">
+                    <img src="/background-icon.png" alt="background-icon" />
+            </footer>
         </div>
         </div>
     );

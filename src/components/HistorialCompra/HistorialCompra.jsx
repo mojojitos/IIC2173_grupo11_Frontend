@@ -14,7 +14,7 @@ function HistorialCompra() {
             const decodedToken = jwtDecode(token);
             const id_user = decodedToken.sub;
 
-        axios.get(`http://api-g11:3000/transactions/${id_user}`)
+        axios.get(`http://localhost:3001/transactions/${id_user}`)
         .then(response => {
             setComprasRealizadas(response.data);
             setTotalPaginas(Math.ceil(response.data.length / tamanoPagina));

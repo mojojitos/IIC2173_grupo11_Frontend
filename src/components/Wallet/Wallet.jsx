@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Wallet.scss';
-import 'bulma/css/bulma.min.css';
+import { jwtDecode } from "jwt-decode";
 
 const Wallet = () => {
     const [recarga, setRecarga] = useState(0); // Monto De Recarga
     const [monto, setMonto] = useState(''); // Monto Actual
 
     useEffect(() => {
-        axios.get('https://api-g11:3000/getWalletCredit/:id') // Mostrar dinero actual
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            const decodedToken = jwtDecode(token);
+            const id_user = decodedToken.sub;
+        axios.get(`https://localhost:3001/getWalletCredit/${id_user}`) // Mostrar dinero actual
             .then(response => 
                 {setMonto(response.data.monto);
                 })
             .catch(error => 
                 {console.error('Error al cargar tu monto actual:', error)
                 });
+            }
     }, []);
 
     const RecargarCreditos = (event) => {  // Recarga de creditos
         event.preventDefault();
-        axios.patch('https://api-g11:3000/wallet', {
+        axios.patch('https://localhost:3001/wallet', {
             amount: parseInt(recarga)
         })
             .then(response => setRecarga(response.data.monto)) // Probar despues

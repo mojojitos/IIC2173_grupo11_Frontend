@@ -44,49 +44,57 @@ const Login = () => {
         }, [isAuthenticated, getAccessTokenSilently, user]);
     
     return (
-        <div className="hero is-fullheight">
-            <div className="hero-body">
-                <div className="container has-text-centered has-background-dark">
-                    <div className="column is-6 is-offset-3">
-                        <h3 className="title is-3 has-text-white">Ingreso de Usuario</h3>
-                        <div className="title has-text-grey is-5">Ingresa tu correo y contraseña.</div>
-                        <form onSubmit={handleSubmit}>
-                            <div className="field">
-                                <label className="label has-text-white">Email</label>
-                                <div className="control">
-                                    <input
-                                        className="input"
-                                        type="email"
-                                        placeholder="Email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                    />
+        <div classNamw="container-login">
+            <h2 className="title">Ingresa como usuario de CoolGoat</h2>
+            <div className="form-footer-background">
+            <div className="hero is-small">
+                <div className="hero-body">
+                    <div className="container has-text-centered has-background-dark">
+                        <div className="column is-6 is-offset-3">
+                            <h3 className="title is-3 has-text-white">Ingreso de Usuario</h3>
+                            <div className="title has-text-grey is-5">Ingresa tu correo y contraseña.</div>
+                            <form onSubmit={handleSubmit}>
+                                <div className="field">
+                                    <label className="label has-text-white">Email</label>
+                                    <div className="control">
+                                        <input
+                                            className="input"
+                                            type="email"
+                                            placeholder="Email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="field">
-                                <label className="label has-text-white">Contraseña</label>
-                                <div className="control">
-                                    <input
-                                        className="input"
-                                        type="password"
-                                        placeholder="Contraseña"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                    />
+                                <div className="field">
+                                    <label className="label has-text-white">Contraseña</label>
+                                    <div className="control">
+                                        <input
+                                            className="input"
+                                            type="password"
+                                            placeholder="Contraseña"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="field">
-                                <div className="control">
-                                    <button className="button is-primary" type="submit">
-                                        Login
-                                    </button>
+                                <div className="field">
+                                    <div className="control">
+                                        <button className="button is-primary" type="submit">
+                                            Login
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                        {status && <div className="has-text-white">{status}</div>}
+                            </form>
+                            {status && <div className="has-text-white">{status}</div>}
+                        </div>
                     </div>
                 </div>
             </div>
+            <footer className="footer-background">
+                    <img src="/background-icon.png" alt="background-icon" />
+            </footer>
+        </div>
         </div>
     );
 };
