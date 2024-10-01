@@ -44,7 +44,7 @@ const Login = () => {
         }, [isAuthenticated, getAccessTokenSilently, user]);
     
     return (
-        <div classNamw="container-login">
+        <div className="container-login">
             <h2 className="title">Ingresa como usuario de CoolGoat</h2>
             <div className="form-footer-background">
             <div className="hero is-small">
