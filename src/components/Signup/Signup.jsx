@@ -15,7 +15,7 @@ const Signup = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post(process.env.REACT_APP_AUTH0_BACKEND_LINK, {
+            const response = await axios.post(`${process.env.REACT_APP_AUTH0_BACKEND_LINK}/signup`, {
                 username: Username,
                 firstName: Nombre,
                 lastName: Apellido,
@@ -97,11 +97,11 @@ const Signup = () => {
                             </div>
                         </div>
                         <div className="field">
-                            <label className="label">Password</label>
+                            <label className="label">Contraseña</label>
                             <div className="control">
                                 <input 
                                     className="input" 
-                                    type="string" 
+                                    type="password" 
                                     placeholder="Ingresa tu contraseña" 
                                     value={Password}
                                     onChange={(e) => setPassword(e.target.value)}
