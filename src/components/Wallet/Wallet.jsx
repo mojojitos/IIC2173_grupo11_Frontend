@@ -28,7 +28,7 @@ const Wallet = () => {
 
     return (
         <div className="container-center">
-            <div className="box">
+            <div className="box has-background-black-ter">
                 <h1 className="title">Tu Billetera</h1>
                 <p className="subtitle">Créditos actuales: {monto}</p>
                 <form onSubmit={RecargarCreditos}>

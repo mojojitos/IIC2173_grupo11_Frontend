@@ -41,7 +41,9 @@ const Signup = () => {
 
     return (
         <div className="container-signup">
-            <div className="columns is-centered">
+            <h2 className="title">Registrate con nosotros</h2>
+            <div className="form-footer-background">
+            <div className="formulario columns is-centered">
                 <div className="column is-half">
                     <form onSubmit={handleSubmit}>
                         <div className="field">
@@ -97,11 +99,11 @@ const Signup = () => {
                             </div>
                         </div>
                         <div className="field">
-                            <label className="label">Password</label>
+                            <label className="label">Contraseña</label>
                             <div className="control">
                                 <input 
                                     className="input" 
-                                    type="string" 
+                                    type="password" 
                                     placeholder="Ingresa tu contraseña" 
                                     value={Password}
                                     onChange={(e) => setPassword(e.target.value)}
@@ -117,7 +119,11 @@ const Signup = () => {
                     </form>
                     {message && <p>{message}</p>}
                 </div>
+                <footer className="footer-background">
+                    <img src="/background-icon.png" alt="background-icon" />
+                </footer>
             </div>
+        </div>
         </div>
     );
 };

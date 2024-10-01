@@ -21,24 +21,32 @@ const Logout = () => {
     };
   
     return (
-      <button className="button is-light" onClick={handleLogout}>
-        Log Out
-      </button>
+      <Link classNameName="button is-light" onClick={handleLogout}>
+        <strong>Log Out</strong>
+      </Link>
     );
 };
 
 const Login = () => {
     return (
         <Link className="button is-light" to="/login">
-            Log In
+            <strong>Log In</strong>
         </Link>
     )
 }
 
-const Historial = () => {
+const HistorialCompra = () => {
     return (
         <Link className="navbar-item" to="/historial-compra">
             Historial de Compras
+        </Link>
+    )
+}
+
+const HistorialNotificacion = () => {
+    return (
+        <Link className="navbar-item" to="/historial-notificacion">
+            Notificaciones
         </Link>
     )
 }
@@ -48,11 +56,11 @@ function Navbar() {
     return (
         <nav className="navbar">
             <div className="navbar-brand">
-                <Link className="navbar-item" to="/pagina-principal" id="button-logo">
+                <Link to="/pagina-principal" className="button-logo">
                     <img src="/logo.png" alt="Logo" className="navbar-logo" />
                 </Link>
             </div>
-            <div className="navbar-divider"></div>
+            <dviv className="navbar-divider"></dviv>
             <div className="navbar-menu">
                 <div className="navbar-start">
                     <Link className="navbar-item" to="/pagina-principal">
@@ -63,29 +71,29 @@ function Navbar() {
                         Partidos
                     </Link>
 
+                    <Link className="navbar-item" to="/resultados">
+                        Resultados
+                    </Link>
+
                     { isAuthenticated && <Billetera />}
-                    { isAuthenticated && <Historial />}
+                    { isAuthenticated && <HistorialCompra />}
+                    { isAuthenticated && <HistorialNotificacion />}
                 </div>
             </div>
             <div className="navbar-end">
                 <div className="navbar-item">
                     <div className="buttons">
+                        <Link className="button is-primary" to="/signup">
+                            <strong>Sign Up</strong>
+                        </Link>
                         { isAuthenticated ? (
-                            <>
-                            <p>¡Bienvenido, {user.name}!</p>
-                            </>
-                        ) : (
-                            <Link className="button is-primary" to="/signup">
-                                <strong>Sign Up</strong>
-                            </Link>
-                        )}
-                        { isAuthenticated ? (
-                            <Logout />
+                            <div className="navbar-item">
+                                <p>¡Bienvenido, {user.name}!</p>
+                                <Logout />
+                            </div>
                         ) : (
                             <Login />
                         )}
-                        { isAuthenticated ? "User is logged in" : "User is not logged in" }
-                        { <Logout /> }
                     </div>
                 </div>
             </div>

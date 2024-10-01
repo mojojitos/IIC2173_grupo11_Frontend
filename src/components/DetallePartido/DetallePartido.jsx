@@ -1,57 +1,146 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./DetallePartido.scss";
 
 const DetallePartido = ({ partido }) => {
+  const { fixtures, league, teams, odds, goals, remaining_bonus } = partido || {};
+
   return (
     <div className="detalle-partido">
-      <h1>
-        {partido.teams.home.name} vs {partido.teams.away.name}
-      </h1>
-      <p>Fecha: {new Date(partido.date).toLocaleString()}</p>
-      <p>Estado: {partido.status.long}</p>
+      <div className="match-header">
+        <div className="date-league">
+          {league?.logo && (
+            <img
+              src={league.logo}
+              alt={`Logo de la liga ${league?.name}`}
+              className="league-logo"
+            />
+          )}
+          <p className="match-date">
+            {fixtures?.date
+              ? new Date(fixtures.date).toLocaleString("es-ES", {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })
+              : "Fecha no disponible"}
+          </p>
+        </div>
+        <div className="match-details">
+          <div className="team">
+            <img
+              src={teams?.home?.logo}
+              alt={`${teams?.home?.name} logo`}
+              className="team-logo"
+            />
+            <div>
+              <span className="team-name">
+                {teams?.home?.name || "Equipo Local"}
+              </span>
+              <p className="team-goals">
+                {goals?.home !== null ? goals.home : "0"}
+              </p>
+            </div>
+          </div>
+          <div className="vs-indicator">
+            VS
+            <p className="match-status">
+              {fixtures?.status?.long || "Estado no disponible"}
+            </p>
+          </div>
+          <div className="team">
+            <img
+              src={teams?.away?.logo}
+              alt={`${teams?.away?.name} logo`}
+              className="team-logo"
+            />
+            <div>
+              <span className="team-name">
+                {teams?.away?.name || "Equipo Visitante"}
+              </span>
+              <p className="team-goals">
+                {goals?.away !== null ? goals.away : "0"}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <div className="league-info">
+      <div className="additional-info">
         <p>
-          Liga: {partido.league.name} ({partido.league.country})
+          Liga: {league?.name || "Liga no disponible"} (
+          {league?.country || "País no disponible"})
         </p>
-        <img src={partido.league.logo} alt="Logo de la liga" />
-      </div>
+        <p>Árbitro: {fixtures?.referee || "Árbitro no disponible"}</p>
+        <p>Ronda: {league?.round || "Ronda no disponible"}</p>
+        <p>Temporada: {league?.season || "Temporada no disponible"}</p>
+        <p>Bonos: {remaining_bonus ?? "Bonos no disponibles"}</p>
 
-      <p>Árbitro: {partido.referee}</p>
-      <p>Ronda: {partido.league.round}</p>
-      <p>Temporada: {partido.league.season}</p>
-
-      <h3>Equipos:</h3>
-      <div className="team">
-        <p className="team-name">Equipo Local: {partido.teams.home.name}</p>
-        <img
-          className="team-logo"
-          src={partido.teams.home.logo}
-          alt={`${partido.teams.home.name} logo`}
-        />
+        <h3>Probabilidades:</h3>
+        <ul className="odds">
+          {odds?.values?.length ? (
+            odds.values.map((odd) => (
+              <li key={odd.value}>
+                {odd.value === "Home" &&
+                  `Victoria ${teams?.home?.name || "Local"}`}
+                {odd.value === "Draw" && "Empate"}
+                {odd.value === "Away" &&
+                  `Victoria ${teams?.away?.name || "Visitante"}`}
+                : {odd.odd}
+              </li>
+            ))
+          ) : (
+            <li>No hay probabilidades disponibles</li>
+          )}
+        </ul>
       </div>
-      <div className="team">
-        <p className="team-name">Equipo Visitante: {partido.teams.away.name}</p>
-        <img
-          className="team-logo"
-          src={partido.teams.away.logo}
-          alt={`${partido.teams.away.name} logo`}
-        />
-      </div>
-
-      <h3>Probabilidades:</h3>
-      <ul className="odds">
-        {partido.odds[0].values.map((odd) => (
-          <li key={odd.value}>
-            {odd.value === "Home" && `Victoria ${partido.teams.home.name}`}
-            {odd.value === "Draw" && "Empate"}
-            {odd.value === "Away" &&
-              `Victoria ${partido.teams.away.name}`}: {odd.odd}
-          </li>
-        ))}
-      </ul>
     </div>
   );
+};
+
+DetallePartido.propTypes = {
+  partido: PropTypes.shape({
+    fixtures: PropTypes.shape({
+      date: PropTypes.string,
+      status: PropTypes.shape({
+        long: PropTypes.string,
+      }),
+      referee: PropTypes.string,
+    }),
+    league: PropTypes.shape({
+      logo: PropTypes.string,
+      name: PropTypes.string,
+      country: PropTypes.string,
+      round: PropTypes.string,
+      season: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    }),
+    teams: PropTypes.shape({
+      home: PropTypes.shape({
+        logo: PropTypes.string,
+        name: PropTypes.string,
+      }),
+      away: PropTypes.shape({
+        logo: PropTypes.string,
+        name: PropTypes.string,
+      }),
+    }),
+    odds: PropTypes.shape({
+      values: PropTypes.arrayOf(
+        PropTypes.shape({
+          value: PropTypes.string.isRequired,
+          odd: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        })
+      ),
+    }),
+    goals: PropTypes.shape({
+      home: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      away: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    }),
+    remaining_bonus: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  }).isRequired,
 };
 
 export default DetallePartido;
