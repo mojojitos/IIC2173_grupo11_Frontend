@@ -26,18 +26,22 @@ const Wallet = () => {
         }
     }, [UserId]); // Se ejecuta cuando `UserId` cambia
 
-    const handleSubmit = async (e) => {  // Recarga de creditos
+    const handleSubmit = async (e) => {  // Recarga de créditos
         e.preventDefault();
         try {
             const response = await axios.patch(`https://grupo11backend.me/wallet`, {
                 id: UserId, // Agrega el ID en el cuerpo de la solicitud
-                amount: parseInt(recarga)
+                amount: parseInt(recarga),
             });
             console.log('Recarga exitosa:', response.data);
+    
+            // Recarga la página para actualizar los créditos actuales
+            window.location.reload();
         } catch (error) {
             console.error('Error al hacer la recarga de créditos', error);
         }
     };
+    
 
     return (
         <div className="container-center">
