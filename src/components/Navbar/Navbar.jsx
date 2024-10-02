@@ -1,62 +1,56 @@
-import React,  { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Navbar.scss';
 import { Link } from 'react-router-dom';
-// import { useAuth } from '../../context/AuthContext';
-// import { useAuth0 } from '@auth0/auth0-react';
 
-const Billetera = () => {
-    return (
-        <Link className="navbar-item" to="/wallet">
-            Billetera
-        </Link>
-    )
-};
+const Billetera = () => (
+    <Link className="navbar-item" to="/wallet">
+        Billetera
+    </Link>
+);
 
 const Logout = () => {
     const handleLogout = () => {
-        // const { postLogout } = useAuth();
         localStorage.removeItem('accessToken');
         localStorage.removeItem('user');
-        // postLogout();
         const logoutUrl = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/v2/logout?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&returnTo=${encodeURIComponent(window.location.origin)}`;
         window.location.href = logoutUrl;
-      };
-  
+    };
+
     return (
-      <button className="button is-light" onClick={handleLogout}>
-        <strong>Log Out</strong>
-      </button>
+        <button className="button is-light" onClick={handleLogout}>
+            <strong>Log Out</strong>
+        </button>
     );
 };
 
-const Login = () => {
-    return (
-        <Link className="button is-light" to="/login">
-            <strong>Log In</strong>
-        </Link>
-    )
-};
+const Login = () => (
+    <Link className="button is-light" to="/login">
+        <strong>Log In</strong>
+    </Link>
+);
 
-const HistorialCompra = () => {
-    return (
-        <Link className="navbar-item" to="/historial-compra">
-            Historial de Compras
-        </Link>
-    )
-};
+const HistorialCompra = () => (
+    <Link className="navbar-item" to="/historial-compra">
+        Historial de Compras
+    </Link>
+);
 
-const HistorialNotificacion = () => {
-    return (
-        <Link className="navbar-item" to="/historial-notificacion">
-            Notificaciones
-        </Link>
-    )
-};
+const HistorialNotificacion = () => (
+    <Link className="navbar-item" to="/historial-notificacion">
+        Notificaciones
+    </Link>
+);
 
 function Navbar() {
-    // const { token, tokenUser } = useAuth();
-    const [token, setToken] = useState(null);
-    const [tokenUser, setTokenUser] = useState(null);
+    const [userId, setUserId] = useState(null);
+
+    useEffect(() => {
+        const storedUserId = localStorage.getItem("user");
+        if (storedUserId) {
+            setUserId(storedUserId);
+        }
+    }, []); 
+
     return (
         <nav className="navbar">
             <div className="navbar-brand">
@@ -70,18 +64,15 @@ function Navbar() {
                     <Link className="navbar-item" to="/pagina-principal">
                         Inicio
                     </Link>
-
                     <Link className="navbar-item" to="/partidos">
                         Partidos
                     </Link>
-
                     <Link className="navbar-item" to="/resultados">
                         Resultados 
                     </Link>
-
-                    { token && <Billetera />}
-                    { token && <HistorialNotificacion />}
-                    { token && <HistorialCompra />}
+                    {userId && <Billetera />}
+                    {userId && <HistorialNotificacion />}
+                    {userId && <HistorialCompra />}
                 </div>
             </div>
             <div className="navbar-end">
@@ -90,16 +81,12 @@ function Navbar() {
                         <Link className="button is-primary" to="/signup">
                             <strong>Sign Up</strong>
                         </Link>
-                        { token ? (
-                            <Logout />
-                        ) : (
-                            <Login />
-                        )}
+                        {userId ? <Logout /> : <Login />}
                     </div>
                 </div>
             </div>
         </nav>
     );
-};
+}
 
 export default Navbar;
