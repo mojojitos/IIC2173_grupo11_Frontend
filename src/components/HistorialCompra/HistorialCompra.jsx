@@ -58,16 +58,18 @@ function HistorialCompra() {
                 <ul>
                     {comprasxPagina.map((compra, index) => (
                         <li key={index} className="transaccion">
-                            <div className="card-content">
-                                <div className="media-content">
-                                    <p className="title is-3"> Bono comprado para {compra.home} v/s {compra.away} </p>
-                                    <p className="subtitle is-4"> Valor de la transaccion: ${compra.cost_transaction} </p>
-                                    <div className="content">
-                                    <p className="subtitle is-4"> 
-                                        {compra.money_victory > 0 && "Dinero ganado: $" + compra.money_victory}
-                                        {compra.money_defeat > 0 && "Dinero perdido: $" + compra.money_defeat}
-                                    </p>
-                                    <p className="subtitle is-6"> Fecha de la transaccion: {new Date(compra.date_transaction).toLocaleString()} </p>
+                            <div className="card has-background-black-ter">
+                                <div className="card-content">
+                                    <div className="media-content">
+                                        <p className="title is-3"> Bono comprado para {compra.home} v/s {compra.away} </p>
+                                        <p className="subtitle is-4"> Valor de la transaccion: ${compra.cost_transaction} </p>
+                                        <div className="content">
+                                        <p className="subtitle is-4"> 
+                                            {compra.money_victory > 0 && "Dinero ganado: $" + compra.money_victory}
+                                            {compra.money_defeat > 0 && "Dinero perdido: $" + compra.money_defeat}
+                                        </p>
+                                        <p className="subtitle is-6"> Fecha de la transaccion: {new Date(compra.date_transaction).toLocaleString()} </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
