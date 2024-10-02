@@ -11,17 +11,18 @@ const Signup = () => {
     const [Password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
-
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log(Username, Nombre, Apellido, Correo, Password);
         try {
-            const response = await axios.post(`${process.env.REACT_APP_AUTH0_BACKEND_LINK}/signup`, {
+            const response = await axios.post(`http://localhost:3000/signup`, {
                 username: Username,
                 firstName: Nombre,
                 lastName: Apellido,
                 email: Correo,
                 password: Password
             });
+
 
             if (response.status === 201) {
                 setMessage('Usuario creado exitosamente');
@@ -35,7 +36,6 @@ const Signup = () => {
         } catch (error) {
             setMessage('Error de red');
             alert(message);
-            alert(`Error creando usuario: ${error.response.data.message}`);
         }
     };
 

@@ -16,7 +16,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${process.env.REACT_APP_AUTH0_BACKEND_LINK}/login`, {
+            const response = await axios.post("http://localhost:3000/login", {
                 username: username,
                 password: password,
             });
@@ -42,7 +42,6 @@ const Login = () => {
         } catch (error) {
             setStatus('Error en el login');
             // console.error('Error al realizar el login:', error.response.data);
-            alert(`Error al iniciar sesión: ${error.response.data.error_description}`);
         }
     };
     
