@@ -1,5 +1,5 @@
-import React from 'react';
-import './App.css';
+import React, { useEffect } from 'react';
+import './App.scss';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Partidos from "./components/Partidos/PartidosPage.jsx";
 import DetallePartidoPage from "./components/DetallePartido/DetallePartidoPage.jsx";
@@ -14,6 +14,10 @@ import DetallePartidoTerminado from './components/PartidosTerminados/DetallePart
 import PartidosTerminados from './components/PartidosTerminados/PartidosTerminados.jsx';
 
 function App() {
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }, []);
+
   return (
     <Router>
       <Navbar />
