@@ -63,37 +63,32 @@ const Login = () => {
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
                                     />
-
                                 </div>
-                                <div className="field">
-                                    <label className="label has-text-white">Contraseña</label>
-                                    <div className="control">
-                                        <input
-                                            className="input"
-                                            type="password"
-                                            placeholder="Contraseña"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                        />
-                                    </div>
+                            </div>
+                            <div className="field">
+                                <label className="label has-text-white">Contraseña</label>
+                                <div className="control">
+                                    <input
+                                        className="input"
+                                        type="password"
+                                        placeholder="Contraseña"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
                                 </div>
-                                <div className="field">
-                                    <div className="control">
-                                        <button className="button is-primary" type="submit">
-                                            Login
-                                        </button>
-                                    </div>
+                            </div>
+                            <div className="field">
+                                <div className="control">
+                                    <button className="button is-primary" type="submit">
+                                        Login
+                                    </button>
                                 </div>
-                            </form>
-                            {status && <div className="has-text-white">{status}</div>}
-                        </div>
+                            </div>
+                        </form>
+                        {status && <div className="has-text-white">{status}</div>}
                     </div>
                 </div>
             </div>
-            <footer className="footer-background">
-                    <img src="/background-icon.png" alt="background-icon" />
-            </footer>
-        </div>
         </div>
     );
 };
