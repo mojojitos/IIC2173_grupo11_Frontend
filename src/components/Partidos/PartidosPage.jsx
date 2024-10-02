@@ -8,10 +8,14 @@ const Partidos = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
+
   // Estados para los filtros
   const [filterDate, setFilterDate] = useState("");
   const [filterDestiny, setFilterDestiny] = useState("");
+  
+  // Estados para almacenar los valores de los filtros aplicados
+  const [appliedFilterDate, setAppliedFilterDate] = useState("");
+  const [appliedFilterDestiny, setAppliedFilterDestiny] = useState("");
 
   useEffect(() => {
     const fetchPartidos = async () => {
@@ -20,11 +24,11 @@ const Partidos = () => {
       try {
         let url = `https://grupo11backend.me/fixtures?page=${page}`;
         
-        // Modificar la URL según los filtros seleccionados
-        if (filterDate) {
-          url = `https://grupo11backend.me/fixtures/byDate/${filterDate}?page=${page}`;
-        } else if (filterDestiny) {
-          url = `https://grupo11backend.me/fixtures/byDestiny/${filterDestiny}?page=${page}`;
+        // Modificar la URL según los filtros aplicados
+        if (appliedFilterDate) {
+          url = `https://grupo11backend.me/byDate/${appliedFilterDate}?page=${page}`;
+        } else if (appliedFilterDestiny) {
+          url = `https://grupo11backend.me/byDestiny/${appliedFilterDestiny}?page=${page}`;
         }
         
         const response = await axios.get(url);
@@ -38,7 +42,7 @@ const Partidos = () => {
     };
 
     fetchPartidos();
-  }, [page, filterDate, filterDestiny]); // Añadir dependencias para actualizar según los filtros y la página
+  }, [page, appliedFilterDate, appliedFilterDestiny]); // Añadir dependencias para actualizar según los filtros aplicados y la página
 
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
@@ -51,7 +55,10 @@ const Partidos = () => {
   };
 
   const handleApplyFilters = () => {
-    setPage(1); // Reiniciar a la primera página
+    // Aplicar los filtros y reiniciar a la primera página
+    setAppliedFilterDate(filterDate);
+    setAppliedFilterDestiny(filterDestiny);
+    setPage(1);
   };
 
   if (loading) return <p>Cargando...</p>;

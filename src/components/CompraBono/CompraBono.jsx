@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import "./CompraBono.scss";
 
-const CompraBonos = ({ partido, userId }) => {
+const CompraBonos = ({ partido }) => {
   const { fixtures, teams, odds } = partido;
   const [quantity, setQuantity] = useState("");
   const [selectedResult, setSelectedResult] = useState("");
   const [selectedOdd, setSelectedOdd] = useState(null);
   const [status, setStatus] = useState("");
   const [ganancia, setGanancia] = useState(0);
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("user");
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+  }, []);
 
   const handleCompra = async () => {
     try {
@@ -19,7 +27,6 @@ const CompraBonos = ({ partido, userId }) => {
         result: selectedResult,
         quantity: quantity,
       };
-      console.log(requestData);
 
       const response = await axios.post(
         "https://grupo11backend.me/bonos/request",
@@ -38,7 +45,6 @@ const CompraBonos = ({ partido, userId }) => {
     setSelectedResult(result);
 
     const foundOdd = odds.values.find((value) => value.value === result);
-
     setSelectedOdd(foundOdd);
 
     if (foundOdd) {
@@ -51,9 +57,7 @@ const CompraBonos = ({ partido, userId }) => {
   const handleQuantityChange = (e) => {
     const newQuantity = Math.max(0, Number(e.target.value));
     setQuantity(newQuantity);
-    if (newQuantity === 0) {
-      setQuantity("");
-    }
+
     if (selectedOdd) {
       setGanancia(newQuantity * parseFloat(selectedOdd.odd) * 1000);
     }
@@ -92,15 +96,13 @@ const CompraBonos = ({ partido, userId }) => {
       <button
         className="boton-comprar"
         onClick={handleCompra}
-        disabled={!quantity || !selectedResult}
+        disabled={!quantity || !selectedResult|| !userId}
       >
         Comprar
       </button>
       {status && (
         <p
-          className={`status ${
-            status === "Compra exitosa" ? "success" : "error"
-          }`}
+          className={`status ${status === "Compra exitosa" ? "success" : "error"}`}
         >
           {status}
         </p>
@@ -112,8 +114,7 @@ const CompraBonos = ({ partido, userId }) => {
 CompraBonos.propTypes = {
   partido: PropTypes.shape({
     fixtures: PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-        .isRequired,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     }).isRequired,
     teams: PropTypes.shape({
       home: PropTypes.shape({
@@ -133,7 +134,6 @@ CompraBonos.propTypes = {
       ).isRequired,
     }).isRequired,
   }).isRequired,
-  userId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default CompraBonos;

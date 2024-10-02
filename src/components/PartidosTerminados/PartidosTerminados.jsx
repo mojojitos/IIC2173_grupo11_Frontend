@@ -18,20 +18,20 @@ const PartidosTerminados = () => {
         const response = await axios.get(`https://grupo11backend.me/AllOldFixtures?page=${page}`);
         const partidosData = response.data;
 
-        // Hacer solicitudes a fixtures/id para cada partido terminado
+        
         const partidosDetalles = await Promise.all(
           partidosData.map(async (partido) => {
             try {
               const detalleResponse = await axios.get(`https://grupo11backend.me/fixtures/${partido.id_fixture}`);
-              return detalleResponse.data; // Retorna los detalles del partido
+              return detalleResponse.data; 
             } catch (error) {
               console.error(`Error al obtener los detalles del partido con ID: ${partido.id_fixture}`, error);
-              return null; // Manejar errores devolviendo null
+              return null; 
             }
           })
         );
 
-        // Filtrar cualquier partido que no se haya podido obtener correctamente
+       
         setPartidos(partidosDetalles.filter((detalle) => detalle !== null));
       } catch (error) {
         console.error("Error al obtener los partidos terminados:", error);
@@ -43,7 +43,6 @@ const PartidosTerminados = () => {
 
     fetchPartidosTerminados();
   }, [page]);
-  console.log(partidos);
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
   };
