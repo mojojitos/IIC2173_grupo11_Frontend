@@ -18,7 +18,7 @@ const Wallet = () => {
         if (UserId) {
             axios.get(`https://grupo11backend.me/getWalletCredit/${UserId}`) // Mostrar dinero actual
                 .then(response => {
-                    setMonto(response.data.monto);
+                    setMonto(response.data.credits);
                 })
                 .catch(error => {
                     console.error('Error al cargar tu monto actual:', error);
