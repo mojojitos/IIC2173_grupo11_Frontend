@@ -20,20 +20,17 @@ const Login = () => {
                 username: username,
                 password: password,
             });
-
+    
             if (response.status === 200) {
                 console.log('Inicio de sesión exitoso');
                 console.log(`Data: ${response.data}`);
-                // console.log(`accessToken: ${response.data.message}`);
-                // console.log(Object.keys(response.data.message));
                 localStorage.setItem('accessToken', response.data.message.access_token);
                 localStorage.setItem('user', response.data.userData.id);
-                const addToken = localStorage.getItem('accessToken');
-                const addUser = localStorage.getItem('user');
-                console.log(`accessToken: ${addToken}`);
-                console.log(`user: ${addUser}`);
-                // postLogin(response.data.message.access_token, response.data.userData.username);
-                navigate('/');
+                console.log(`accessToken: ${localStorage.getItem('accessToken')}`);
+                console.log(`user: ${localStorage.getItem('user')}`);
+    
+                navigate('/'); 
+                window.location.reload(); 
             } else {
                 console.log(response.data);
                 console.log('Error al iniciar sesión');
@@ -41,7 +38,6 @@ const Login = () => {
             }
         } catch (error) {
             setStatus('Error en el login');
-            // console.error('Error al realizar el login:', error.response.data);
         }
     };
     
