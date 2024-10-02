@@ -9,12 +9,19 @@ function HistorialNotificacion() {
     const [indiceActual, setIndiceActual] = useState(1);
     const [totalPaginas, setTotalPaginas] = useState(1);
     const [tamanoPagina] = useState(10);
+    const [UserId, setUserId] = useState(null);
+
     useEffect(() => {
-        const token = localStorage.getItem('accessToken');
-        if (token) {
-            const decodedToken = jwtDecode(token);
-            const id_user = decodedToken.sub;
-        axios.get(`https://grupo11.backend.me/showNotifications/${id_user}`)
+        // const token = localStorage.getItem('accessToken');
+        // if (token) {
+            // const decodedToken = jwtDecode(token);
+            // const id_user = decodedToken.sub;
+        const storedUserId = localStorage.getItem("user");
+        if (storedUserId) {
+            setUserId(storedUserId);
+        };
+
+        axios.get(`https://grupo11.backend.me/showNotifications/${UserId}`)
         .then(response => {
             setNotificacionesRecibidas(response.data);
             setTotalPaginas(Math.ceil(response.data.length / tamanoPagina));
@@ -22,7 +29,6 @@ function HistorialNotificacion() {
         .catch(error => {
             console.error('Error al obtener las notificaciones recibidas:', error);
         });
-    }
     }, [tamanoPagina]);
 
     // Logica para paginacion y cambio de página

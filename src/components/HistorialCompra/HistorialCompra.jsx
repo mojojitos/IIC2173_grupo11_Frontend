@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from "react";
 import "./HistorialCompra.scss";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+
+// import { jwtDecode } from "jwt-decode";
 
 function HistorialCompra() {
     const [comprasRealizadas, setComprasRealizadas] = useState([]);
     const [indiceActual, setIndiceActual] = useState(1);
     const [totalPaginas, setTotalPaginas] = useState(1);
     const [tamanoPagina] = useState(8);
+    const [UserId, setUserId] = useState(null);
     useEffect(() => {
-        const token = localStorage.getItem('accessToken');
-        if (token) {
-            const decodedToken = jwtDecode(token);
-            const id_user = decodedToken.sub;
+        // const token = localStorage.getItem('accessToken');
+        // if (token) {
+            // const decodedToken = jwtDecode(token);
+            // const id_user = decodedToken.sub;
+        const storedUserId = localStorage.getItem("user");
+        if (storedUserId) {
+            setUserId(storedUserId);
+        };
 
-        axios.get(`https://grupo11backend.me/transactions/${id_user}`)
+        axios.get(`https://grupo11backend.me/transactions/${UserId}`)
         .then(response => {
             setComprasRealizadas(response.data);
             setTotalPaginas(Math.ceil(response.data.length / tamanoPagina));
@@ -22,7 +28,6 @@ function HistorialCompra() {
         .catch(error => {
             console.error('Error al obtener el historial de compra:', error);
         });
-    }
     }, [tamanoPagina]);
 
     // Logica para paginacion y cambio de página
