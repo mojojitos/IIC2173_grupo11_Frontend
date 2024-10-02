@@ -13,7 +13,6 @@ const Signup = () => {
     const navigate = useNavigate();
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(Username, Nombre, Apellido, Correo, Password);
         try {
             const response = await axios.post(`https://grupo11backend.me/signup`, {
                 username: Username,
