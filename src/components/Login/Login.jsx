@@ -27,7 +27,7 @@ const Login = () => {
                 // console.log(`accessToken: ${response.data.message}`);
                 // console.log(Object.keys(response.data.message));
                 localStorage.setItem('accessToken', response.data.message.access_token);
-                localStorage.setItem('user', response.data.userData.username);
+                localStorage.setItem('user', response.data.userData.id);
                 const addToken = localStorage.getItem('accessToken');
                 const addUser = localStorage.getItem('user');
                 console.log(`accessToken: ${addToken}`);
