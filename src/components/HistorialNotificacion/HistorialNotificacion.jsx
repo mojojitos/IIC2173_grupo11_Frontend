@@ -18,7 +18,7 @@ function HistorialNotificacion() {
 
     useEffect(() => {
         if (UserId) {
-            axios.get(`http://localhost:3000/showNotifications/${UserId}`)
+            axios.get(`https://grupo11backend.me/showNotifications/${UserId}`)
                 .then(response => {
                     setNotificacionesRecibidas(response.data);
                     setTotalPaginas(Math.ceil(response.data.length / tamanoPagina));
