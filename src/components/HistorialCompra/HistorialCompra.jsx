@@ -60,8 +60,8 @@ function HistorialCompra() {
                         <li key={index} className="transaccion">
                             <div className="hero is-small has-background-grey-darker">
                                 <div className="hero-body">
-                                    <p className="title"> {compra.date_transaction} | Monto: {compra.cost_transaction} </p>
-                                    <p className="subtitle"> Home: {compra.home} - Away: {compra.away} </p>
+                                    <p className="title"> Fecha de transaccion: {Date(compra.date_transaction).toLocaleString()} </p>
+                                    <p className="subtitle"> Monto de compra: {compra.cost_transaction} </p>
                                 </div>
                             </div>
                         </li>

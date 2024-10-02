@@ -14,7 +14,6 @@ const Logout = () => {
         localStorage.removeItem('user');
         const logoutUrl = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/v2/logout?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&returnTo=${encodeURIComponent(window.location.origin)}`;
         window.location.href = logoutUrl;
-        window.location.reload();
     };
 
     return (
@@ -49,7 +48,6 @@ function Navbar() {
         const storedUserId = localStorage.getItem("user");
         if (storedUserId) {
             setUserId(storedUserId);
-            window.location.reload();
         }
     }, []); 
 
