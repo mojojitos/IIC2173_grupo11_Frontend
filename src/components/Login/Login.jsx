@@ -1,70 +1,69 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
+import React, { useState } from 'react';
+// import { useAuth0 } from '@auth0/auth0-react';
 import './Login.scss';
-// import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+// import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
-    const [email, setEmail] = useState('');
+    // const { postLogin } = useAuth();
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [status, setStatus] = useState('');
-    const { loginWithRedirect, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const navigate = useNavigate();
+    // const { loginWithRedirect, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            loginWithRedirect({
-                appState: { targetUrl: '/' },
+            const response = await axios.post("http://localhost:3000/login", {
+                username: username,
+                password: password,
             });
+
+            if (response.status === 200) {
+                console.log('Inicio de sesión exitoso');
+                console.log(`Data: ${response.data}`);
+                // console.log(`accessToken: ${response.data.message}`);
+                // console.log(Object.keys(response.data.message));
+                localStorage.setItem('accessToken', response.data.message.access_token);
+                localStorage.setItem('user', response.data.userData.username);
+                const addToken = localStorage.getItem('accessToken');
+                const addUser = localStorage.getItem('user');
+                console.log(`accessToken: ${addToken}`);
+                console.log(`user: ${addUser}`);
+                // postLogin(response.data.message.access_token, response.data.userData.username);
+                navigate('/');
+            } else {
+                console.log(response.data);
+                console.log('Error al iniciar sesión');
+                alert(`Error al iniciar sesión: ${response.error_description}`);
+            }
         } catch (error) {
             setStatus('Error en el login');
-            console.error('Error al realizar el login:', error);
+            // console.error('Error al realizar el login:', error.response.data);
         }
     };
-
-    useEffect(() => {
-        const storeAccessToken = async () => {
-            console.log(`user: ${user}`);
-            if (user) {
-                console.log('user saved');
-            }
-            if (isAuthenticated) {
-                try {
-                    const accessToken = await getAccessTokenSilently();
-                    localStorage.setItem('accessToken', accessToken);
-                    const testToken = localStorage.getItem('accessToken');
-                    console.log(`Test Token: ${testToken}`);
-                    console.log(`Access Token: ${accessToken}`);
-                } catch (error) {
-                    console.error('Error fetching access token', error);
-                }
-            }
-        };
-    
-        storeAccessToken();
-        }, [isAuthenticated, getAccessTokenSilently, user]);
     
     return (
-        <div className="container-login">
-            <h2 className="title">Ingresa como usuario de CoolGoat</h2>
-            <div className="form-footer-background">
-            <div className="hero is-small">
-                <div className="hero-body">
-                    <div className="container has-text-centered has-background-dark">
-                        <div className="column is-6 is-offset-3">
-                            <h3 className="title is-3 has-text-white">Ingreso de Usuario</h3>
-                            <div className="title has-text-grey is-5">Ingresa tu correo y contraseña.</div>
-                            <form onSubmit={handleSubmit}>
-                                <div className="field">
-                                    <label className="label has-text-white">Email</label>
-                                    <div className="control">
-                                        <input
-                                            className="input"
-                                            type="email"
-                                            placeholder="Email"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                        />
-                                    </div>
+        <div className="hero is-fullheight">
+            <div className="hero-body">
+                <div className="container has-text-centered has-background-dark">
+                    <div className="column is-6 is-offset-3">
+                        <h3 className="title is-3 has-text-white">Ingreso de Usuario</h3>
+                        <div className="title has-text-grey is-5">Ingresa tu nombre de usuario y contraseña.</div>
+                        <form onSubmit={handleSubmit}>
+                            <div className="field">
+                                <label className="label has-text-white">Nombre de Usuario</label>
+                                <div className="control">
+                                    <input
+                                        className="input"
+                                        type="string"
+                                        placeholder="Ingresa nombre de usuario"
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                    />
+
                                 </div>
                                 <div className="field">
                                     <label className="label has-text-white">Contraseña</label>
