@@ -56,9 +56,9 @@ function HistorialNotificacion() {
                     {notifsxPagina
                         .sort((a, b) => new Date(b.date) - new Date(a.date))
                         .map((notif, index) => (
-                            <li key={index} className="message is-dark">
+                            <li key={index} className="message">
                                 <div className="message-header">
-                                    <p>{new Date(notif.date).toLocaleString()}</p>
+                                    <p>Mensaje recibdo en: {new Date(notif.date).toLocaleString()}</p>
                                 </div>
                                 <div className="message-body">
                                     <p>{notif.message}</p>
