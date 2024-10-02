@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Wallet.scss';
-// import { jwtDecode } from "jwt-decode";
 
 const Wallet = () => {
     const [recarga, setRecarga] = useState(0); // Monto De Recarga
@@ -9,31 +8,34 @@ const Wallet = () => {
     const [UserId, setUserId] = useState(null);
 
     useEffect(() => {
-        // const token = localStorage.getItem('accessToken');
-        // if (token) {
-            // const decodedToken = jwtDecode(token);
-            // const id_user = decodedToken.sub;
         const storedUserId = localStorage.getItem("user");
         if (storedUserId) {
             setUserId(storedUserId);
-        };
-
-        axios.get(`https://grupo11backend.me/getWalletCredit/${UserId}`) // Mostrar dinero actual
-            .then(response => 
-                {setMonto(response.data.monto);
-                })
-            .catch(error => 
-                {console.error('Error al cargar tu monto actual:', error)
-                });
+        }
     }, []);
+
+    useEffect(() => {
+        if (UserId) {
+            axios.get(`https://grupo11backend.me/getWalletCredit/${UserId}`) // Mostrar dinero actual
+                .then(response => {
+                    setMonto(response.data.monto);
+                })
+                .catch(error => {
+                    console.error('Error al cargar tu monto actual:', error);
+                });
+        }
+    }, [UserId]); // Se ejecuta cuando `UserId` cambia
 
     const handleSubmit = async (e) => {  // Recarga de creditos
         e.preventDefault();
         try {
-            const response = await axios.patch(`https://grupo11backend.me/wallet`, { amount: parseInt(recarga) });
+            const response = await axios.patch(`https://grupo11backend.me/wallet`, {
+                id: UserId, // Agrega el ID en el cuerpo de la solicitud
+                amount: parseInt(recarga)
+            });
             console.log('Recarga exitosa:', response.data);
         } catch (error) {
-            console.error('Error al hacer la recarga de creditos', error);
+            console.error('Error al hacer la recarga de créditos', error);
         }
     };
 
@@ -44,14 +46,14 @@ const Wallet = () => {
                 <p className="subtitle">Créditos actuales: {monto}</p>
                 <form onSubmit={handleSubmit}>
                     <div className="field">
-                        <label className="label">Cantidad de creditos a cargar</label>
+                        <label className="label">Cantidad de créditos a cargar</label>
                         <div className="control">
                             <input
                                 className="input"
                                 type="number"
                                 value={recarga}
                                 onChange={(e) => setRecarga(e.target.value)}
-                                placeholder="Ingresa aqui el número de creditos"
+                                placeholder="Ingresa aquí el número de créditos"
                             />
                         </div>
                     </div>
