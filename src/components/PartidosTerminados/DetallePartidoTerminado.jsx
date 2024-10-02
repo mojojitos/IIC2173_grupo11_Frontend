@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import CompraBonos from "../CompraBono/CompraBono.jsx";
-import DetallePartido from "./DetallePartido.jsx";
+import DetallePartido from "../DetallePartido/DetallePartido.jsx";
 import axios from "axios";
 
 const DetallePartidoPage = () => {
@@ -47,7 +46,6 @@ const DetallePartidoPage = () => {
   return (
     <div className="detalle-partido-page">
       <DetallePartido partido={partido} />
-      <CompraBonos partido={partido} />
     </div>
   );
 };

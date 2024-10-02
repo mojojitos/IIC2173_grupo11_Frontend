@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from "react";
-import "./HistorialCompra.scss";
+import "./HistorialNotificacion.scss";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-function HistorialCompra() {
-    const [comprasRealizadas, setComprasRealizadas] = useState([]);
+
+function HistorialNotificacion() {
+    const [notificacionesRecibidas, setNotificacionesRecibidas] = useState([]);
     const [indiceActual, setIndiceActual] = useState(1);
     const [totalPaginas, setTotalPaginas] = useState(1);
-    const [tamanoPagina] = useState(8);
+    const [tamanoPagina] = useState(10);
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
         if (token) {
             const decodedToken = jwtDecode(token);
             const id_user = decodedToken.sub;
-
-        axios.get(`http://localhost:3001/transactions/${id_user}`)
+        axios.get(`http://localhost:3001/showNotifications/${id_user}`)
         .then(response => {
-            setComprasRealizadas(response.data);
+            setNotificacionesRecibidas(response.data);
             setTotalPaginas(Math.ceil(response.data.length / tamanoPagina));
         })
         .catch(error => {
-            console.error('Error al obtener el historial de compra:', error);
+            console.error('Error al obtener las notificaciones recibidas:', error);
         });
     }
     }, [tamanoPagina]);
@@ -50,24 +50,26 @@ function HistorialCompra() {
     };
 
 
-    const comprasxPagina = comprasRealizadas.slice(
+    const notifsxPagina = notificacionesRecibidas.slice(
         (indiceActual - 1) * tamanoPagina,
         indiceActual * tamanoPagina
     );
 
 
     return(
-        <div className="container_compra">
+        <div className="container_notificaciones">
             <div>
-                <h1 className="title">Historial de Compras</h1>
+                <h1 className="title">Centro de Notificaciones</h1>
                 <ul>
-                    {comprasxPagina.map((compra, index) => (
-                        <li key={index} className="transaccion">
-                            <div className="hero is-small has-backgroung-grey-darker">
-                                <div className="hero-body">
-                                    <p className="title"> {compra.date} | Monto: {compra.number_bonus} </p>
-                                    <p className="subtitle"> Estado: {compra.total} </p>
-                                </div>
+                    {notifsxPagina
+                    .sort((a, b) => new Date(b.date) - new Date(a.date))
+                    .map((notif, index) => (
+                        <li key={index} className="message is-dark">
+                            <div className="message-header">
+                                <p>{notif.date}</p>
+                            </div>
+                            <div className="message-body">
+                                <p>{notif.message}</p>
                             </div>
                         </li>
                     ))}
@@ -90,4 +92,4 @@ function HistorialCompra() {
     );
 };
 
-export default HistorialCompra;
+export default HistorialNotificacion;

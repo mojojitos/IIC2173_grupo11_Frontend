@@ -41,7 +41,9 @@ const Signup = () => {
 
     return (
         <div className="container-signup">
-            <div className="columns is-centered">
+            <h2 className="title">Registrate con nosotros</h2>
+            <div className="form-footer-background">
+            <div className="formulario columns is-centered">
                 <div className="column is-half">
                     <form onSubmit={handleSubmit}>
                         <div className="field">
@@ -118,6 +120,10 @@ const Signup = () => {
                     {message && <p>{message}</p>}
                 </div>
             </div>
+            <footer className="footer-background">
+                    <img src="/background-icon.png" alt="background-icon" />
+            </footer>
+        </div>
         </div>
     );
 };
