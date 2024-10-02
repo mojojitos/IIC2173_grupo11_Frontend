@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./HistorialNotificacion.scss";
 import axios from "axios";
-// import { jwtDecode } from "jwt-decode";
-
 
 function HistorialNotificacion() {
     const [notificacionesRecibidas, setNotificacionesRecibidas] = useState([]);
@@ -12,85 +10,73 @@ function HistorialNotificacion() {
     const [UserId, setUserId] = useState(null);
 
     useEffect(() => {
-        // const token = localStorage.getItem('accessToken');
-        // if (token) {
-            // const decodedToken = jwtDecode(token);
-            // const id_user = decodedToken.sub;
         const storedUserId = localStorage.getItem("user");
         if (storedUserId) {
             setUserId(storedUserId);
-        };
+        }
+    }, []);
 
-        axios.get(`https://grupo11.backend.me/showNotifications/${UserId}`)
-        .then(response => {
-            setNotificacionesRecibidas(response.data);
-            setTotalPaginas(Math.ceil(response.data.length / tamanoPagina));
-        })
-        .catch(error => {
-            console.error('Error al obtener las notificaciones recibidas:', error);
-        });
-    }, [tamanoPagina]);
+    useEffect(() => {
+        if (UserId) {
+            axios.get(`http://localhost:3000/showNotifications/${UserId}`)
+                .then(response => {
+                    setNotificacionesRecibidas(response.data);
+                    setTotalPaginas(Math.ceil(response.data.length / tamanoPagina));
+                })
+                .catch(error => {
+                    console.error('Error al obtener las notificaciones recibidas:', error);
+                });
+        }
+    }, [UserId, tamanoPagina]);
 
-    // Logica para paginacion y cambio de página
-    const HandleSiguientePagina = () => {
-        const handleClick = () => setIndiceActual(indiceActual + 1);
-        return (
-            <button className="pagination-next" onClick={handleClick} disabled={indiceActual === totalPaginas}>
-                &gt;
-            </button>
-        )
+    // Lógica para cambiar de página
+    const handleSiguientePagina = () => {
+        setIndiceActual(prev => prev + 1);
     };
 
-    const HandlePaginaAnterior = () => {
-        const handleClick = () => setIndiceActual(indiceActual - 1);
-        return (
-            <button className="pagination-previous" onClick={handleClick} disabled={indiceActual === 1}>
-                &lt;
-            </button>
-        )
+    const handlePaginaAnterior = () => {
+        setIndiceActual(prev => prev - 1);
     };
 
     const handleTargetPagina = (target) => {
-        const handleClick = () => setIndiceActual(target);
-        return handleClick;
+        setIndiceActual(target);
     };
 
-
+    // Obtener notificaciones para la página actual
     const notifsxPagina = notificacionesRecibidas.slice(
         (indiceActual - 1) * tamanoPagina,
         indiceActual * tamanoPagina
     );
 
-
-    return(
+    return (
         <div className="container_notificaciones">
             <div>
                 <h1 className="title">Centro de Notificaciones</h1>
                 <ul>
                     {notifsxPagina
-                    .sort((a, b) => new Date(b.date) - new Date(a.date))
-                    .map((notif, index) => (
-                        <li key={index} className="message is-dark">
-                            <div className="message-header">
-                                <p>{notif.date}</p>
-                            </div>
-                            <div className="message-body">
-                                <p>{notif.message}</p>
-                            </div>
-                        </li>
-                    ))}
+                        .sort((a, b) => new Date(b.date) - new Date(a.date))
+                        .map((notif, index) => (
+                            <li key={index} className="message is-dark">
+                                <div className="message-header">
+                                    <p>{new Date(notif.date).toLocaleString()}</p>
+                                </div>
+                                <div className="message-body">
+                                    <p>{notif.message}</p>
+                                </div>
+                            </li>
+                        ))}
                 </ul>
                 <nav className="pagination is-right" role="navigation" aria-label="pagination">
-                    { (indiceActual > 1) && <HandlePaginaAnterior />}
-                    { (indiceActual < totalPaginas) && <HandleSiguientePagina />}
+                    {indiceActual > 1 && <button className="pagination-previous" onClick={handlePaginaAnterior}>&lt;</button>}
+                    {indiceActual < totalPaginas && <button className="pagination-next" onClick={handleSiguientePagina}>&gt;</button>}
                     <ul className="pagination-list">
-                        { (indiceActual !== 1) && <li><button className="pagination-link" onClick={handleTargetPagina(1)}>1</button></li>}
-                        { (indiceActual > 3) && <li><span className="pagination-ellipsis">&hellip;</span></li>}
-                        { (indiceActual > 2) && <li><button className="pagination-link" onClick={handleTargetPagina(indiceActual -  1)}>{(indiceActual - 1)}</button></li>}
-                        <li><button className="pagination-link is-current" onClick={handleTargetPagina(indiceActual)}>{indiceActual}</button></li>
-                        { (indiceActual < totalPaginas - 1) && <li><button className="pagination-link" onClick={handleTargetPagina(indiceActual + 1)}>{(indiceActual + 1)}</button></li>}
-                        { (indiceActual < totalPaginas - 2) && <li><span className="pagination-ellipsis">&hellip;</span></li>}
-                        { (indiceActual !== totalPaginas) && <li><button className="pagination-link" onClick={handleTargetPagina(totalPaginas)}>{totalPaginas}</button></li>}
+                        {indiceActual !== 1 && <li><button className="pagination-link" onClick={() => handleTargetPagina(1)}>1</button></li>}
+                        {indiceActual > 3 && <li><span className="pagination-ellipsis">&hellip;</span></li>}
+                        {indiceActual > 2 && <li><button className="pagination-link" onClick={() => handleTargetPagina(indiceActual - 1)}>{indiceActual - 1}</button></li>}
+                        <li><button className="pagination-link is-current">{indiceActual}</button></li>
+                        {indiceActual < totalPaginas - 1 && <li><button className="pagination-link" onClick={() => handleTargetPagina(indiceActual + 1)}>{indiceActual + 1}</button></li>}
+                        {indiceActual < totalPaginas - 2 && <li><span className="pagination-ellipsis">&hellip;</span></li>}
+                        {indiceActual !== totalPaginas && <li><button className="pagination-link" onClick={() => handleTargetPagina(totalPaginas)}>{totalPaginas}</button></li>}
                     </ul>
                 </nav>
             </div>
