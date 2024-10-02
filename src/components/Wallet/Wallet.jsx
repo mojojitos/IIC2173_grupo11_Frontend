@@ -12,7 +12,7 @@ const Wallet = () => {
         if (token) {
             const decodedToken = jwtDecode(token);
             const id_user = decodedToken.sub;
-        axios.get(`https://localhost:3001/getWalletCredit/${id_user}`) // Mostrar dinero actual
+        axios.get(`https://grupo11backend.me/getWalletCredit/${id_user}`) // Mostrar dinero actual
             .then(response => 
                 {setMonto(response.data.monto);
                 })
@@ -24,7 +24,7 @@ const Wallet = () => {
 
     const RecargarCreditos = (event) => {  // Recarga de creditos
         event.preventDefault();
-        axios.patch('https://localhost:3001/wallet', {
+        axios.patch('https://grupo11backend.me/wallet', {
             amount: parseInt(recarga)
         })
             .then(response => setRecarga(response.data.monto)) // Probar despues

@@ -14,7 +14,7 @@ function HistorialNotificacion() {
         if (token) {
             const decodedToken = jwtDecode(token);
             const id_user = decodedToken.sub;
-        axios.get(`http://localhost:3001/showNotifications/${id_user}`)
+        axios.get(`https://grupo11.backend.me/showNotifications/${id_user}`)
         .then(response => {
             setNotificacionesRecibidas(response.data);
             setTotalPaginas(Math.ceil(response.data.length / tamanoPagina));

@@ -16,7 +16,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3000/login", {
+            const response = await axios.post("https://grupo11backend.me/login", {
                 username: username,
                 password: password,
             });
@@ -46,6 +46,7 @@ const Login = () => {
     };
     
     return (
+        <div className="container-login">
         <div className="hero is-fullheight">
             <div className="hero-body">
                 <div className="container has-text-centered has-background-dark">
@@ -89,6 +90,10 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            <footer className="footer-background">
+                    <img src="/background-icon.png" alt="background-icon" />
+            </footer>
+        </div>
         </div>
     );
 };

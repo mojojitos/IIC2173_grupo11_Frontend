@@ -15,7 +15,7 @@ const Signup = () => {
         event.preventDefault();
         console.log(Username, Nombre, Apellido, Correo, Password);
         try {
-            const response = await axios.post(`http://localhost:3000/signup`, {
+            const response = await axios.post(`https://grupo11backend.me/signup`, {
                 username: Username,
                 firstName: Nombre,
                 lastName: Apellido,
@@ -41,6 +41,8 @@ const Signup = () => {
 
     return (
         <div className="container-signup">
+            <h2 className="title">Registrate con nosotros</h2>
+            <div className="form-footer-background">
             <div className="columns is-centered">
                 <div className="column is-half">
                     <form onSubmit={handleSubmit}>
@@ -88,7 +90,7 @@ const Signup = () => {
                             <div className="control">
                                 <input 
                                     className="input" 
-                                    type="string" 
+                                    type="email" 
                                     placeholder="Ingresa tu correo" 
                                     value={Correo}
                                     onChange={(e) => setCorreo(e.target.value)}
@@ -118,6 +120,10 @@ const Signup = () => {
                     {message && <p>{message}</p>}
                 </div>
             </div>
+            <footer className="footer-background">
+                <img src="/background-icon.png" alt="background-icon" />
+            </footer>
+        </div>
         </div>
     );
 };

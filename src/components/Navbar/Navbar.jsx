@@ -10,7 +10,7 @@ const Billetera = () => {
             Billetera
         </Link>
     )
-}
+};
 
 const Logout = () => {
     const handleLogout = () => {
@@ -24,7 +24,7 @@ const Logout = () => {
   
     return (
       <button className="button is-light" onClick={handleLogout}>
-        Log Out
+        <strong>Log Out</strong>
       </button>
     );
 };
@@ -32,18 +32,26 @@ const Logout = () => {
 const Login = () => {
     return (
         <Link className="button is-light" to="/login">
-            Log In
+            <strong>Log In</strong>
         </Link>
     )
-}
+};
 
-const Historial = () => {
+const HistorialCompra = () => {
     return (
         <Link className="navbar-item" to="/historial-compra">
             Historial de Compras
         </Link>
     )
-}
+};
+
+const HistorialNotificacion = () => {
+    return (
+        <Link className="navbar-item" to="/historial-notificacion">
+            Notificaciones
+        </Link>
+    )
+};
 
 function Navbar() {
     // const { token, tokenUser } = useAuth();
@@ -67,29 +75,26 @@ function Navbar() {
                         Partidos
                     </Link>
 
+                    <Link className="navbar-item" to="/resultados">
+                        Resultados 
+                    </Link>
+
                     { token && <Billetera />}
-                    { token && <Historial />}
+                    { token && <HistorialNotificacion />}
+                    { token && <HistorialCompra />}
                 </div>
             </div>
             <div className="navbar-end">
                 <div className="navbar-item">
                     <div className="buttons">
-                        { token ? (
-                            <>
-                            <p>¡Bienvenido, {tokenUser}!</p>
-                            </>
-                        ) : (
-                            <Link className="button is-primary" to="/signup">
-                                <strong>Sign Up</strong>
-                            </Link>
-                        )}
+                        <Link className="button is-primary" to="/signup">
+                            <strong>Sign Up</strong>
+                        </Link>
                         { token ? (
                             <Logout />
                         ) : (
                             <Login />
                         )}
-                        { token ? "User is logged in" : "User is not logged in" }
-                        { <Logout /> }
                     </div>
                 </div>
             </div>

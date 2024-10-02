@@ -1,12 +1,10 @@
 .navbar-logo {
-    height: 50px;
+    height: 60px;
     width: auto;
-    margin: 10px;
-    margin-top: 15px;
 }
 
-#button-logo {
-    height: 40px;
+.button-logo {
+    height: 60px;
     width: auto;
     transition: box-shadow 0.3s;
 }
@@ -16,6 +14,7 @@
 }
 
 .navbar-item {
+    height: auto;
     font-weight: normal;
     font-size: 20px;
 }
