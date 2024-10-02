@@ -32,6 +32,7 @@ const Wallet = () => {
         try {
             const response = await axios.patch(`https://grupo11backend.me/wallet`, { amount: parseInt(recarga) });
             console.log('Recarga exitosa:', response.data);
+            window.location.reload();
         } catch (error) {
             console.error('Error al hacer la recarga de creditos', error);
         }
