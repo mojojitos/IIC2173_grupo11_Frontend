@@ -14,7 +14,7 @@ const Signup = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post(`https://grupo11backend.me/signup`, {
+            const response = await axios.post(`https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/signup`, {
                 username: Username,
                 firstName: Nombre,
                 lastName: Apellido,

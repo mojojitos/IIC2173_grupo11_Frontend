@@ -9,7 +9,7 @@ const Partidos = () => {
   useEffect(() => {
     const fetchPartidos = async () => {
       try {
-        const response = await axios.get("https://grupo11backend.me/fixtures");
+        const response = await axios.get("https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/fixtures");
         setPartidos(response.data);
       } catch (error) {
         console.error("Error al obtener los partidos:", error);

@@ -15,14 +15,14 @@ const PartidosTerminados = () => {
       setError(null);
 
       try {
-        const response = await axios.get(`https://grupo11backend.me/AllOldFixtures?page=${page}`);
+        const response = await axios.get(`https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/AllOldFixtures`);
         const partidosData = response.data;
 
         
         const partidosDetalles = await Promise.all(
           partidosData.map(async (partido) => {
             try {
-              const detalleResponse = await axios.get(`https://grupo11backend.me/fixtures/${partido.id_fixture}`);
+              const detalleResponse = await axios.get(`https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/fixtures/${partido.id_fixture}`);
               return detalleResponse.data; 
             } catch (error) {
               console.error(`Error al obtener los detalles del partido con ID: ${partido.id_fixture}`, error);
@@ -60,9 +60,15 @@ const PartidosTerminados = () => {
     <div className="partidos-list">
       <h1>Partidos Terminados</h1>
       <ul>
-        {partidos.map((partido) => (
-          <Partido key={partido.fixtures.id} partido={partido} link={"partido-terminado"}/>
-        ))}
+        {partidos.map((partido) => {
+          if (partido && partido.fixtures && partido.fixtures.id) { // Verificación adicional
+            return (
+              <Partido key={partido.fixtures.id} partido={partido} link={"partido-terminado"} />
+            );
+          } else {
+            return null;
+          }
+        })}
       </ul>
       <div className="pagination">
         <button onClick={handlePreviousPage} disabled={page === 1}>

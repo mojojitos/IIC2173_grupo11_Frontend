@@ -16,7 +16,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("https://grupo11backend.me/login", {
+            const response = await axios.post("https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/login", {
                 username: username,
                 password: password,
             });

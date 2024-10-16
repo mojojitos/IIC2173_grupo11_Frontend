@@ -16,7 +16,7 @@ const Wallet = () => {
 
     useEffect(() => {
         if (UserId) {
-            axios.get(`https://grupo11backend.me/getWalletCredit/${UserId}`) // Mostrar dinero actual
+            axios.get(`https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/getWalletCredit/${UserId}`) // Mostrar dinero actual
                 .then(response => {
                     setMonto(response.data.credits);
                 })
@@ -29,7 +29,7 @@ const Wallet = () => {
     const handleSubmit = async (e) => {  // Recarga de créditos
         e.preventDefault();
         try {
-            const response = await axios.patch(`https://grupo11backend.me/wallet`, {
+            const response = await axios.patch(`https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/wallet`, {
                 id: UserId, // Agrega el ID en el cuerpo de la solicitud
                 amount: parseInt(recarga),
             });
