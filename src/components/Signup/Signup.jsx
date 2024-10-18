@@ -33,8 +33,9 @@ const Signup = () => {
                 alert(response.text());
             }
         } catch (error) {
-            setMessage('Error de red');
-            alert(message);
+            console.error('Error al realizar el signup:', error.response?.data);
+            setMessage('Error al realizar el signup:');
+            alert(error.response?.data?.error_description || 'Inicio de sesión falló. Por favor, intenta nuevamente.');
         }
     };
 
