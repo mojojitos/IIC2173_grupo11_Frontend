@@ -11,11 +11,34 @@ const CompraBonos = ({ partido }) => {
   const [status, setStatus] = useState("");
   const [ganancia, setGanancia] = useState(0);
   const [userId, setUserId] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("wallet"); 
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("user");
     if (storedUserId) {
       setUserId(storedUserId);
+    }
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const tokenWs = queryParams.get("token_ws");
+
+    if (tokenWs) {
+
+      axios
+        .post(`${process.env.REACT_APP_BACKEND_LINK}/webpay/confirm`, {
+          token_ws: tokenWs,
+        })
+        .then((response) => {
+          if (response.data.status === "success") {
+            setStatus("Transacción exitosa");
+          } else {
+            setStatus("Transacción rechazada");
+          }
+        })
+        .catch((error) => {
+          setStatus("Error al confirmar la transacción");
+          console.error("Error en la confirmación:", error);
+        });
     }
   }, []);
 
@@ -28,12 +51,28 @@ const CompraBonos = ({ partido }) => {
         quantity: quantity,
       };
 
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_LINK}/bonos/request`,
-        requestData
-      );
-      setStatus("Compra exitosa");
-      console.log(response.data);
+      if (paymentMethod === "webpay") {
+
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_LINK}/webpay/pay`,
+          requestData
+        );
+        if (response.data && response.data.token && response.data.url) {
+          setStatus("Redirigiendo a WebPay...");
+          document.getElementById("webpay-form").submit();
+        }
+      } else if (paymentMethod === "wallet") {
+
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_LINK}/bonos/request`,
+          requestData
+        );
+        if (response.data.status === "success") {
+          setStatus("Compra exitosa con Wallet");
+        } else {
+          setStatus("Error en la compra con Wallet");
+        }
+      }
     } catch (error) {
       setStatus("Error en la compra");
       console.error("Error al realizar la compra:", error);
@@ -63,6 +102,10 @@ const CompraBonos = ({ partido }) => {
     }
   };
 
+  const handlePaymentMethodChange = (e) => {
+    setPaymentMethod(e.target.value); 
+  };
+
   return (
     <div className="compra-bonos">
       <h2>Comprar Bonos</h2>
@@ -75,7 +118,6 @@ const CompraBonos = ({ partido }) => {
           placeholder="0"
         />
       </div>
-
       <div>
         <label>Resultado: </label>
         <select onChange={handleResultChange} value={selectedResult}>
@@ -85,27 +127,40 @@ const CompraBonos = ({ partido }) => {
           <option value="Away">Victoria {teams.away.name}</option>
         </select>
       </div>
-
+      <div>
+        <label>Método de Pago: </label>
+        <select onChange={handlePaymentMethodChange} value={paymentMethod}>
+          <option value="wallet">Wallet</option>
+          <option value="webpay">WebPay</option>
+        </select>
+      </div>
+  
       <div className="ganancia-info">
         <p>Ganancia potencial: ${ganancia}</p>
       </div>
       <div className="precio-info">
         <p>Precio total: ${quantity * 1000}</p>
       </div>
-
+  
       <button
         className="boton-comprar"
         onClick={handleCompra}
-        disabled={!quantity || !selectedResult|| !userId}
+        disabled={!quantity || !selectedResult || !userId}
       >
         Comprar
       </button>
       {status && (
         <p
-          className={`status ${status === "Compra exitosa" ? "success" : "error"}`}
+          className={`status ${status.includes("exitosa") ? "success" : "error"}`}
         >
           {status}
         </p>
+      )}
+
+      {paymentMethod === "webpay" && (
+        <form id="webpay-form" action={response.data.url} method="POST">
+          <input type="hidden" name="token_ws" value={response.data.token} />
+        </form>
       )}
     </div>
   );
