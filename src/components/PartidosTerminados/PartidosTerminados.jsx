@@ -15,14 +15,14 @@ const PartidosTerminados = () => {
       setError(null);
 
       try {
-        const response = await axios.get(`https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/AllOldFixtures`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/AllOldFixtures`);
         const partidosData = response.data;
 
         
         const partidosDetalles = await Promise.all(
           partidosData.map(async (partido) => {
             try {
-              const detalleResponse = await axios.get(`https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/fixtures/${partido.id_fixture}`);
+              const detalleResponse = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/fixtures/${partido.id_fixture}`);
               return detalleResponse.data; 
             } catch (error) {
               console.error(`Error al obtener los detalles del partido con ID: ${partido.id_fixture}`, error);

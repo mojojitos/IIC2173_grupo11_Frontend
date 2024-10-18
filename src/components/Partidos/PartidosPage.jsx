@@ -22,13 +22,13 @@ const Partidos = () => {
       setLoading(true);
       setError(null);
       try {
-        let url = `https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/fixtures?page=${page}`;
+        let url = `${process.env.REACT_APP_BACKEND_LINK}/fixtures?page=${page}`;
         
         // Modificar la URL según los filtros aplicados
         if (appliedFilterDate) {
-          url = `https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/byDate/${appliedFilterDate}?page=${page}`;
+          url = `${process.env.REACT_APP_BACKEND_LINK}/byDate/${appliedFilterDate}?page=${page}`;
         } else if (appliedFilterDestiny) {
-          url = `https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/byDestiny/${appliedFilterDestiny}?page=${page}`;
+          url = `${process.env.REACT_APP_BACKEND_LINK}/byDestiny/${appliedFilterDestiny}?page=${page}`;
         }
 
         const response = await axios.get(url);

@@ -29,7 +29,7 @@ const CompraBonos = ({ partido }) => {
       };
 
       const response = await axios.post(
-        "https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/bonos/request",
+        `${process.env.REACT_APP_BACKEND_LINK}/bonos/request`,
         requestData
       );
       setStatus("Compra exitosa");

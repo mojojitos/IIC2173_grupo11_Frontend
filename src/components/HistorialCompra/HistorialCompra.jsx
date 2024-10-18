@@ -18,7 +18,7 @@ function HistorialCompra() {
 
     useEffect(() => {
         if (userId) {
-            axios.get(`https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/transactions/${userId}`)
+            axios.get(`${process.env.REACT_APP_BACKEND_LINK}/transactions/${userId}`)
                 .then(response => {
                     setComprasRealizadas(response.data);
                     setTotalPaginas(Math.ceil(response.data.length / tamanoPagina));

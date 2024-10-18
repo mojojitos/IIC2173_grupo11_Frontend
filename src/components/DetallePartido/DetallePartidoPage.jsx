@@ -19,7 +19,7 @@ const DetallePartidoPage = () => {
       }
 
       try {
-        const response = await axios.get(`https://npjd9zo9g3.execute-api.us-east-1.amazonaws.com/v3/fixtures/${fixtureId}`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/fixtures/${fixtureId}`);
         setPartido(response.data);
       } catch (error) {
         console.error("Error al obtener los partidos:", error);
