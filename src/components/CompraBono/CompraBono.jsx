@@ -12,6 +12,7 @@ const CompraBonos = ({ partido }) => {
   const [ganancia, setGanancia] = useState(0);
   const [userId, setUserId] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("wallet"); 
+  const [webpayData, setWebpayData] = useState({ token: null, url: null });
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("user");
@@ -23,13 +24,12 @@ const CompraBonos = ({ partido }) => {
     const tokenWs = queryParams.get("token_ws");
 
     if (tokenWs) {
-
       axios
         .post(`${process.env.REACT_APP_BACKEND_LINK}/webpay/confirm`, {
           token_ws: tokenWs,
         })
         .then((response) => {
-          if (response.data.status === "success") {
+          if (response.status === 200) {
             setStatus("Transacción exitosa");
           } else {
             setStatus("Transacción rechazada");
@@ -52,22 +52,23 @@ const CompraBonos = ({ partido }) => {
       };
 
       if (paymentMethod === "webpay") {
-
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_LINK}/webpay/pay`,
           requestData
         );
         if (response.data && response.data.token && response.data.url) {
           setStatus("Redirigiendo a WebPay...");
-          document.getElementById("webpay-form").submit();
+          setWebpayData({
+            token: response.data.token,
+            url: response.data.url,
+          });
         }
       } else if (paymentMethod === "wallet") {
-
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_LINK}/bonos/request`,
           requestData
         );
-        if (response.data.status === "success") {
+        if (response.status === 200) {
           setStatus("Compra exitosa con Wallet");
         } else {
           setStatus("Error en la compra con Wallet");
@@ -103,7 +104,7 @@ const CompraBonos = ({ partido }) => {
   };
 
   const handlePaymentMethodChange = (e) => {
-    setPaymentMethod(e.target.value); 
+    setPaymentMethod(e.target.value);
   };
 
   return (
@@ -157,9 +158,9 @@ const CompraBonos = ({ partido }) => {
         </p>
       )}
 
-      {paymentMethod === "webpay" && (
-        <form id="webpay-form" action={response.data.url} method="POST">
-          <input type="hidden" name="token_ws" value={response.data.token} />
+      {paymentMethod === "webpay" && webpayData.url && (
+        <form id="webpay-form" action={webpayData.url} method="POST">
+          <input type="hidden" name="token_ws" value={webpayData.token} />
         </form>
       )}
     </div>
