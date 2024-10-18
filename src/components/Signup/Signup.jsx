@@ -22,8 +22,8 @@ const Signup = () => {
                 password: Password
             });
 
-
-            if (response.status === 201) {
+            console.log('Response:', response.status);
+            if (response.status === 200) {
                 setMessage('Usuario creado exitosamente');
                 console.log(`Data: ${response.data}`);
                 navigate('/');
