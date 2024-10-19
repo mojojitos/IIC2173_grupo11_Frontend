@@ -22,20 +22,22 @@ const Signup = () => {
                 password: Password
             });
 
-            console.log('Response:', response.status);
-            if (response.status === 200) {
+            console.log('Response:', typeof(response.status), response.status);
+            if (response.status == 201 || response.status == "201") { 
+                console.log('---');
                 setMessage('Usuario creado exitosamente');
                 console.log(`Data: ${response.data}`);
+                console.log(response);
                 navigate('/');
+                
             } else {
-                console.log(response.data);
-                setMessage('Error al crear el usuario');
-                alert(response.text());
+                console.log(response.data.message);
+                setMessage(`Error al crear el usuario: ${response.data.message}`);
             }
         } catch (error) {
             console.error('Error al realizar el signup:', error.response?.data);
-            setMessage('Error al realizar el signup:');
-            alert(error.response?.data?.error_description || 'Inicio de sesión falló. Por favor, intenta nuevamente.');
+            setMessage(`Error al realizar el signup: ${error.response?.data?.message || error.message}`);
+            console.log(error.response);
         }
     };
 

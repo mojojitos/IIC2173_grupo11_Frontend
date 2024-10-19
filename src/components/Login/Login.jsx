@@ -37,7 +37,7 @@ const Login = () => {
                 alert(`Error al iniciar sesión: ${response.error_description}`);
             }
         } catch (error) {
-            setStatus('Error en el login');
+            setStatus(`Error en el login: ${error.response?.data?.error_description || error.message}`);
         }
     };
     
