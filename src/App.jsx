@@ -12,6 +12,7 @@ import HistorialNotificacion from './components/HistorialNotificacion/HistorialN
 import HistorialCompra from './components/HistorialCompra/HistorialCompra.jsx';
 import DetallePartidoTerminado from './components/PartidosTerminados/DetallePartidoTerminado.jsx';
 import PartidosTerminados from './components/PartidosTerminados/PartidosTerminados.jsx';
+import WebpayRedirect from './components/Webpay/WebpayRedirect.jsx';
 
 function App() {
   useEffect(() => {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/partido-terminado/:fixtureId" element={<DetallePartidoTerminado />} />
         <Route path="/resultados" element={<PartidosTerminados />} />
         <Route path="/wallet" element={<Wallet />} />
+        <Route path="/webpay/:requestId" element={<WebpayRedirect/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/historial-notificacion" element={<HistorialNotificacion />} />

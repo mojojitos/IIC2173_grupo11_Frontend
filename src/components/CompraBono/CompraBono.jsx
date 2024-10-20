@@ -62,6 +62,9 @@ const CompraBonos = ({ partido }) => {
             token: response.data.token,
             url: response.data.url,
           });
+          setTimeout(() => {
+            document.getElementById("webpay-form").submit();
+          }, 1000); 
         }
       } else if (paymentMethod === "wallet") {
         const response = await axios.post(
