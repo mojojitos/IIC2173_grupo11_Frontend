@@ -11,34 +11,13 @@ const CompraBonos = ({ partido }) => {
   const [status, setStatus] = useState("");
   const [ganancia, setGanancia] = useState(0);
   const [userId, setUserId] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState("wallet"); 
+  const [paymentMethod, setPaymentMethod] = useState("wallet");
   const [webpayData, setWebpayData] = useState({ token: null, url: null });
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("user");
     if (storedUserId) {
       setUserId(storedUserId);
-    }
-
-    const queryParams = new URLSearchParams(window.location.search);
-    const tokenWs = queryParams.get("token_ws");
-
-    if (tokenWs) {
-      axios
-        .post(`${process.env.REACT_APP_BACKEND_LINK}/webpay/confirm`, {
-          token_ws: tokenWs,
-        })
-        .then((response) => {
-          if (response.status === 200) {
-            setStatus("Transacción exitosa");
-          } else {
-            setStatus("Transacción rechazada");
-          }
-        })
-        .catch((error) => {
-          setStatus("Error al confirmar la transacción");
-          console.error("Error en la confirmación:", error);
-        });
     }
   }, []);
 
@@ -138,14 +117,14 @@ const CompraBonos = ({ partido }) => {
           <option value="webpay">WebPay</option>
         </select>
       </div>
-  
+
       <div className="ganancia-info">
         <p>Ganancia potencial: ${ganancia}</p>
       </div>
       <div className="precio-info">
         <p>Precio total: ${quantity * 1000}</p>
       </div>
-  
+
       <button
         className="boton-comprar"
         onClick={handleCompra}
