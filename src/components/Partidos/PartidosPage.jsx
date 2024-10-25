@@ -16,18 +16,20 @@ const Partidos = () => {
   // Estados para almacenar los valores de los filtros aplicados
   const [appliedFilterDate, setAppliedFilterDate] = useState("");
   const [appliedFilterDestiny, setAppliedFilterDestiny] = useState("");
-  console.log(process.env.REACT_APP_BACKEND_LINK);
   useEffect(() => {
     const fetchPartidos = async () => {
       setLoading(true);
       setError(null);
       try {
+        // eslint-disable-next-line no-undef
         let url = `${process.env.REACT_APP_BACKEND_LINK}/fixtures?page=${page}`;
         
         // Modificar la URL según los filtros aplicados
         if (appliedFilterDate) {
+          // eslint-disable-next-line no-undef
           url = `${process.env.REACT_APP_BACKEND_LINK}/byDate/${appliedFilterDate}?page=${page}`;
         } else if (appliedFilterDestiny) {
+          // eslint-disable-next-line no-undef
           url = `${process.env.REACT_APP_BACKEND_LINK}/byDestiny/${appliedFilterDestiny}?page=${page}`;
         }
 

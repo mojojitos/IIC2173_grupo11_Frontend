@@ -9,6 +9,7 @@ const Partidos = () => {
   useEffect(() => {
     const fetchPartidos = async () => {
       try {
+        // eslint-disable-next-line no-undef
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/fixtures`);
         setPartidos(response.data);
       } catch (error) {

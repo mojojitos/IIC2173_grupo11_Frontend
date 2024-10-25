@@ -19,6 +19,7 @@ const Wallet = () => {
 
     useEffect(() => {
         if (userId) {
+            // eslint-disable-next-line no-undef
             axios.get(`${process.env.REACT_APP_BACKEND_LINK}/getWalletCredit/${userId}`) // Mostrar dinero actual
                 .then(response => {
                     setMonto(response.data.credits);
@@ -42,7 +43,7 @@ const Wallet = () => {
                 userId: userId,
                 amount: parseInt(recarga),
             };
-
+            // eslint-disable-next-line no-undef
             const response = await axios.patch(`${process.env.REACT_APP_BACKEND_LINK}/webpay/recharge`, requestData);
 
             if (response.data && response.data.token && response.data.url) {

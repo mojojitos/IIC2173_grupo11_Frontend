@@ -18,6 +18,7 @@ const DetallePartidoPage = () => {
       }
 
       try {
+        // eslint-disable-next-line no-undef
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/fixtures/${fixtureId}`);
         setPartido(response.data);
       } catch (error) {

@@ -18,6 +18,7 @@ function HistorialCompra() {
 
     useEffect(() => {
         if (userId) {
+            // eslint-disable-next-line no-undef
             axios.get(`${process.env.REACT_APP_BACKEND_LINK}/transactions/${userId}`)
                 .then(response => {
                     setComprasRealizadas(response.data);

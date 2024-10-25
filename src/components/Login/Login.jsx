@@ -16,6 +16,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            // eslint-disable-next-line no-undef
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/login`, {
                 username: username,
                 password: password,

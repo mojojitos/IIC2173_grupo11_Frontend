@@ -14,6 +14,7 @@ const Signup = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
+            // eslint-disable-next-line no-undef
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/signup`, {
                 username: Username,
                 firstName: Nombre,

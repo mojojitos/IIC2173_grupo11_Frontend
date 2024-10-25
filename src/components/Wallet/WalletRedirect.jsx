@@ -31,6 +31,7 @@ const WebpayRedirect = () => {
         }
 
         // Realizar la solicitud de confirmación de Webpay enviando userId y amount
+        // eslint-disable-next-line no-undef
         const response = await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/webpay/confirm_recharge/${requestId}`, {
           token_ws: tokenWs,
           userId: userId,

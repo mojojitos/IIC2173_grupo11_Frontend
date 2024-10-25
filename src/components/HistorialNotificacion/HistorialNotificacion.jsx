@@ -18,6 +18,7 @@ function HistorialNotificacion() {
 
     useEffect(() => {
         if (UserId) {
+            // eslint-disable-next-line no-undef
             axios.get(`${process.env.REACT_APP_BACKEND_LINK}/showNotifications/${UserId}`)
                 .then(response => {
                     setNotificacionesRecibidas(response.data);

@@ -15,6 +15,7 @@ const PartidosTerminados = () => {
       setError(null);
 
       try {
+        // eslint-disable-next-line no-undef
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/AllOldFixtures`);
         const partidosData = response.data;
 
@@ -22,6 +23,7 @@ const PartidosTerminados = () => {
         const partidosDetalles = await Promise.all(
           partidosData.map(async (partido) => {
             try {
+              // eslint-disable-next-line no-undef
               const detalleResponse = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/fixtures/${partido.id_fixture}`);
               return detalleResponse.data; 
             } catch (error) {
