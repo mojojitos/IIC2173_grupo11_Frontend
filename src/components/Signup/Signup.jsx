@@ -24,7 +24,7 @@ const Signup = () => {
             });
 
             console.log('Response:', typeof(response.status), response.status);
-            if (response.status == 201 || response.status == "201") { 
+            if (response.status === 201 || response.status === "201") { 
                 console.log('---');
                 setMessage('Usuario creado exitosamente');
                 console.log(`Data: ${response.data}`);
