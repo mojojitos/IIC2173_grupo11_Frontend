@@ -8,7 +8,8 @@ const WebpayRedirect = () => {
   useEffect(() => {
     const confirmWebpay = async () => {
       const tokenWs = new URLSearchParams(window.location.search).get('token_ws');
-      
+      const userId = localStorage.getItem('user'); 
+
       // Verificar si la transacción ya está en curso o fue procesada
       const lockKey = `webpay_confirm_lock_${requestId}`;
       if (sessionStorage.getItem(lockKey)) {
@@ -22,7 +23,8 @@ const WebpayRedirect = () => {
       try {
         // eslint-disable-next-line no-undef
         const response = await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/webpay/confirm/${requestId}`, {
-          token_ws: tokenWs
+          token_ws: tokenWs,
+          userId: userId 
         });
         
         console.log('Respuesta de confirmación de Webpay:', response.status, response.data.message);
