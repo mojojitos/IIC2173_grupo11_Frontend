@@ -13,9 +13,9 @@ const Signup = () => {
     const navigate = useNavigate();
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(Username, Nombre, Apellido, Correo, Password);
         try {
-            const response = await axios.post(`https://grupo11backend.me/signup`, {
+            // eslint-disable-next-line no-undef
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/signup`, {
                 username: Username,
                 firstName: Nombre,
                 lastName: Apellido,
@@ -23,19 +23,22 @@ const Signup = () => {
                 password: Password
             });
 
-
-            if (response.status === 201) {
+            console.log('Response:', typeof(response.status), response.status);
+            if (response.status === 201 || response.status === "201") { 
+                console.log('---');
                 setMessage('Usuario creado exitosamente');
                 console.log(`Data: ${response.data}`);
+                console.log(response);
                 navigate('/');
+                
             } else {
-                console.log(response.data);
-                setMessage('Error al crear el usuario');
-                alert(response.text());
+                console.log(response.data.message);
+                setMessage(`Error al crear el usuario: ${response.data.message}`);
             }
         } catch (error) {
-            setMessage('Error de red');
-            alert(message);
+            console.error('Error al realizar el signup:', error.response?.data);
+            setMessage(`Error al realizar el signup: ${error.response?.data?.message || error.message}`);
+            console.log(error.response);
         }
     };
 

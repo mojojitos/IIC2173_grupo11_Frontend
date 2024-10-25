@@ -15,23 +15,25 @@ const PartidosTerminados = () => {
       setError(null);
 
       try {
-        const response = await axios.get(`https://grupo11backend.me/AllOldFixtures?page=${page}`);
+        // eslint-disable-next-line no-undef
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/AllOldFixtures`);
         const partidosData = response.data;
 
-        // Hacer solicitudes a fixtures/id para cada partido terminado
+        
         const partidosDetalles = await Promise.all(
           partidosData.map(async (partido) => {
             try {
-              const detalleResponse = await axios.get(`https://grupo11backend.me/fixtures/${partido.id_fixture}`);
-              return detalleResponse.data; // Retorna los detalles del partido
+              // eslint-disable-next-line no-undef
+              const detalleResponse = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/fixtures/${partido.id_fixture}`);
+              return detalleResponse.data; 
             } catch (error) {
               console.error(`Error al obtener los detalles del partido con ID: ${partido.id_fixture}`, error);
-              return null; // Manejar errores devolviendo null
+              return null; 
             }
           })
         );
 
-        // Filtrar cualquier partido que no se haya podido obtener correctamente
+       
         setPartidos(partidosDetalles.filter((detalle) => detalle !== null));
       } catch (error) {
         console.error("Error al obtener los partidos terminados:", error);
@@ -43,7 +45,6 @@ const PartidosTerminados = () => {
 
     fetchPartidosTerminados();
   }, [page]);
-  console.log(partidos);
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
   };
@@ -61,9 +62,15 @@ const PartidosTerminados = () => {
     <div className="partidos-list">
       <h1>Partidos Terminados</h1>
       <ul>
-        {partidos.map((partido) => (
-          <Partido key={partido.fixtures.id} partido={partido} link={"partido-terminado"}/>
-        ))}
+        {partidos.map((partido) => {
+          if (partido && partido.fixtures && partido.fixtures.id) { // Verificación adicional
+            return (
+              <Partido key={partido.fixtures.id} partido={partido} link={"partido-terminado"} />
+            );
+          } else {
+            return null;
+          }
+        })}
       </ul>
       <div className="pagination">
         <button onClick={handlePreviousPage} disabled={page === 1}>

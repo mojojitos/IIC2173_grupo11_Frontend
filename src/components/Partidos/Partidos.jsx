@@ -9,7 +9,8 @@ const Partidos = () => {
   useEffect(() => {
     const fetchPartidos = async () => {
       try {
-        const response = await axios.get("https://grupo11backend.me/fixtures");
+        // eslint-disable-next-line no-undef
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/fixtures`);
         setPartidos(response.data);
       } catch (error) {
         console.error("Error al obtener los partidos:", error);

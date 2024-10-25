@@ -16,32 +16,29 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("https://grupo11backend.me/login", {
+            // eslint-disable-next-line no-undef
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/login`, {
                 username: username,
                 password: password,
             });
-
+    
             if (response.status === 200) {
                 console.log('Inicio de sesión exitoso');
                 console.log(`Data: ${response.data}`);
-                // console.log(`accessToken: ${response.data.message}`);
-                // console.log(Object.keys(response.data.message));
                 localStorage.setItem('accessToken', response.data.message.access_token);
-                localStorage.setItem('user', response.data.userData.username);
-                const addToken = localStorage.getItem('accessToken');
-                const addUser = localStorage.getItem('user');
-                console.log(`accessToken: ${addToken}`);
-                console.log(`user: ${addUser}`);
-                // postLogin(response.data.message.access_token, response.data.userData.username);
-                navigate('/');
+                localStorage.setItem('user', response.data.userData.id);
+                console.log(`accessToken: ${localStorage.getItem('accessToken')}`);
+                console.log(`user: ${localStorage.getItem('user')}`);
+    
+                navigate('/'); 
+                window.location.reload(); 
             } else {
                 console.log(response.data);
                 console.log('Error al iniciar sesión');
                 alert(`Error al iniciar sesión: ${response.error_description}`);
             }
         } catch (error) {
-            setStatus('Error en el login');
-            // console.error('Error al realizar el login:', error.response.data);
+            setStatus(`Error en el login: ${error.response?.data?.error_description || error.message}`);
         }
     };
     

@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import "./CompraBono.scss";
 
-const CompraBonos = ({ partido, userId }) => {
+const CompraBonos = ({ partido }) => {
   const { fixtures, teams, odds } = partido;
   const [quantity, setQuantity] = useState("");
   const [selectedResult, setSelectedResult] = useState("");
   const [selectedOdd, setSelectedOdd] = useState(null);
   const [status, setStatus] = useState("");
   const [ganancia, setGanancia] = useState(0);
+  const [userId, setUserId] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("wallet");
+  const [webpayData, setWebpayData] = useState({ token: null, url: null });
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("user");
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+  }, []);
 
   const handleCompra = async () => {
     try {
@@ -19,14 +29,35 @@ const CompraBonos = ({ partido, userId }) => {
         result: selectedResult,
         quantity: quantity,
       };
-      console.log(requestData);
 
-      const response = await axios.post(
-        "https://grupo11backend.me/bonos/request",
-        requestData
-      );
-      setStatus("Compra exitosa");
-      console.log(response.data);
+      if (paymentMethod === "webpay") {
+        const response = await axios.post(
+          // eslint-disable-next-line no-undef
+          `${process.env.REACT_APP_BACKEND_LINK}/webpay/pay`,
+          requestData
+        );
+        if (response.data && response.data.token && response.data.url) {
+          setStatus("Redirigiendo a WebPay...");
+          setWebpayData({
+            token: response.data.token,
+            url: response.data.url,
+          });
+          setTimeout(() => {
+            document.getElementById("webpay-form").submit();
+          }, 1000); 
+        }
+      } else if (paymentMethod === "wallet") {
+        const response = await axios.post(
+          // eslint-disable-next-line no-undef
+          `${process.env.REACT_APP_BACKEND_LINK}/bonos/request`,
+          requestData
+        );
+        if (response.status === 200) {
+          setStatus("Compra exitosa con Wallet");
+        } else {
+          setStatus("Error en la compra con Wallet");
+        }
+      }
     } catch (error) {
       setStatus("Error en la compra");
       console.error("Error al realizar la compra:", error);
@@ -38,7 +69,6 @@ const CompraBonos = ({ partido, userId }) => {
     setSelectedResult(result);
 
     const foundOdd = odds.values.find((value) => value.value === result);
-
     setSelectedOdd(foundOdd);
 
     if (foundOdd) {
@@ -51,12 +81,14 @@ const CompraBonos = ({ partido, userId }) => {
   const handleQuantityChange = (e) => {
     const newQuantity = Math.max(0, Number(e.target.value));
     setQuantity(newQuantity);
-    if (newQuantity === 0) {
-      setQuantity("");
-    }
+
     if (selectedOdd) {
       setGanancia(newQuantity * parseFloat(selectedOdd.odd) * 1000);
     }
+  };
+
+  const handlePaymentMethodChange = (e) => {
+    setPaymentMethod(e.target.value);
   };
 
   return (
@@ -71,7 +103,6 @@ const CompraBonos = ({ partido, userId }) => {
           placeholder="0"
         />
       </div>
-
       <div>
         <label>Resultado: </label>
         <select onChange={handleResultChange} value={selectedResult}>
@@ -79,6 +110,13 @@ const CompraBonos = ({ partido, userId }) => {
           <option value="Home">Victoria {teams.home.name}</option>
           <option value="Draw">Empate</option>
           <option value="Away">Victoria {teams.away.name}</option>
+        </select>
+      </div>
+      <div>
+        <label>Método de Pago: </label>
+        <select onChange={handlePaymentMethodChange} value={paymentMethod}>
+          <option value="wallet">Wallet</option>
+          <option value="webpay">WebPay</option>
         </select>
       </div>
 
@@ -92,18 +130,22 @@ const CompraBonos = ({ partido, userId }) => {
       <button
         className="boton-comprar"
         onClick={handleCompra}
-        disabled={!quantity || !selectedResult}
+        disabled={!quantity || !selectedResult || !userId}
       >
         Comprar
       </button>
       {status && (
         <p
-          className={`status ${
-            status === "Compra exitosa" ? "success" : "error"
-          }`}
+          className={`status ${status.includes("exitosa") ? "success" : "error"}`}
         >
           {status}
         </p>
+      )}
+
+      {paymentMethod === "webpay" && webpayData.url && (
+        <form id="webpay-form" action={webpayData.url} method="POST">
+          <input type="hidden" name="token_ws" value={webpayData.token} />
+        </form>
       )}
     </div>
   );
@@ -112,8 +154,7 @@ const CompraBonos = ({ partido, userId }) => {
 CompraBonos.propTypes = {
   partido: PropTypes.shape({
     fixtures: PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-        .isRequired,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     }).isRequired,
     teams: PropTypes.shape({
       home: PropTypes.shape({
@@ -133,7 +174,6 @@ CompraBonos.propTypes = {
       ).isRequired,
     }).isRequired,
   }).isRequired,
-  userId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default CompraBonos;
