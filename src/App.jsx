@@ -13,6 +13,7 @@ import HistorialCompra from './components/HistorialCompra/HistorialCompra.jsx';
 import DetallePartidoTerminado from './components/PartidosTerminados/DetallePartidoTerminado.jsx';
 import PartidosTerminados from './components/PartidosTerminados/PartidosTerminados.jsx';
 import WebpayRedirect from './components/Webpay/WebpayRedirect.jsx';
+import WalletRedirect from './components/Wallet/WalletRedirect.jsx';
 
 function App() {
   useEffect(() => {
@@ -31,6 +32,7 @@ function App() {
         <Route path="/resultados" element={<PartidosTerminados />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/webpay/:requestId" element={<WebpayRedirect/>} />
+        <Route path="/wallet/:requestId" element={<WalletRedirect />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/historial-notificacion" element={<HistorialNotificacion />} />

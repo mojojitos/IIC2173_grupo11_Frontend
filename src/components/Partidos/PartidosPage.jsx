@@ -16,7 +16,7 @@ const Partidos = () => {
   // Estados para almacenar los valores de los filtros aplicados
   const [appliedFilterDate, setAppliedFilterDate] = useState("");
   const [appliedFilterDestiny, setAppliedFilterDestiny] = useState("");
-
+  console.log(process.env.REACT_APP_BACKEND_LINK);
   useEffect(() => {
     const fetchPartidos = async () => {
       setLoading(true);
