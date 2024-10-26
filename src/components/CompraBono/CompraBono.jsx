@@ -36,6 +36,7 @@ const CompraBonos = ({ partido }) => {
         sessionStorage.setItem(lockKey, "processing");
 
         const response = await axios.post(
+          // eslint-disable-next-line no-undef
           `${process.env.REACT_APP_BACKEND_LINK}/webpay/pay`,
           requestData
         );
@@ -51,6 +52,7 @@ const CompraBonos = ({ partido }) => {
         }
       } else if (paymentMethod === "wallet") {
         const response = await axios.post(
+          // eslint-disable-next-line no-undef
           `${process.env.REACT_APP_BACKEND_LINK}/bonos/request`,
           requestData
         );
