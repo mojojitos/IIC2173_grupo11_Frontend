@@ -19,6 +19,7 @@ const WebpayRedirect = () => {
       sessionStorage.setItem(lockKey, 'processing');
 
       try {
+        // eslint-disable-next-line no-undef
         const response = await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/webpay/confirm/${requestId}`, {
           token_ws: tokenWs,
           userId: userId 
