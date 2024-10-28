@@ -36,10 +36,6 @@ const Signup = () => {
                 setMessage(`Error al crear el usuario: ${response.data.message}`);
             }
         } catch (error) {
-            if (error.message === 'Network Error') {
-                setMessage('Usuario creado exitosamente');
-                navigate('/');
-            }
             console.error('Error al realizar el signup:', error.response?.data);
             setMessage(`Error al realizar el signup: ${error.response?.data?.message || error.message}`);
             console.log(error.response);
