@@ -12,6 +12,7 @@ import HistorialNotificacion from './components/HistorialNotificacion/HistorialN
 import HistorialCompra from './components/HistorialCompra/HistorialCompra.jsx';
 import DetallePartidoTerminado from './components/PartidosTerminados/DetallePartidoTerminado.jsx';
 import PartidosTerminados from './components/PartidosTerminados/PartidosTerminados.jsx';
+import Recomendaciones from './components/Recomendaciones/Recomendaciones.jsx';
 import WebpayRedirect from './components/Webpay/WebpayRedirect.jsx';
 import WalletRedirect from './components/Wallet/WalletRedirect.jsx';
 import CompraResultado from './components/CompraResultado/CompraResultado.jsx';
@@ -40,6 +41,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/historial-notificacion" element={<HistorialNotificacion />} />
         <Route path="/historial-compra" element={<HistorialCompra />} />
+        <Route path="/recomendaciones" element={<Recomendaciones />} />
         <Route path="/arena" element={<BullData />} />
       </Routes>
     </Router>
