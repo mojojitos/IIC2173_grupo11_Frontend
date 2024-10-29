@@ -26,7 +26,8 @@ const WebpayRedirect = () => {
         });
         
         console.log('Respuesta de confirmación de Webpay:', response.status, response.data.message);
-        handleTransactionStatus(response.status, response.data.message);
+        
+        handleTransactionStatus(response.status, response.data.message, requestId);
 
         sessionStorage.removeItem(lockKey);  // Eliminar el candado al finalizar
         
@@ -41,20 +42,20 @@ const WebpayRedirect = () => {
     confirmWebpay();
   }, [requestId]);
 
-  const handleTransactionStatus = (status, message) => {
+  const handleTransactionStatus = (status, message, requestId) => {
     console.log('Estado de la transacción:', status, message);
     if (status === 200 && message.includes('exito')) {
       alert("¡Pago exitoso!");
-      window.location.href = "/resultado/exito"; 
+      window.location.href = `/resultado/exito/${requestId}`; 
     } else if (status === 200 && message.includes('rechazada')) {
       alert("Lo sentimos, el pago fue rechazado.");
-      window.location.href = "/resultado/fallo"; 
+      window.location.href = `/resultado/fallo/${requestId}`; 
     } else if (status === 200 && message.includes('anulada')) {
       alert("Has cancelado la compra.");
-      window.location.href = "/resultado/anulado"; 
+      window.location.href = `/resultado/anulado/${requestId}`; 
     } else {
       alert("Ocurrió un error inesperado, por favor intenta de nuevo.");
-      window.location.href = "/resultado/error"; 
+      window.location.href = `/resultado/error/${requestId}`; 
     }
   };
   
