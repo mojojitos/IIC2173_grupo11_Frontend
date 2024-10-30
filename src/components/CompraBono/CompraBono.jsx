@@ -23,31 +23,23 @@ const CompraBonos = ({ partido }) => {
 
   const handleCompra = async () => {
     try {
-      const lockKey = `webpay_confirm_lock_${fixtures.id}`;
-      
-      // Verificar si ya hay una transacción en proceso
-      if (sessionStorage.getItem(lockKey) === "processing") {
-        setStatus("Transacción en proceso. Por favor, espere.");
-        return; // Salir de la función sin proceder
-      }
-  
       const requestData = {
         userId: userId,
         fixtureId: fixtures.id,
         result: selectedResult,
         quantity: quantity,
       };
-  
+
       if (paymentMethod === "webpay") {
-        // Configurar el candado antes de la redirección
+        // Crear el candado en `sessionStorage` antes de la redirección
+        const lockKey = `webpay_confirm_lock_${fixtures.id}`;
         sessionStorage.setItem(lockKey, "processing");
-  
+
         const response = await axios.post(
           // eslint-disable-next-line no-undef
           `${process.env.REACT_APP_BACKEND_LINK}/webpay/pay`,
           requestData
         );
-  
         if (response.data && response.data.token && response.data.url) {
           setStatus("Redirigiendo a WebPay...");
           setWebpayData({
@@ -56,7 +48,7 @@ const CompraBonos = ({ partido }) => {
           });
           setTimeout(() => {
             document.getElementById("webpay-form").submit();
-          }, 1000);
+          }, 1000); 
         }
       } else if (paymentMethod === "wallet") {
         const response = await axios.post(
@@ -75,7 +67,6 @@ const CompraBonos = ({ partido }) => {
       console.error("Error al realizar la compra:", error);
     }
   };
-  
 
   const handleResultChange = (e) => {
     const result = e.target.value;
