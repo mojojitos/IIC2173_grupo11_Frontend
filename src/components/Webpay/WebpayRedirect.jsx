@@ -45,13 +45,10 @@ const WebpayRedirect = () => {
   const handleTransactionStatus = (status, message, requestId) => {
     console.log('Estado de la transacción:', status, message);
     if (status === 200 && message.includes('exito')) {
-      alert("¡Pago exitoso!");
       window.location.href = `/resultado/exito/${requestId}`; 
     } else if (status === 200 && message.includes('rechazada')) {
-      alert("Lo sentimos, el pago fue rechazado.");
       window.location.href = `/resultado/rechazada/${requestId}`; 
     } else if (status === 200 && message.includes('anulada')) {
-      alert("Has cancelado la compra.");
       window.location.href = `/resultado/anulado/${requestId}`; 
     } else {
       alert("Ocurrió un error inesperado, por favor intenta de nuevo.");

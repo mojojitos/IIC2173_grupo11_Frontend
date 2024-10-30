@@ -10,6 +10,7 @@ function BullData() {
 
   const handleFetchJob = async () => {
     try {
+      // eslint-disable-next-line no-undef
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/job/${jobId}`);
       setJobData(response.data);
     } catch (error) {
@@ -19,6 +20,7 @@ function BullData() {
 
   const handleCreateJob = async () => {
     try {
+      // eslint-disable-next-line no-undef
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/job`,{ data1: newJob }
       );
       // console.log('Job created:', response.data);
@@ -30,6 +32,7 @@ function BullData() {
 
   const handleFetchStatus = async () => {
     try {
+      // eslint-disable-next-line no-undef
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/heartbeat`);
       setStatus(response.data);
     } catch (error) {
