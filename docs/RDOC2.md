@@ -134,3 +134,10 @@ El frontend maneja la respuesta de Webpay y redirige a un endpoint específico s
 
 - **Éxito**: se muestra información de la compra aprobada.
 - **Anulada/Rechazada/Error**: se muestra un mensaje correspondiente al estado de la transacción.
+
+## Manejo de Wallet
+
+El proceso de integración de Webpay para el manejo de **wallet** es similar al flujo de transacciones estándar, con algunas diferencias clave:
+
+1. **Sin comunicación con el broker**: En este caso, no se envía la información de la transacción al broker.
+2. **Redirección específica**: La redirección posterior a la transacción se configura para dirigir nuevamente al usuario a la sección `/wallet` en el frontend.
