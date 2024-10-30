@@ -70,6 +70,9 @@ function Navbar() {
                     <Link className="navbar-item" to="/resultados">
                         Resultados 
                     </Link>
+                    <Link className="navbar-item" to="/arena">
+                        Workers
+                    </Link>
                     {userId && <Billetera />}
                     {userId && <HistorialNotificacion />}
                     {userId && <HistorialCompra />}
