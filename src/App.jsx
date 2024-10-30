@@ -14,7 +14,7 @@ import DetallePartidoTerminado from './components/PartidosTerminados/DetallePart
 import PartidosTerminados from './components/PartidosTerminados/PartidosTerminados.jsx';
 import WebpayRedirect from './components/Webpay/WebpayRedirect.jsx';
 import WalletRedirect from './components/Wallet/WalletRedirect.jsx';
-import WebpayPagos from './components/Webpay/WebpayPagos.jsx';
+import CompraResultado from './components/CompraResultado/CompraResultado.jsx';
 
 function App() {
   useEffect(() => {
@@ -30,7 +30,7 @@ function App() {
         <Route path="/partidos" element={<Partidos />} />
         <Route path="/partido/:fixtureId" element={<DetallePartidoPage />} />
         <Route path="/partido-terminado/:fixtureId" element={<DetallePartidoTerminado />} />
-        <Route path="/resultado/:state/:requestId" element={<WebpayPagos />} />
+        <Route path="/resultado/:state/:requestId" element={<CompraResultado />} />
         <Route path="/resultados" element={<PartidosTerminados />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/webpay/:requestId" element={<WebpayRedirect/>} />

@@ -49,7 +49,7 @@ const WebpayRedirect = () => {
       window.location.href = `/resultado/exito/${requestId}`; 
     } else if (status === 200 && message.includes('rechazada')) {
       alert("Lo sentimos, el pago fue rechazado.");
-      window.location.href = `/resultado/fallo/${requestId}`; 
+      window.location.href = `/resultado/rechazada/${requestId}`; 
     } else if (status === 200 && message.includes('anulada')) {
       alert("Has cancelado la compra.");
       window.location.href = `/resultado/anulado/${requestId}`; 
