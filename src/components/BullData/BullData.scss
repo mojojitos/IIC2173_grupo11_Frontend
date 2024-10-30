@@ -1,0 +1,13 @@
+.bullInfo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
+  gap: 20px; /* Space between columns */
+  padding: 20px;
+}
+  
+.bullInfo {
+  border: 1px solid #ccc; /* Optional: Adds a border for visibility */
+  padding: 20px; /* Optional: Adds padding inside each column */
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow for depth */
+}
+  

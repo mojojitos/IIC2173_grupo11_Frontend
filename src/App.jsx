@@ -15,6 +15,7 @@ import PartidosTerminados from './components/PartidosTerminados/PartidosTerminad
 import WebpayRedirect from './components/Webpay/WebpayRedirect.jsx';
 import WalletRedirect from './components/Wallet/WalletRedirect.jsx';
 import CompraResultado from './components/CompraResultado/CompraResultado.jsx';
+import BullData from './components/BullData/BullData.jsx';
 
 function App() {
   useEffect(() => {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/historial-notificacion" element={<HistorialNotificacion />} />
         <Route path="/historial-compra" element={<HistorialCompra />} />
+        <Route path="/arena" element={<BullData />} />
       </Routes>
     </Router>
   );
