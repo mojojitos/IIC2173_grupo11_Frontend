@@ -69,7 +69,18 @@ function HistorialCompra() {
                                             {compra.money_victory > 0 && "Dinero ganado: $" + compra.money_victory}
                                             {compra.money_defeat > 0 && "Dinero perdido: $" + compra.money_defeat}
                                         </p>
+                                        
                                         <p className="subtitle is-6"> Fecha de la transaccion: {new Date(compra.date_transaction).toLocaleString()} </p>
+                                                                                    {/* Botón para ver el PDF */}
+                                                                                    <button
+                                                className="button is-link"
+                                                onClick={() => {
+                                                    const pdfUrl = `https://bucket-boletas.s3.us-east-1.amazonaws.com/pdfs/${userId}/${compra.id_request}.pdf`;
+                                                    window.open(pdfUrl, "_blank");
+                                                }}
+                                            >
+                                                Ver PDF
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
