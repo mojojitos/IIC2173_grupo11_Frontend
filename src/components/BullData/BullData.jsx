@@ -20,7 +20,7 @@ function BullData() {
   const handleCreateJob = async () => {
     try {
       // eslint-disable-next-line no-undef
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/job`, { data1: null });
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/job`);
     setStatus(response.data);
       // console.log('Job created:', response.data);
     } catch (error) {
@@ -35,17 +35,6 @@ function BullData() {
       setStatus(response.data);
     } catch (error) {
       console.error('Error fetching status:', error);
-    }
-  };
-
-  const handleCreateAwaitJob = async () => {
-    try {
-      // eslint-disable-next-line no-undef
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/await_and_return`);
-      // console.log('Job created:', response.data);
-      setStatus(response.data);
-    } catch (error) {
-      console.error('Error creating job:', error);
     }
   };
 
@@ -71,10 +60,6 @@ function BullData() {
       <div>
         <h2>Create Job</h2>
         <button onClick={handleCreateJob}>Create Job</button>
-      </div>
-      <div>
-        <h2>Create Await Job</h2>
-        <button onClick={handleCreateAwaitJob}>Create Await Job</button>
       </div>
       <div>
         <h2>Status</h2>
