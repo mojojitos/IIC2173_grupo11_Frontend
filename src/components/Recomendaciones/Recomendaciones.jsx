@@ -16,6 +16,7 @@ const Recomendaciones = () => {
 
   useEffect(() => {
     if (userId) {
+      // eslint-disable-next-line no-undef
       axios.get(`${process.env.REACT_APP_BACKEND_LINK}/recommendations/${userId}`)
           .then(response => {
               setRecomendaciones(response.data);
