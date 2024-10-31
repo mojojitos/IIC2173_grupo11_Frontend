@@ -6,7 +6,6 @@ function BullData() {
   const [jobId, setJobId] = useState('');
   const [jobData, setJobData] = useState(null);
   const [status, setStatus] = useState(null);
-  const [newJob, setNewJob] = useState('newData');
 
   const handleFetchJob = async () => {
     try {
@@ -21,10 +20,9 @@ function BullData() {
   const handleCreateJob = async () => {
     try {
       // eslint-disable-next-line no-undef
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/job`,{ data1: newJob }
-      );
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/job`, { data1: null });
+    setStatus(response.data);
       // console.log('Job created:', response.data);
-      setNewJob(response.data);
     } catch (error) {
       console.error('Error creating job:', error);
     }
@@ -37,6 +35,17 @@ function BullData() {
       setStatus(response.data);
     } catch (error) {
       console.error('Error fetching status:', error);
+    }
+  };
+
+  const handleCreateAwaitJob = async () => {
+    try {
+      // eslint-disable-next-line no-undef
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/await_and_return`);
+      // console.log('Job created:', response.data);
+      setStatus(response.data);
+    } catch (error) {
+      console.error('Error creating job:', error);
     }
   };
 
@@ -61,14 +70,11 @@ function BullData() {
       </div>
       <div>
         <h2>Create Job</h2>
-        <input
-          type="text"
-          value={newJob}
-          onChange={(e) => setNewJob(e.target.value)}
-          placeholder="Enter Job ID"
-        />
         <button onClick={handleCreateJob}>Create Job</button>
-        {newJob && <pre>{JSON.stringify(newJob, null, 2)}</pre>}
+      </div>
+      <div>
+        <h2>Create Await Job</h2>
+        <button onClick={handleCreateAwaitJob}>Create Await Job</button>
       </div>
       <div>
         <h2>Status</h2>
