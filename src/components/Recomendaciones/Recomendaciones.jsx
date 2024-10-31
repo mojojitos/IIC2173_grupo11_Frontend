@@ -5,19 +5,26 @@ import "./Recomendaciones.scss";
 
 const Recomendaciones = () => {
   const [recomendaciones, setRecomendaciones] = useState([]);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    const fetchRecomendaciones = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/recommendations`);
-        setRecomendaciones(response.data);
-      } catch (error) {
-        console.error("Error al obtener los partidos recomendados:", error);
-      }
-    };
-
-    fetchRecomendaciones();
+    const storedUserId = localStorage.getItem("user");
+    if (storedUserId) {
+        setUserId(storedUserId);
+    }
   }, []);
+
+  useEffect(() => {
+    if (userId) {
+      axios.get(`${process.env.REACT_APP_BACKEND_LINK}/recommendations/${userId}`)
+          .then(response => {
+              setRecomendaciones(response.data);
+          })
+          .catch(error => {
+              console.error('Error al obtener las recomendaciones:', error);
+          });
+        }
+      }, [userId]);
 
   return (
     <div className="recomendaciones-list">
