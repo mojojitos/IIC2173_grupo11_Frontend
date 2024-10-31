@@ -75,7 +75,7 @@ function HistorialCompra() {
                                                                                     <button
                                                 className="button is-link"
                                                 onClick={() => {
-                                                    const pdfUrl = `https://bucket-boletas.s3.us-east-1.amazonaws.com/pdfs/${userId}/${compra.id_request}.pdf`;
+                                                    const pdfUrl = `https://grupo11-dev-pdf-bucket.s3.us-east-1.amazonaws.com/pdfs/${userId}/${compra.id_request}.pdf`;
                                                     window.open(pdfUrl, "_blank");
                                                 }}
                                             >
