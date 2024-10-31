@@ -1,6 +1,6 @@
 @import "~bulma/bulma";
 
-.partidos-list {
+.recomendaciones-container {
   padding: 2rem;
   background-color: #373737;
   border-radius: 10px;
@@ -14,76 +14,78 @@
     text-align: center;
     margin-bottom: 2rem;
   }
+}
 
-  ul {
-    list-style: none;
-    padding: 0;
+.recomendaciones-list {
+  list-style: none;
+  padding: 0;
+}
+
+.recomendaciones-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #373737;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #333333;
   }
 
-  li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: #373737;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-    
-    &:hover {
-      background-color: #373737;
-    }
+  a {
+    text-decoration: none;
+    color: #3273dc;
+    font-weight: 600;
+    font-size: 1.2rem;
+    flex-grow: 1;
+    text-align: left;
+  }
+}
 
-    a {
-      text-decoration: none;
-      color: #3273dc;
-      font-weight: 600;
-      font-size: 1.2rem;
-      flex-grow: 1;
-      text-align: left;
-    }
+.recomendaciones-team-logo {
+  width: 50px;
+  height: 50px;
+  margin: 0 10px;
 
-    .team-logo {
-      width: 50px;
-      height: 50px;
-      margin: 0 10px;
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-      }
-    }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
 
-    .league-logo {
-      width: 60px;
-      height: 60px;
-      margin-left: 10px;
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-    }
+.recomendaciones-league-logo {
+  width: 60px;
+  height: 60px;
+  margin-left: 10px;
 
-    .match-info {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
 
-      .team-name {
-        font-size: 1.2rem;
-        margin: 0 10px;
-        text-align: center;
-      }
+.recomendaciones-match-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 
-      .match-date {
-        font-size: 1rem;
-        color: #e2e2e2;
-        margin-right: 10px;
-      }
-    }
+  .recomendaciones-team-name {
+    font-size: 1.2rem;
+    margin: 0 10px;
+    text-align: center;
+  }
+
+  .recomendaciones-match-date {
+    font-size: 1rem;
+    color: #e2e2e2;
+    margin-right: 10px;
   }
 }
