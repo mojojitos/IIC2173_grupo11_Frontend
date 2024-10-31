@@ -33,7 +33,7 @@ function BullData() {
   const handleFetchStatus = async () => {
     try {
       // eslint-disable-next-line no-undef
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/heartbeat`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/puerto_8000`);
       setStatus(response.data);
     } catch (error) {
       console.error('Error fetching status:', error);
