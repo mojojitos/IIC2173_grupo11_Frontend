@@ -32,6 +32,7 @@ const Recomendaciones = ({ link }) => {
       <h1>Partidos Recomendados</h1>
       <ul className="recomendaciones-list">
       {recomendaciones.map((recomendacion) => (
+          <li className="partido-item">
              <Link to={`/${link}/${recomendacion.fixtures.id}`} className="recomendaciones-link">
               <div className="recomendaciones-match-info">
                 <div className="recomendaciones-team-logo">
@@ -57,10 +58,15 @@ const Recomendaciones = ({ link }) => {
                 </div>
               </div>
             </Link>
+           </li>
         ))}
       </ul>
     </div>
   );
+};
+
+Recomendaciones.propTypes = {
+  link: PropTypes.string.isRequired,
 };
 
 export default Recomendaciones;
