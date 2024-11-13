@@ -33,7 +33,7 @@ const Recomendaciones = ({ link }) => {
       <h1>Partidos Recomendados</h1>
       <ul className="recomendaciones-list">
       {recomendaciones.map((recomendacion) => (
-          <li className="partido-item">
+          <li key={recomendacion.fixtures.id} className="recomendacion-item">
              <Link to={`/${link}/${recomendacion.fixtures.id}`} className="recomendaciones-link">
               <div className="recomendaciones-match-info">
                 <div className="recomendaciones-team-logo">
