@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Recomendaciones.scss";
 
-const Recomendaciones = () => {
+const Recomendaciones = ({ link }) => {
   const [recomendaciones, setRecomendaciones] = useState([]);
   const [userId, setUserId] = useState(null);
 
@@ -31,9 +31,8 @@ const Recomendaciones = () => {
     <div className="recomendaciones-container">
       <h1>Partidos Recomendados</h1>
       <ul className="recomendaciones-list">
-        {recomendaciones.map((recomendacion) => (
-          <li key={recomendacion.fixture_id} className="recomendaciones-item">
-            <Link to={`/partido/${recomendacion.fixture_id}`}>
+      {recomendaciones.map((recomendacion) => (
+             <Link to={`/${link}/${recomendacion.fixtures.id}`} className="recomendaciones-link">
               <div className="recomendaciones-match-info">
                 <div className="recomendaciones-team-logo">
                   <img
@@ -58,7 +57,6 @@ const Recomendaciones = () => {
                 </div>
               </div>
             </Link>
-          </li>
         ))}
       </ul>
     </div>
