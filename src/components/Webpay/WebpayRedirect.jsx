@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Loading from "../Loading/Loading.jsx";
 import axios from 'axios';
 
 const WebpayRedirect = () => {
@@ -56,7 +57,7 @@ const WebpayRedirect = () => {
     }
   };
   
-  return <div>Procesando el pago...</div>; 
+  return <div><Loading /></div>; 
 };
 
 export default WebpayRedirect;

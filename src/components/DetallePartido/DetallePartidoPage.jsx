@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import CompraBonos from "../CompraBono/CompraBono.jsx";
 import ReservaAdmin from "../ReservaAdmin/ReservaAdmin.jsx";
 import DetallePartido from "./DetallePartido.jsx";
+import Loading from "../Loading/Loading.jsx";
 import axios from "axios";
 
 const DetallePartidoPage = () => {
@@ -51,7 +52,7 @@ const DetallePartidoPage = () => {
   }, [fixtureId]);
 
   if (loading) {
-    return <p>Cargando...</p>;
+    return <p><Loading /></p>;
   }
 
   if (error) {

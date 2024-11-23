@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import './Navbar.scss';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode"; 
+import "./Navbar.scss";
 
 const Billetera = () => (
     <Link className="navbar-item" to="/wallet">
@@ -10,10 +11,9 @@ const Billetera = () => (
 
 const Logout = () => {
     const handleLogout = () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('user');
-        // const logoutUrl = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/v2/logout?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&returnTo=${encodeURIComponent(window.location.origin)}`;
-        window.location.reload(); 
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("user");
+        window.location.reload();
     };
 
     return (
@@ -46,6 +46,7 @@ const Recomendaciones = () => (
         Recomendaciones
     </Link>
 );
+
 const Reservas = () => (
     <Link className="navbar-item" to="/reserva-info">
         Reservas
@@ -54,13 +55,26 @@ const Reservas = () => (
 
 function Navbar() {
     const [userId, setUserId] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         const storedUserId = localStorage.getItem("user");
         if (storedUserId) {
             setUserId(storedUserId);
         }
-    }, []); 
+        const token = localStorage.getItem("TokenJWT");
+        if (token) {
+            try {
+                const decodedToken = jwtDecode(token);
+                console.log("Decoded token:", decodedToken);
+                if (decodedToken.scope && decodedToken.scope.includes("admin")) {
+                    setIsAdmin(true);
+                }
+            } catch (error) {
+                console.error("Error al decodificar el token:", error);
+            }
+        }
+    }, []);
 
     return (
         <nav className="navbar">
@@ -79,7 +93,7 @@ function Navbar() {
                         Partidos
                     </Link>
                     <Link className="navbar-item" to="/resultados">
-                        Resultados 
+                        Resultados
                     </Link>
                     <Link className="navbar-item" to="/arena">
                         Workers
@@ -88,17 +102,20 @@ function Navbar() {
                     {userId && <HistorialNotificacion />}
                     {userId && <HistorialCompra />}
                     {userId && <Recomendaciones />}
-                    {userId && <Reservas />}
+                    
+                    {userId && isAdmin && <Reservas />}
                 </div>
             </div>
             <div className="navbar-end">
                 <div className="navbar-item">
-                    <div className="buttons">
+                    {!userId && (
                         <Link className="button is-primary" to="/signup">
                             <strong>Sign Up</strong>
                         </Link>
-                        {userId ? <Logout /> : <Login />}
-                    </div>
+                    )}
+                </div>
+                <div className="navbar-item">
+                    {userId ? <Logout /> : <Login />}
                 </div>
             </div>
         </nav>

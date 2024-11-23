@@ -18,6 +18,7 @@ import WalletRedirect from './components/Wallet/WalletRedirect.jsx';
 import CompraResultado from './components/CompraResultado/CompraResultado.jsx';
 import BullData from './components/BullData/BullData.jsx';
 import ReservaInfo from './components/ReservaInfo/ReservaInfo.jsx';
+import NotFound from './components/NotFound/NotFound.jsx';
 
 function App() {
   useEffect(() => {
@@ -45,6 +46,7 @@ function App() {
         <Route path="/recomendaciones" element={<Recomendaciones />} />
         <Route path="/arena" element={<BullData />} />
         <Route path="/reserva-info" element={<ReservaInfo />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

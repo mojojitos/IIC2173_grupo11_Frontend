@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Partido from "./Partido.jsx";
 import "./PartidosPage.scss";
+import Loading from "../Loading/Loading.jsx";
 
 const Partidos = () => {
   const [partidos, setPartidos] = useState([]);
@@ -64,7 +65,7 @@ const Partidos = () => {
     setPage(1);
   };
 
-  if (loading) return <p>Cargando...</p>;
+  if (loading) return <p><Loading /></p>;
   if (error) return <p>{error}</p>;
 
   return (

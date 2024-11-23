@@ -1,19 +1,76 @@
 .pagina-principal {
     margin: 10px;
-}
-
-.header-icon {
-    height: auto;
-    width: 600px;
-    align-content: center;
-}
-
-.header-section {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header-section {
     padding: 50px;
-}
-
-.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    text-align: center;
+  }
+  
+  .header-icon {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    height: 400px; 
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .header-icon img {
+    max-height: 100%; 
+    max-width: 100%;
+  }
+  
+  .hero {
     padding: 50px;
     border-radius: 40px;
     margin: 30px;
-}
+  }
+  .hero:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+  
+  .heroes-section {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .destacados-section {
+    min-width: 1200px;
+    min-height: 800px;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+  
+    h2 {
+      margin-bottom: 20px;
+      color: #000;
+      font-weight: bold;
+    }
+  
+    .partidos-destacados {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+  }
+  
