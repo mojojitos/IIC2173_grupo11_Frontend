@@ -26,6 +26,7 @@ const Login = () => {
                 console.log('Inicio de sesión exitoso');
                 console.log(`Data: ${response.data}`);
                 localStorage.setItem('accessToken', response.data.message.access_token);
+                localStorage.setItem('TokenJWT', response.data.jwt_token);
                 localStorage.setItem('user', response.data.userData.id);
                 console.log(`accessToken: ${localStorage.getItem('accessToken')}`);
                 console.log(`user: ${localStorage.getItem('user')}`);

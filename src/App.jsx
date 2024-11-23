@@ -17,6 +17,7 @@ import WebpayRedirect from './components/Webpay/WebpayRedirect.jsx';
 import WalletRedirect from './components/Wallet/WalletRedirect.jsx';
 import CompraResultado from './components/CompraResultado/CompraResultado.jsx';
 import BullData from './components/BullData/BullData.jsx';
+import ReservaInfo from './components/ReservaInfo/ReservaInfo.jsx';
 
 function App() {
   useEffect(() => {
@@ -43,6 +44,7 @@ function App() {
         <Route path="/historial-compra" element={<HistorialCompra />} />
         <Route path="/recomendaciones" element={<Recomendaciones />} />
         <Route path="/arena" element={<BullData />} />
+        <Route path="/reserva-info" element={<ReservaInfo />} />
       </Routes>
     </Router>
   );

@@ -46,6 +46,11 @@ const Recomendaciones = () => (
         Recomendaciones
     </Link>
 );
+const Reservas = () => (
+    <Link className="navbar-item" to="/reserva-info">
+        Reservas
+    </Link>
+);
 
 function Navbar() {
     const [userId, setUserId] = useState(null);
@@ -83,6 +88,7 @@ function Navbar() {
                     {userId && <HistorialNotificacion />}
                     {userId && <HistorialCompra />}
                     {userId && <Recomendaciones />}
+                    {userId && <Reservas />}
                 </div>
             </div>
             <div className="navbar-end">

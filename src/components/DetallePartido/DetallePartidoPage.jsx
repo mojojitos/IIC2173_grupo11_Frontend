@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { jwtDecode } from "jwt-decode"; 
 import CompraBonos from "../CompraBono/CompraBono.jsx";
+import ReservaAdmin from "../ReservaAdmin/ReservaAdmin.jsx";
 import DetallePartido from "./DetallePartido.jsx";
 import axios from "axios";
 
@@ -8,6 +10,7 @@ const DetallePartidoPage = () => {
   const [partido, setPartido] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { fixtureId } = useParams();
 
   useEffect(() => {
@@ -26,11 +29,25 @@ const DetallePartidoPage = () => {
         console.error("Error al obtener los partidos:", error);
         setError("Error al obtener los datos del partido.");
       } finally {
-        setLoading(false); // Finalizar la carga
+        setLoading(false);
       }
     };
 
     fetchPartido();
+
+    // Verificar el token JWT para determinar si es admin
+    const token = localStorage.getItem("TokenJWT");
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        console.log("Decoded token:", decodedToken);
+        if (decodedToken.scope && decodedToken.scope.includes("admin")) {
+          setIsAdmin(true);
+        }
+      } catch (error) {
+        console.error("Error al decodificar el token:", error);
+      }
+    }
   }, [fixtureId]);
 
   if (loading) {
@@ -49,6 +66,7 @@ const DetallePartidoPage = () => {
     <div className="detalle-partido-page">
       <DetallePartido partido={partido} />
       <CompraBonos partido={partido} />
+      {isAdmin && <ReservaAdmin partido={partido} />}
     </div>
   );
 };
