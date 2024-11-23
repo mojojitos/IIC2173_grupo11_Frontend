@@ -48,7 +48,7 @@ const ReservaInfo = () => {
         {reserves.map((reserve) => (
           <li key={reserve.fixtures.id} className="reserve-item">
             <div className="reserve-content">
-              <Partido partido={reserve} link="reserva" />
+              <Partido partido={reserve} link="partido" />
               <div className="bonus-info">
                 <p>Remaining Bonus: {reserve.remaining_bonus}</p>
                 <p>Admin Remaining Bonus: {reserve.admin_remaining_bonus}</p>
