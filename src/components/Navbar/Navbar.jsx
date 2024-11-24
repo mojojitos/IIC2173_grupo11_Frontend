@@ -13,6 +13,7 @@ const Logout = () => {
     const handleLogout = () => {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("user");
+        localStorage.removeItem("TokenJWT");
         window.location.reload();
     };
 
@@ -102,7 +103,7 @@ function Navbar() {
                     {userId && <HistorialNotificacion />}
                     {userId && <HistorialCompra />}
                     {userId && <Recomendaciones />}
-                    
+
                     {userId && isAdmin && <Reservas />}
                 </div>
             </div>
