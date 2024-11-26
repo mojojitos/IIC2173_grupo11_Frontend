@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import {jwtDecode} from "jwt-decode";
 import "./ReservaAdmin.scss";
 
 const ReservaAdmin = ({ partido }) => {
@@ -8,8 +9,26 @@ const ReservaAdmin = ({ partido }) => {
   const [quantity, setQuantity] = useState("");
   const [status, setStatus] = useState("");
   const [userId, setUserId] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    const token = localStorage.getItem("TokenJWT");
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        if (decodedToken.scope && decodedToken.scope.includes("admin")) {
+          setIsAdmin(true);
+        } else {
+          setStatus("Acceso denegado: Solo los administradores pueden reservar bonos.");
+        }
+      } catch (error) {
+        console.error("Error al decodificar el token:", error);
+        setStatus("Error de autenticación. Por favor, inicia sesión nuevamente.");
+      }
+    } else {
+      setStatus("Token no encontrado. Por favor, inicia sesión.");
+    }
+
     const storedUserId = localStorage.getItem("user");
     if (storedUserId) {
       setUserId(storedUserId);
@@ -18,7 +37,7 @@ const ReservaAdmin = ({ partido }) => {
 
   const handleReserva = async () => {
     try {
-      const token = localStorage.getItem("TokenJWT"); 
+      const token = localStorage.getItem("TokenJWT");
       if (!token) {
         setStatus("No se encontró un token válido.");
         return;
@@ -56,6 +75,14 @@ const ReservaAdmin = ({ partido }) => {
     const newQuantity = Math.max(0, Number(e.target.value));
     setQuantity(newQuantity);
   };
+
+  if (!isAdmin) {
+    return (
+      <div className="reserva-admin">
+        <p>{status || "Validando acceso..."}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="reserva-admin">

@@ -1,0 +1,66 @@
+.publish-response {
+    background-color: #f1f4f8;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 400px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .publish-response h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .response-options {
+    margin-bottom: 20px;
+  }
+  
+  .response-options label {
+    display: block;
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .response-options input[type="radio"] {
+    margin-right: 10px;
+  }
+  
+  .btn-response {
+    background-color: #186eca;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  
+  .btn-response:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .btn-response:hover:not(:disabled) {
+    background-color: #004ea1;
+  }
+  
+  .response-status {
+    margin-top: 15px;
+    font-size: 16px;
+  }
+  
+  .response-status.success {
+    color: green;
+  }
+  
+  .response-status.error {
+    color: red;
+  }
+  

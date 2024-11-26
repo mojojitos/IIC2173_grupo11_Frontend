@@ -70,7 +70,7 @@ const PublishResponse = ({ proposalId }) => {
       </button>
       {responseStatus && <p className="response-status">{responseStatus}</p>}
     </div>
-  );
+  );  
 };
 
 PublishResponse.propTypes = {

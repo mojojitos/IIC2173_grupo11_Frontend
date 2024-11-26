@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {jwtDecode} from "jwt-decode";
 import Partido from "../Partidos/Partido.jsx";
 import "./ReservaInfo.scss";
 import Loading from "../Loading/Loading.jsx";
@@ -8,13 +9,37 @@ const ReservaInfo = () => {
   const [reserves, setReserves] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("TokenJWT");
+
+    if (!token) {
+      setError("No se encontró un token válido. Por favor, inicia sesión.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.scope && decodedToken.scope.includes("admin")) {
+        setIsAdmin(true);
+      } else {
+        setError("Acceso denegado: Solo los administradores pueden ver esta información.");
+        setLoading(false);
+        return;
+      }
+    } catch (error) {
+      console.error("Error al decodificar el token:", error);
+      setError("Error de autenticación. Por favor, inicia sesión nuevamente.");
+      setLoading(false);
+      return;
+    }
+
     const fetchReserves = async () => {
       try {
         const response = await axios.get(
-           // eslint-disable-next-line no-undef
+          // eslint-disable-next-line no-undef
           `${process.env.REACT_APP_BACKEND_LINK}/admin/showReserves`,
           {
             headers: {
@@ -34,9 +59,13 @@ const ReservaInfo = () => {
     fetchReserves();
   }, []);
 
+  if (!isAdmin) {
+    return <p>{error || "Validando acceso..."}</p>;
+  }
+
   if (loading) return <p><Loading /></p>;
   if (error) return <p>{error}</p>;
-  
+
   if (!reserves || reserves.length === 0) {
     return <p>No hay reservas disponibles.</p>;
   }

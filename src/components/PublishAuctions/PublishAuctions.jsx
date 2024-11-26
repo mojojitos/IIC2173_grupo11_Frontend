@@ -72,47 +72,44 @@ const PublishAuctions = () => {
   return (
     <div className="publish-auctions">
       <h2>Publicar Subasta</h2>
-      <div className="form-group">
-        <label htmlFor="id-fixture">ID del Fixture:</label>
+      <div>
+        <label>ID del Fixture:</label>
         <input
-          id="id-fixture"
           type="text"
           value={idFixture}
           onChange={(e) => setIdFixture(e.target.value)}
           placeholder="Ingrese el ID del Fixture"
         />
       </div>
-
-      <div className="form-group">
-        <label htmlFor="result">Resultado:</label>
+  
+      <div>
+        <label>Resultado:</label>
         <input
-          id="result"
           type="text"
           value={result}
           onChange={(e) => setResult(e.target.value)}
           placeholder="Ingrese el resultado"
         />
       </div>
-
-      <div className="form-group">
-        <label htmlFor="quantity">Cantidad:</label>
+  
+      <div>
+        <label>Cantidad:</label>
         <input
-          id="quantity"
           type="number"
           value={quantity}
           onChange={(e) => setQuantity(Math.max(0, Number(e.target.value)))}
           placeholder="Ingrese la cantidad"
         />
       </div>
-
+  
       <button onClick={handlePublish} className="btn-publish">
         Publicar Subasta
       </button>
-
+  
       {responseMessage && <p className="response-message">{responseMessage}</p>}
       {status && <p className="status">{status}</p>}
     </div>
-  );
+  );  
 };
 
 export default PublishAuctions;
