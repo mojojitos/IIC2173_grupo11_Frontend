@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { jwtDecode } from "jwt-decode"; 
+import jwtDecode from "jwt-decode"; // Sin destructuring para evitar errores
 import "./Navbar.scss";
 
 const Billetera = () => (
@@ -54,6 +54,30 @@ const Reservas = () => (
     </Link>
 );
 
+const Subastas = () => (
+    <Link className="navbar-item" to="/subastas">
+        Subastas
+    </Link>
+);
+
+const SubastasPublicar = () => (
+    <Link className="navbar-item" to="/subastas-publicar">
+        Publicar Subastas
+    </Link>
+);
+
+const Propuestas = () => (
+    <Link className="navbar-item" to="/propuestas">
+        Propuestas
+    </Link>
+);
+
+const PropuestasPublicar = () => (
+    <Link className="navbar-item" to="/propuestas-publicar">
+        Publicar Propuestas
+    </Link>
+);
+
 function Navbar() {
     const [userId, setUserId] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -67,7 +91,6 @@ function Navbar() {
         if (token) {
             try {
                 const decodedToken = jwtDecode(token);
-                console.log("Decoded token:", decodedToken);
                 if (decodedToken.scope && decodedToken.scope.includes("admin")) {
                     setIsAdmin(true);
                 }
@@ -103,8 +126,11 @@ function Navbar() {
                     {userId && <HistorialNotificacion />}
                     {userId && <HistorialCompra />}
                     {userId && <Recomendaciones />}
-
                     {userId && isAdmin && <Reservas />}
+                    {userId && isAdmin && <Subastas />}
+                    {userId && isAdmin && <SubastasPublicar />}
+                    {userId && isAdmin && <Propuestas />}
+                    {userId && isAdmin && <PropuestasPublicar />}
                 </div>
             </div>
             <div className="navbar-end">
