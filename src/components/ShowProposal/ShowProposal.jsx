@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import jwtDecode from "jwt-decode";
-import PublishResponse from "./PublishResponse"; // Importa el componente
-import "./ShowProposals.scss";
+import {jwtDecode} from "jwt-decode";
+import PublishResponse from "../PublishResponse/PublishResponse.jsx";
+import "./ShowProposal.scss";
 
-const ShowProposals = () => {
+const ShowProposal = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [proposals, setProposals] = useState([]);
   const [status, setStatus] = useState("");
@@ -100,4 +100,4 @@ const ShowProposals = () => {
   );
 };
 
-export default ShowProposals;
+export default ShowProposal;

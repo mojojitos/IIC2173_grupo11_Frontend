@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import jwtDecode from "jwt-decode";
-import "./PublishProposals.scss";
+import {jwtDecode} from "jwt-decode";
+import "./PublishProposal.scss";
 
-const PublishProposals = () => {
+const PublishProposal = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [idFixture, setIdFixture] = useState("");
   const [result, setResult] = useState("");
@@ -115,4 +115,4 @@ const PublishProposals = () => {
   );
 };
 
-export default PublishProposals;
+export default PublishProposal;

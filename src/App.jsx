@@ -20,7 +20,7 @@ import BullData from './components/BullData/BullData.jsx';
 import ReservaInfo from './components/ReservaInfo/ReservaInfo.jsx';
 import NotFound from './components/NotFound/NotFound.jsx';
 import ShowAuctions from './components/ShowAuctions/ShowAuctions.jsx';
-import ShowProposals from './components/ShowProposal/ShowProposal.jsx';
+import ShowProposal from './components/ShowProposal/ShowProposal.jsx';
 import PublishAuctions from './components/PublishAuctions/PublishAuctions.jsx';
 import PublishProposal from './components/PublishProposal/PublishProposal.jsx';
 
@@ -53,7 +53,7 @@ function App() {
         <Route path="/reserva-info" element={<ReservaInfo />} />
         <Route path="/subastas" element={<ShowAuctions />} />
         <Route path="/subastas-publicar" element={<PublishAuctions />} />
-        <Route path="/propuestas" element={<ShowProposals />} />
+        <Route path="/propuestas" element={<ShowProposal />} />
         <Route path="/propuestas-publicar" element={<PublishProposal />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
