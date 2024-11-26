@@ -1,37 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode";
 import "./PublishAuctions.scss";
 
-const PublishAuctions = () => {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [idFixture, setIdFixture] = useState("");
+const PublishAuctions = ({ idFixture }) => {
   const [result, setResult] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [status, setStatus] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
-
-  useEffect(() => {
-    const token = localStorage.getItem("TokenJWT");
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        if (decodedToken.scope && decodedToken.scope.includes("admin")) {
-          setIsAdmin(true);
-        } else {
-          setStatus("Acceso denegado: Solo los administradores pueden publicar subastas.");
-        }
-      } catch (error) {
-        console.error("Error al decodificar el token:", error);
-      }
-    } else {
-      setStatus("Token no encontrado. Por favor, inicia sesión.");
-    }
-  }, []);
 
   const handlePublish = async () => {
     if (!idFixture || !result || !quantity) {
-      setStatus("Por favor, completa todos los campos antes de publicar.");
+      setResponseMessage("Por favor, completa todos los campos antes de publicar.");
       return;
     }
 
@@ -42,16 +21,20 @@ const PublishAuctions = () => {
         result,
         quantity,
       };
-      // eslint-disable-next-line no-undef
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/admin/publishAuction`, requestData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+
+      const response = await axios.post(
+        // eslint-disable-next-line no-undef
+        `${process.env.REACT_APP_BACKEND_LINK}/admin/publishAuction`,
+        requestData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.status === 200) {
         setResponseMessage("Subasta publicada exitosamente.");
-        setStatus("");
       } else {
         setResponseMessage("Error al publicar la subasta.");
       }
@@ -61,55 +44,39 @@ const PublishAuctions = () => {
     }
   };
 
-  if (!isAdmin) {
-    return (
-      <div className="publish-auctions">
-        <p>{status || "Validando acceso..."}</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="publish-auctions">
-      <h2>Publicar Subasta</h2>
-      <div>
-        <label>ID del Fixture:</label>
-        <input
-          type="text"
-          value={idFixture}
-          onChange={(e) => setIdFixture(e.target.value)}
-          placeholder="Ingrese el ID del Fixture"
-        />
+    <div className="publish-response">
+      <h3>Publicar Subasta</h3>
+      <div className="response-options">
+        <label>
+          Resultado:
+          <input
+            type="text"
+            value={result}
+            onChange={(e) => setResult(e.target.value)}
+            placeholder="Ingrese el resultado"
+          />
+        </label>
+        <label>
+          Cantidad:
+          <input
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(Math.max(0, Number(e.target.value)))}
+            placeholder="Ingrese la cantidad"
+          />
+        </label>
       </div>
-  
-      <div>
-        <label>Resultado:</label>
-        <input
-          type="text"
-          value={result}
-          onChange={(e) => setResult(e.target.value)}
-          placeholder="Ingrese el resultado"
-        />
-      </div>
-  
-      <div>
-        <label>Cantidad:</label>
-        <input
-          type="number"
-          value={quantity}
-          onChange={(e) => setQuantity(Math.max(0, Number(e.target.value)))}
-          placeholder="Ingrese la cantidad"
-        />
-      </div>
-  
-      <button onClick={handlePublish} className="btn-publish">
-        Publicar Subasta
+      <button onClick={handlePublish} className="btn-response">
+        Publicar
       </button>
-  
-      {responseMessage && <p className="response-message">{responseMessage}</p>}
-      {status && <p className="status">{status}</p>}
+      {responseMessage && <p className="response-status">{responseMessage}</p>}
     </div>
-  );  
+  );
+};
+
+PublishAuctions.propTypes = {
+  idFixture: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default PublishAuctions;

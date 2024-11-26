@@ -1,57 +1,68 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode";
 import "./PublishProposal.scss";
+import PropTypes from "prop-types";
 
-const PublishProposal = () => {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [idFixture, setIdFixture] = useState("");
+const PublishProposal = ({ auctionId }) => {
+  const [reserves, setReserves] = useState([]);
+  const [selectedFixture, setSelectedFixture] = useState("");
   const [result, setResult] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [status, setStatus] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("TokenJWT");
-    if (token) {
+    const fetchReserves = async () => {
       try {
-        const decodedToken = jwtDecode(token);
-        if (decodedToken.scope && decodedToken.scope.includes("admin")) {
-          setIsAdmin(true);
-        } else {
-          setStatus("Acceso denegado: Solo los administradores pueden publicar propuestas.");
-        }
+        const token = localStorage.getItem("TokenJWT");
+        const response = await axios.get(
+          // eslint-disable-next-line no-undef
+          `${process.env.REACT_APP_BACKEND_LINK}/admin/showReserves`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const filteredReserves = response.data.filter(
+          (reserve) => reserve.admin_remaining_bonus > 0
+        );
+        setReserves(filteredReserves);
       } catch (error) {
-        console.error("Error al decodificar el token:", error);
+        console.error("Error al obtener las reservas:", error);
+        setResponseMessage("Error al cargar las reservas. Por favor, inténtalo de nuevo.");
       }
-    } else {
-      setStatus("Token no encontrado. Por favor, inicia sesión.");
-    }
+    };
+
+    fetchReserves();
   }, []);
 
   const handlePublish = async () => {
-    if (!idFixture || !result || !quantity) {
-      setStatus("Por favor, completa todos los campos antes de publicar.");
+    if (!auctionId || !selectedFixture || !result || !quantity) {
+      setResponseMessage("Por favor, completa todos los campos antes de publicar.");
       return;
     }
 
     try {
       const token = localStorage.getItem("TokenJWT");
       const requestData = {
-        id_fixture: idFixture,
+        auction_id: auctionId,
+        id_fixture: selectedFixture,
         result,
         quantity,
       };
-      // eslint-disable-next-line no-undef
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/admin/publishProposal`, requestData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(
+        // eslint-disable-next-line no-undef
+        `${process.env.REACT_APP_BACKEND_LINK}/admin/publishProposal`,
+        requestData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.status === 200) {
         setResponseMessage("Propuesta publicada exitosamente.");
-        setStatus("");
       } else {
         setResponseMessage("Error al publicar la propuesta.");
       }
@@ -61,55 +72,56 @@ const PublishProposal = () => {
     }
   };
 
-  if (!isAdmin) {
-    return (
-      <div className="publish-proposals">
-        <p>{status || "Validando acceso..."}</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="publish-proposals">
-      <h2>Publicar Propuesta</h2>
-      <div>
-        <label>ID del Fixture:</label>
-        <input
-          type="text"
-          value={idFixture}
-          onChange={(e) => setIdFixture(e.target.value)}
-          placeholder="Ingrese el ID del Fixture"
-        />
+    <div className="publish-proposal">
+      <h3>Publicar Propuesta</h3>
+      <div className="response-options">
+        <label>
+          Partido:
+          <select
+            value={selectedFixture}
+            onChange={(e) => setSelectedFixture(e.target.value)}
+          >
+            <option value="">Seleccione un partido</option>
+            {reserves.map((reserve) => (
+              <option
+                key={reserve.fixtures.id}
+                value={reserve.fixtures.id}
+              >
+                {reserve.teams.home.name} vs {reserve.teams.away.name} (
+                {reserve.admin_remaining_bonus})
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Resultado:
+          <input
+            type="text"
+            value={result}
+            onChange={(e) => setResult(e.target.value)}
+            placeholder="Ingrese el resultado"
+          />
+        </label>
+        <label>
+          Cantidad:
+          <input
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(Math.max(0, Number(e.target.value)))}
+            placeholder="Ingrese la cantidad"
+          />
+        </label>
       </div>
-  
-      <div>
-        <label>Resultado:</label>
-        <input
-          type="text"
-          value={result}
-          onChange={(e) => setResult(e.target.value)}
-          placeholder="Ingrese el resultado"
-        />
-      </div>
-  
-      <div>
-        <label>Cantidad:</label>
-        <input
-          type="number"
-          value={quantity}
-          onChange={(e) => setQuantity(Math.max(0, Number(e.target.value)))}
-          placeholder="Ingrese la cantidad"
-        />
-      </div>
-  
-      <button onClick={handlePublish} className="btn-publish">
-        Publicar Propuesta
+      <button onClick={handlePublish} className="btn-response">
+        Publicar
       </button>
-  
-      {responseMessage && <p className="response-message">{responseMessage}</p>}
-      {status && <p className="status">{status}</p>}
+      {responseMessage && <p className="response-status">{responseMessage}</p>}
     </div>
-  );  
+  );
+};
+PublishProposal.propTypes = {
+  auctionId: PropTypes.string.isRequired,
 };
 
 export default PublishProposal;

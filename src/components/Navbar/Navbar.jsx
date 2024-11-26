@@ -60,21 +60,9 @@ const Subastas = () => (
     </Link>
 );
 
-const SubastasPublicar = () => (
-    <Link className="navbar-item" to="/subastas-publicar">
-        Publicar Subastas
-    </Link>
-);
-
 const Propuestas = () => (
     <Link className="navbar-item" to="/propuestas">
         Propuestas
-    </Link>
-);
-
-const PropuestasPublicar = () => (
-    <Link className="navbar-item" to="/propuestas-publicar">
-        Publicar Propuestas
     </Link>
 );
 
@@ -128,9 +116,7 @@ function Navbar() {
                     {userId && <Recomendaciones />}
                     {userId && isAdmin && <Reservas />}
                     {userId && isAdmin && <Subastas />}
-                    {userId && isAdmin && <SubastasPublicar />}
                     {userId && isAdmin && <Propuestas />}
-                    {userId && isAdmin && <PropuestasPublicar />}
                 </div>
             </div>
             <div className="navbar-end">

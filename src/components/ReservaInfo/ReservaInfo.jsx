@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
 import Partido from "../Partidos/Partido.jsx";
+import PublishAuctions from "../PublishAuctions/PublishAuctions.jsx";
 import "./ReservaInfo.scss";
 import Loading from "../Loading/Loading.jsx";
 
@@ -71,17 +72,20 @@ const ReservaInfo = () => {
   }
 
   return (
-    <div className="reserva-info">
-      <h1 className="reserva-title">Reservas Disponibles</h1>
-      <ul className="reserves-list">
+    <div className="show-proposals">
+      <h2>Reservas</h2>
+      <ul className="proposals-list">
         {reserves.map((reserve) => (
-          <li key={reserve.fixtures.id} className="reserve-item">
-            <div className="reserve-content">
+          <li key={reserve.fixtures.id} className="proposal-item">
+            <div className="proposal-content">
               <Partido partido={reserve} link="partido" />
-              <div className="bonus-info">
-                <p>Remaining Bonus: {reserve.remaining_bonus}</p>
-                <p>Admin Remaining Bonus: {reserve.admin_remaining_bonus}</p>
+              <div className="proposal-info">
+                <p><strong>Remaining Bonus:</strong> {reserve.remaining_bonus}</p>
+                <p><strong>Admin Remaining Bonus:</strong> {reserve.admin_remaining_bonus}</p>
               </div>
+            </div>
+            <div className="action">
+              <PublishAuctions idFixture={reserve.fixtures.id} />
             </div>
           </li>
         ))}

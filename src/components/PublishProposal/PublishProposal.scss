@@ -1,37 +1,49 @@
-.publish-proposals {
+.publish-proposal {
     background-color: #f1f4f8;
     border-radius: 10px;
     padding: 20px;
-    margin: 20px auto;
+    margin: 0 auto;
     max-width: 400px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
   }
   
-  .publish-proposals h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
+  .publish-proposal h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
     color: #333;
   }
   
-  .publish-proposals label {
-    display: block;
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 5px;
+  .response-options {
+    margin-bottom: 20px;
+  
+    label {
+      display: block;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+      cursor: pointer;
+  
+      input {
+        display: block;
+        margin-top: 5px;
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        color: #333;
+        font-size: 14px;
+      }
+  
+      input:focus {
+        outline: none;
+        border-color: #186eca;
+      }
+    }
   }
   
-  .publish-proposals input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    box-sizing: border-box;
-  }
-  
-  .btn-publish {
+  .btn-response {
     background-color: #186eca;
     color: #fff;
     border: none;
@@ -43,26 +55,26 @@
     width: 100%;
   }
   
-  .btn-publish:disabled {
+  .btn-response:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
   
-  .btn-publish:hover:not(:disabled) {
+  .btn-response:hover:not(:disabled) {
     background-color: #004ea1;
   }
   
-  .response-message,
-  .status {
+  .response-status {
     margin-top: 15px;
-    font-size: 16px;
-  }
+    font-size: 14px;
+    color: black;
   
-  .response-message.success {
-    color: green;
-  }
+    &.success {
+      color: green;
+    }
   
-  .response-message.error {
-    color: red;
+    &.error {
+      color: red;
+    }
   }
   

@@ -1,4 +1,4 @@
-.publish-auctions {
+.publish-response {
     background-color: #f1f4f8;
     border-radius: 10px;
     padding: 20px;
@@ -8,30 +8,29 @@
     text-align: center;
   }
   
-  .publish-auctions h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
+  .publish-response h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
     color: #333;
   }
   
-  .publish-auctions label {
+  .response-options {
+    margin-bottom: 20px;
+  }
+  
+  .response-options label {
     display: block;
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 5px;
-  }
-  
-  .publish-auctions input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     font-size: 16px;
-    box-sizing: border-box;
+    color: #666;
+    margin-bottom: 10px;
+    cursor: pointer;
   }
   
-  .btn-publish {
+  .response-options input[type="radio"] {
+    margin-right: 10px;
+  }
+  
+  .btn-response {
     background-color: #186eca;
     color: #fff;
     border: none;
@@ -43,26 +42,26 @@
     width: 100%;
   }
   
-  .btn-publish:disabled {
+  .btn-response:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
   
-  .btn-publish:hover:not(:disabled) {
+  .btn-response:hover:not(:disabled) {
     background-color: #004ea1;
   }
   
-  .response-message,
-  .status {
+  .response-status {
     margin-top: 15px;
     font-size: 16px;
+    color: black;
   }
   
-  .response-message.success {
+  .response-status.success {
     color: green;
   }
   
-  .response-message.error {
+  .response-status.error {
     color: red;
   }
   

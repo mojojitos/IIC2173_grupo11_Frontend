@@ -21,8 +21,6 @@ import ReservaInfo from './components/ReservaInfo/ReservaInfo.jsx';
 import NotFound from './components/NotFound/NotFound.jsx';
 import ShowAuctions from './components/ShowAuctions/ShowAuctions.jsx';
 import ShowProposal from './components/ShowProposal/ShowProposal.jsx';
-import PublishAuctions from './components/PublishAuctions/PublishAuctions.jsx';
-import PublishProposal from './components/PublishProposal/PublishProposal.jsx';
 
 
 function App() {
@@ -52,9 +50,7 @@ function App() {
         <Route path="/arena" element={<BullData />} />
         <Route path="/reserva-info" element={<ReservaInfo />} />
         <Route path="/subastas" element={<ShowAuctions />} />
-        <Route path="/subastas-publicar" element={<PublishAuctions />} />
         <Route path="/propuestas" element={<ShowProposal />} />
-        <Route path="/propuestas-publicar" element={<PublishProposal />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
